@@ -1,7 +1,7 @@
 package ebnatural.bizcurator.apiserver.model;
 
 import ebnatural.bizcurator.apiserver.common.constants.OrderCancelState;
-import ebnatural.bizcurator.apiserver.common.constants.ORDER_CANCEL_TYPE;
+import ebnatural.bizcurator.apiserver.common.constants.OrderCancelType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +33,11 @@ public class CancelApplication {
 
     @Column(columnDefinition = "ENUM('UNSELECTED', 'CHANGE_OF_MIND', 'UNSATISFIED', 'DELIVERY_DELAYED')")
     @Enumerated(EnumType.ORDINAL)
-    private ORDER_CANCEL_TYPE opinionCategory = ORDER_CANCEL_TYPE.UNSELECTED; // 취소 사유 카테고리
+    private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
     @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECTED', 'FINISHED')")
     @Enumerated(EnumType.ORDINAL)
     private OrderCancelState state= OrderCancelState.WAIT; // 상태값
 
-    LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
+    private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 }
