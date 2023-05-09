@@ -48,6 +48,12 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "weekly_clicks")
+    private Integer weeklyClicks;
+
+    @Column(name = "monthly_clicks")
+    private Integer monthlyClicks;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
