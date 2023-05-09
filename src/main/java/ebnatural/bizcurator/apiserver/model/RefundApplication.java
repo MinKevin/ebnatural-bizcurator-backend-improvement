@@ -1,8 +1,8 @@
 package ebnatural.bizcurator.apiserver.model;
 
 import ebnatural.bizcurator.apiserver.common.constants.OrderCancelState;
-import ebnatural.bizcurator.apiserver.common.constants.OrderCancelType;
 import ebnatural.bizcurator.apiserver.common.constants.OrderRefundType;
+import ebnatural.bizcurator.apiserver.common.constants.ReceiveWayType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,15 @@ public class RefundApplication {
     @Enumerated(EnumType.ORDINAL)
     private OrderCancelState state= OrderCancelState.WAIT; // 상태값
 
-    private ReceiveWayType receiveWayType;
+    @Column(columnDefinition = "ENUM('PICK_UP_BY_COMPANY', 'SEND_BY_USER')")
+    @Enumerated(EnumType.ORDINAL)
+    private ReceiveWayType receiveWayType = ReceiveWayType.PICK_UP_BY_COMPANY;  // 수거신청상태값
+
+    private String address; // 수거지 주소
+
+    private String bankAccount; // 환불받을계좌
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
+
+    private String postalCode; // 우편번호
 }
