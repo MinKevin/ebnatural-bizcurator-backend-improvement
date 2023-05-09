@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "product")
@@ -62,10 +64,12 @@ public class Product {
     @Column(name = "discount_rate", precision = 3, scale = 2)
     private BigDecimal discountRate;
 
-    @Column(name = "created_at")
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false, updatable = true)
     private LocalDateTime updatedAt;
 
     @Column(name = "weekly_clicks")
