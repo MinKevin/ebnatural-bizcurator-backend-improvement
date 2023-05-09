@@ -25,16 +25,11 @@ import lombok.ToString;
         @Index(columnList = "createdBy"),
 })
 @Entity
-public class Board extends AuditingFields {
+public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Setter
-    @JoinColumn(name = "memberId")
-    @ManyToOne(optional = false)
-    private Member member;
 
     @Setter
     @Column(nullable = false)
@@ -54,10 +49,10 @@ public class Board extends AuditingFields {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Board)) {
+        if (!(o instanceof Article)) {
             return false;
         }
-        Board that = (Board) o;
+        Article that = (Article) o;
         return this.getId() != null && this.getId().equals(that.getId());
     }
 
