@@ -3,7 +3,7 @@ package ebnatural.bizcurator.apiserver.common.constants;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum ORDER_CANCEL_TYPE {
+public enum OrderCancelType {
     UNSELECTED("선택안됨"),
     CHANGE_OF_MIND("고객변심"),
     UNSATISFIED("서비스 불만족"),

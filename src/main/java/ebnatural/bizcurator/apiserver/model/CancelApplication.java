@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.model;
 
-import ebnatural.bizcurator.apiserver.common.constants.ORDER_CANCEL_STATE;
+import ebnatural.bizcurator.apiserver.common.constants.OrderCancelState;
 import ebnatural.bizcurator.apiserver.common.constants.ORDER_CANCEL_TYPE;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -37,7 +37,7 @@ public class CancelApplication {
 
     @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECTED', 'FINISHED')")
     @Enumerated(EnumType.ORDINAL)
-    private ORDER_CANCEL_STATE state= ORDER_CANCEL_STATE.WAIT; // 상태값
+    private OrderCancelState state= OrderCancelState.WAIT; // 상태값
 
     LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 }

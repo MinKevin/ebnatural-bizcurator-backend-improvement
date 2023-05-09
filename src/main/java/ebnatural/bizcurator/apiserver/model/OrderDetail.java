@@ -1,7 +1,7 @@
 package ebnatural.bizcurator.apiserver.model;
 
 import ebnatural.bizcurator.apiserver.common.constants.DELIVERY_STATE;
-import ebnatural.bizcurator.apiserver.common.constants.ORDER_TYPE;
+import ebnatural.bizcurator.apiserver.common.constants.OrderType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,7 +61,7 @@ public class OrderDetail {
 
     @Column(columnDefinition = "ENUM('IMMEDIATE', 'REQUEST_DOCUMENT')")
     @Enumerated(EnumType.ORDINAL)
-    private ORDER_TYPE orderType; // 주문 유형
+    private OrderType orderType; // 주문 유형
 
     private int shippingFee; // 배송비
 
