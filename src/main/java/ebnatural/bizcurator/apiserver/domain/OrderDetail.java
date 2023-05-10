@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * 주문 내역 클래스
  */
+@Getter
 @RequiredArgsConstructor
 @Entity
 public class OrderDetail {
