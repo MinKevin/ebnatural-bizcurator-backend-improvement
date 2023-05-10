@@ -30,7 +30,7 @@ public class Member extends TimeEntity {
     message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
     String password;
 
-    @Column(name = "role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
+    @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
