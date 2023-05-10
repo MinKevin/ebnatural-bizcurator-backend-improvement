@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,10 +21,6 @@ import org.hibernate.Hibernate;
 @Table(name = "product_category")
 @Getter
 @ToString
-@RequiredArgsConstructor
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Category {
 
     @Id

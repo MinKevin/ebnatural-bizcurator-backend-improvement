@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,10 +27,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Table(name = "product")
 @Getter
 @ToString
-@RequiredArgsConstructor
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product {
 
     @Id

@@ -20,10 +20,6 @@ import org.hibernate.Hibernate;
 @Table(name = "manufacturer")
 @Getter
 @ToString
-@RequiredArgsConstructor
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Manufacturer {
 
     @Id
