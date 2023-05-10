@@ -1,4 +1,4 @@
-package ebnatural.bizcurator.apiserver.common.constants;
+package ebnatural.bizcurator.apiserver.domain.constant;
 
 import lombok.RequiredArgsConstructor;
 

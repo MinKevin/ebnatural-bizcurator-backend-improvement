@@ -1,7 +1,7 @@
-package ebnatural.bizcurator.apiserver.model;
+package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.common.constants.DeliveryState;
-import ebnatural.bizcurator.apiserver.common.constants.OrderType;
+import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

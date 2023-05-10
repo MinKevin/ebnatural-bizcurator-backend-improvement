@@ -1,8 +1,8 @@
-package ebnatural.bizcurator.apiserver.model;
+package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.common.constants.OrderCancelState;
-import ebnatural.bizcurator.apiserver.common.constants.OrderRefundType;
-import ebnatural.bizcurator.apiserver.common.constants.ReceiveWayType;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelState;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
+import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
