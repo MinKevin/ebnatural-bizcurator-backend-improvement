@@ -35,13 +35,13 @@ public class Manufacturer {
         if (this == o) {
             return true;
         }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(
-                o)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Manufacturer that = (Manufacturer) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
+
 
     @Override
     public int hashCode() {

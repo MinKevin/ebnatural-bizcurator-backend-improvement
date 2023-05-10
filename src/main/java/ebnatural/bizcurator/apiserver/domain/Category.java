@@ -30,18 +30,19 @@ public class Category {
     @Setter
     @Column(name = "name", nullable = false)
     private String name;
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Category category = (Category) o;
         return getId() != null && Objects.equals(getId(), category.getId());
     }
+
 
     @Override
     public int hashCode() {

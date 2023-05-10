@@ -88,13 +88,13 @@ public class Product {
         if (this == o) {
             return true;
         }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(
-                o)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Product product = (Product) o;
         return getId() != null && Objects.equals(getId(), product.getId());
     }
+
 
     @Override
     public int hashCode() {
