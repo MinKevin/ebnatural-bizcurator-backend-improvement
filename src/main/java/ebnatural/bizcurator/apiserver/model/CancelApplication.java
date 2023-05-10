@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+/**
+ * 구매취소신청내역 클래스
+ */
 @Entity
 public class CancelApplication {
     @Id
@@ -29,6 +32,7 @@ public class CancelApplication {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private OrderDetail orderDetail;    // 주문정보
 
+    @Column(length = 100)
     private String opinionDetail; // 취소 사유
 
     @Column(columnDefinition = "ENUM('UNSELECTED', 'CHANGE_OF_MIND', 'UNSATISFIED', 'DELIVERY_DELAYED')")

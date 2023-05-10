@@ -15,6 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+/**
+ * 환불신청내역 클래스
+ */
 @Entity
 public class RefundApplication {
     @Id
@@ -30,6 +33,7 @@ public class RefundApplication {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private OrderDetail orderDetail;    // 주문정보
 
+    @Column(length = 100)
     private String opinionDetail; // 환불 상세 사유
 
     @Column(columnDefinition = "ENUM('UNSELECTED', 'CHANGE_OF_MIND', 'UNSATISFIED', 'DEFECT', 'SHIPPING_ERROR')")
@@ -46,9 +50,11 @@ public class RefundApplication {
 
     private String address; // 수거지 주소
 
+    @Column(length = 50)
     private String bankAccount; // 환불받을계좌
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 
+    @Column(length = 20)
     private String postalCode; // 우편번호
 }

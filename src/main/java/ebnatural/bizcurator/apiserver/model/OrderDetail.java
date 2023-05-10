@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * 주문 내역 클래스
+ */
 @RequiredArgsConstructor
 @Entity
 public class OrderDetail {
