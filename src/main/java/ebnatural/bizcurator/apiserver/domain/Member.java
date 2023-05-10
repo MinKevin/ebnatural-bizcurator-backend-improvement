@@ -2,6 +2,8 @@ package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberType;
 import ebnatural.bizcurator.apiserver.domain.constant.TimeEntity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.lang.Nullable;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 
 @Entity
+@RequiredArgsConstructor
+@Getter
 public class Member extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,9 +54,6 @@ public class Member extends TimeEntity {
     String managerEmail;
 
     String managerPhoneNumber;
-
-    @Column(name = "last_login")
-    LocalDate modifiedAt;
 
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name = "order_detail_id")

@@ -17,10 +17,10 @@ import java.time.format.DateTimeFormatter;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeEntity {
     @CreatedDate
-    private String createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
+    private String createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-M-d"));
 
     @LastModifiedDate
-    private String modifiedAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
+    private String modifiedAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-M-d"));
 
     @PrePersist
     //엔티티 저장 이전에 실행
