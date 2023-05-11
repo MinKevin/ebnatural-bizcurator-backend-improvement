@@ -5,6 +5,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.OrderType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -13,13 +14,14 @@ import javax.persistence.Id;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 주문 내역 클래스
  */
 @Getter
-@RequiredArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class OrderDetail {
     @Id
@@ -60,17 +62,37 @@ public class OrderDetail {
 
     private int cost; // 결제금액
 
-    @Column(columnDefinition = "ENUM('PAID', 'DELIVERING', 'DELIVER_DONE', 'FINISH')")
-    @Enumerated(EnumType.ORDINAL)
-    private DeliveryState deliveryState; // 배송상태
+    @Enumerated(EnumType.STRING)
+    private DeliveryState deliveryState = DeliveryState.PAID; // 배송상태
 
-    @Column(columnDefinition = "ENUM('IMMEDIATE', 'REQUEST_DOCUMENT')")
-    @Enumerated(EnumType.ORDINAL)
-    private OrderType orderType; // 주문 유형
+    @Enumerated(EnumType.STRING)
+    private OrderType orderType = OrderType.IMMEDIATE; // 주문 유형
 
     private int shippingFee; // 배송비
 
     @Column(length = 20)
     private String invoiceNumber; // 송장번호
+    protected OrderDetail() {
+    }
+
+    private OrderDetail(Long paymentId, int quantity, String buyerName, String buyerPhoneNumber, String address,
+            String requestContent, String postalCode, String paymentMethod, int cost, int shippingFee) {
+        this.paymentId = paymentId;
+        this.quantity = quantity;
+        this.buyerName = buyerName;
+        this.buyerPhoneNumber = buyerPhoneNumber;
+        this.address = address;
+        this.requestContent = requestContent;
+        this.postalCode = postalCode;
+        this.paymentMethod = paymentMethod;
+        this.cost = cost;
+        this.shippingFee = shippingFee;
+    }
+
+    public static OrderDetail of(Long paymentId, int quantity, String buyerName, String buyerPhoneNumber, String address,
+            String requestContent, String postalCode, String paymentMethod, int cost, int shippingFee) {
+        return new OrderDetail(paymentId, quantity, buyerName, buyerPhoneNumber, address, requestContent, postalCode,
+                paymentMethod, cost, shippingFee);
+    }
 
 }
