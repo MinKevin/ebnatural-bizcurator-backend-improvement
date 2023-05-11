@@ -38,16 +38,8 @@ public class Product {
     private String name;
 
     @Setter
-    @Column(name = "main_image")
-    private String mainImage;
-
-    @Setter
-    @Column(name = "detail_image")
-    private String detailImage;
-
-    @Setter
-    @Column(name = "regular_price", precision = 10, scale = 2)
-    private BigDecimal regularPrice;
+    @Column(name = "regular_price")
+    private Integer regularPrice;
 
     @Setter
     @Column(name = "min_quantity")
@@ -58,8 +50,8 @@ public class Product {
     private Integer maxQuantity;
 
     @Setter
-    @Column(name = "discount_rate", precision = 3, scale = 2)
-    private BigDecimal discountRate;
+    @Column(name = "discount_rate")
+    private Integer discountRate;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
