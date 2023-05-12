@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+<<<<<<< HEAD
 import ebnatural.bizcurator.apiserver.domain.Cart;
 import ebnatural.bizcurator.apiserver.dto.request.CartProductRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CartProductResponse;
@@ -10,6 +11,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+=======
+import ebnatural.bizcurator.apiserver.model.Cart;
+import ebnatural.bizcurator.apiserver.service.CartService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+>>>>>>> origin/feature/#1-cart
 
 import java.util.List;
 
@@ -19,6 +30,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+<<<<<<< HEAD
     public static final String CONTAINING_SUCCESS = "장바구니담기 성공";
     public static final String UPDATE_SUCCESS = "상품 수정 성공";
     @GetMapping("/")//장바구니 조회
@@ -44,4 +56,13 @@ public class CartController {
     }
 
     //장바구니 상품 삭제
+=======
+    @GetMapping("/")
+    public ResponseEntity<ModelMap> getCartsList(ModelMap modelMap){
+        List<Cart> cartsList = cartService.getCartsList();
+        modelMap.addAttribute(cartsList);
+        return ResponseEntity.ok().body(modelMap);
+    }
+
+>>>>>>> origin/feature/#1-cart
 }
