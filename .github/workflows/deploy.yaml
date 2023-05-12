@@ -25,11 +25,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-#      - name: Build with Gradle
-#        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-#        with:
-#          arguments: clean build -x test
-
 #      - name: Set yaml file
 #        uses: microsoft/variable-substitution@v1
 #        with:
@@ -45,8 +40,9 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: ./gradlew build
-        shell: bash
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: clean build -x test
 
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA .
