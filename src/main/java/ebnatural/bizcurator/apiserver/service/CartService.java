@@ -29,17 +29,17 @@ public class CartService {
 
     //장바구니 조회
     @Transactional(readOnly = true)
-    public List<CartProductResponse> getCartsList() {//cart DB에 회원번호에 맞는 cart 를 찾아서 cart안에있는 product들을 리스트로 반환해줘야함
+    /*public List<CartProductResponse> getCartsList() {//cart DB에 회원번호에 맞는 cart 를 찾아서 cart안에있는 product들을 리스트로 반환해줘야함
         Long memberId = getMember().getId();
 
         return cartRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new NoSuchElementException("No value present"))
                 .stream().map(cart -> {
-                    Product product = cart.getProduct();
+                    Product product = cart.getProduct(); //TODO : Product가 아니라 ProductDto로 받을 예정
                     return new CartProductResponse(product.getName(), product.discountPrice(),
-                            product.getRegularPrice(), cart.getQuantity(),"url들어올자리");
+                            product.getRegularPrice(), cart.getQuantity(),CartProductResponse.builder().productImage());
                 }).collect(Collectors.toList());
-    }
+    }*/
 
     //장바구니에 제품 담기
     public void containingCartProducts(CartProductRequest cartProductRequest) {
@@ -55,5 +55,17 @@ public class CartService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (Member) authentication.getPrincipal();
 
+    }
+
+    public void deleteProductsByCart(CartProductRequest cartProductRequest) {
+        //Cart cart = checkExist(cartProductRequest.getProductId());
+
+        cartRepository.deleteById(cartProductRequest.getProductId());
+    }
+
+    //Cart에 Request로 들어온 ProductId가 있는지 체크
+    private Cart checkExist(Long productId) {
+        Cart cart = cartRepository.findByProduct_Id(productId).orElseThrow(() -> new NoSuchElementException());
+        return cart;
     }
 }

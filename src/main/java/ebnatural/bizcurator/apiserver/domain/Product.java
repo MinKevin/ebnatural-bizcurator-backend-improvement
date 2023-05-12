@@ -75,6 +75,10 @@ public class Product {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    public int discountPrice(){
+        return (int) (((getRegularPrice() * getDiscountRate())*0.01)-getRegularPrice());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
