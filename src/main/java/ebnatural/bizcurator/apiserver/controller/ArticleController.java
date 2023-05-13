@@ -20,11 +20,6 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    @GetMapping("/api/testaws")
-    public ResponseEntity<ArticleResponse> testAws() {
-        return ArticleResponse.ok("공지사항 조회가 완료되었습니다.", null);
-    }
-
     @GetMapping("/api/notices")
     public ResponseEntity<ArticleResponse> getNoticesLowerThanId(@RequestParam("lastArticleId") Long lastArticleId, @RequestParam("size") Integer size) {
         List<ArticleDto> notices = articleService.fetchArticlePagesBy(lastArticleId, BoardType.NOTICE, size);
