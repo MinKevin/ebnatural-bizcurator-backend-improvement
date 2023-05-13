@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://my-rds-instance.crrni39fxkfz.ap-northeast-2.rds.amazonaws.com:3306/my_rds_name"
-    username: "admin"
-    password: "!ebnatural12"
+    url: jdbc:mysql://localhost:3306/testDB
+    username: root
+    password: 1234
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
