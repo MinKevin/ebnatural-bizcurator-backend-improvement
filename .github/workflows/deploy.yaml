@@ -3,7 +3,7 @@ name: CI-CD
 on:
   push:
     branches:
-      - #24-aws-deploy
+      - main
       
 env:
   S3_BUCKET_NAME: s3-ebnatural
