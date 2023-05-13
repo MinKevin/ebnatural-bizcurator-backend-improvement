@@ -44,8 +44,20 @@ jobs:
         with:
           arguments: clean build -x test
 
+      - name: Make Directory
+        run: mkdir -p deploy
+
+      - name: Copy Jar
+        run: cp ./build/libs/*.jar ./deploy
+
+      - name: Copy appspec.yml
+        run: cp appspec.yml ./deploy
+
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+
       - name: Make zip file
-        run: zip -r ./$GITHUB_SHA .
+        run: zip -r ./$GITHUB_SHA ./deploy
         shell: bash
 
       - name: Configure AWS credentials
