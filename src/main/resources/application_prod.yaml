@@ -1,9 +1,9 @@
 \spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${url}
-    username: ${username}
-    password: ${password}
+    url: ${RDS_HOST}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
