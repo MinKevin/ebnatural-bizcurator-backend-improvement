@@ -26,7 +26,6 @@ public class MyPageService {
     public List<PaymentHistoryDto> getAllPaymentHistory() {
         // todo: 시큐리티 완성되면 수정
         Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
-
         List<OrderDetail> orderDetailList = orderDetailRepository.findAllByMemberId(memberId);
 
         if (orderDetailList.isEmpty()) {

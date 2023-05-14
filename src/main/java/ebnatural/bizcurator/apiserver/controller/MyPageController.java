@@ -24,7 +24,7 @@ public class MyPageController {
     @GetMapping("/orders/products")
     public ResponseEntity<PaymentHistoryResponse> showOrderHistoryList(
             @RequestParam(value = "filter-month", required = false) String filterMonth,
-            @RequestParam(value = "delivery-state", required = false) String deliveryState) throws Exception {
+            @RequestParam(value = "delivery-state", required = false) String deliveryState) {
 
         List<PaymentHistoryDto> paymentHistoryResponseList = myPageService.getAllPaymentHistory();
         return PaymentHistoryResponse.ok("조회 완료했습니다.", paymentHistoryResponseList);
