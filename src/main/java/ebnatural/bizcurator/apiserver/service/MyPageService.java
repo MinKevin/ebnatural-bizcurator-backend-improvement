@@ -1,9 +1,11 @@
 package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
+import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +22,25 @@ public class MyPageService {
     // todo: 시큐리티 완성되면 수정
     //private final JwtProvider jwtProvider;
 
-    public List<PaymentHistoryDto> getAllPaymentHistory() {
+    public List<PaymentHistoryDto> getAllPaymentHistory(Integer filterMonth, String deliveryStateText) {
+
+        List<OrderDetail> orderDetailList = null;
         // todo: 시큐리티 완성되면 수정
         Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
-        List<OrderDetail> orderDetailList = orderDetailRepository.findAllByMemberId(memberId);
+
+        if (filterMonth != null && deliveryStateText != null) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            DeliveryState deliveryState = DeliveryState.valueOf(deliveryStateText.toUpperCase());
+            orderDetailList = orderDetailRepository.findAllByMemberIdAndOrderTimeAfterAndDeliveryState(memberId, filterDate, deliveryState);
+        } else if (filterMonth != null) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            orderDetailList = orderDetailRepository.findAllByMemberIdAndOrderTimeAfter(memberId, filterDate);
+        } else if (deliveryStateText != null) {
+            DeliveryState deliveryState = DeliveryState.valueOf(deliveryStateText.toUpperCase());
+            orderDetailList = orderDetailRepository.findAllByMemberIdAndDeliveryState(memberId, deliveryState);
+        } else {
+            orderDetailList = orderDetailRepository.findAllByMemberId(memberId);
+        }
 
         if (orderDetailList.isEmpty()) {
             return null;

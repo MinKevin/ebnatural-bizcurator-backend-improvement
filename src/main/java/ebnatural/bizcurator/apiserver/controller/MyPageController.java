@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MyPageService;
@@ -18,15 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyPageController {
 
-
     private final MyPageService myPageService;
 
     @GetMapping("/orders/products")
     public ResponseEntity<CommonResponse> showOrderHistoryList(
-            @RequestParam(value = "filter-month", required = false) String filterMonth,
-            @RequestParam(value = "delivery-state", required = false) String deliveryState) {
+            @RequestParam(value = "filter-month", required = false) Integer filterMonth,
+            @RequestParam(value = "delivery-state", required = false) String deliveryStateText) {
 
-        List<PaymentHistoryDto> paymentHistoryResponseList = myPageService.getAllPaymentHistory();
+        List<PaymentHistoryDto> paymentHistoryResponseList = myPageService.getAllPaymentHistory(filterMonth, deliveryStateText);
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("histories", paymentHistoryResponseList);
         return CommonResponse.ok(HttpStatus.OK.value(), "조회가 완료됐습니다.", historyMap);
