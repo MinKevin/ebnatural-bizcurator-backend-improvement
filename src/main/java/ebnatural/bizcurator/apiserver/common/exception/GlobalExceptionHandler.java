@@ -4,16 +4,21 @@ import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,11 +40,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH, ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH.getMessage());
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        log.warn("handleDataIntegrityViolation", e);
+        return handleExceptionInternal(ErrorCode.DATA_INTEGRITY_VIOLATION, ErrorCode.DATA_INTEGRITY_VIOLATION.getMessage());
+    }
+
     // @Valid 어노테이션으로 넘어오는 에러 처리
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.warn("handleBindException", ex);
         return handleExceptionInternal(ex);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn("handleMissingServletRequestParameter", ex);
+        return handleExceptionInternal(ErrorCode.MISSING_SERVLET_REQUEST_PARAMETER, ErrorCode.MISSING_SERVLET_REQUEST_PARAMETER.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn("handleMissingPathVariable", ex);
+        return handleExceptionInternal(ErrorCode.MISSING_PATH_VARIABLE, ErrorCode.MISSING_PATH_VARIABLE.getMessage());
     }
 
     // 대부분의 에러 처리
