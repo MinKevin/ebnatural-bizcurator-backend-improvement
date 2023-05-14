@@ -1,26 +1,32 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.response.PaymentHistoryResponse;
+import ebnatural.bizcurator.apiserver.service.MyPageService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.webjars.NotFoundException;
 
+@RequiredArgsConstructor
 @RequestMapping("/api/mypages")
 @RestController
 public class MyPageController {
 
+
+    private final MyPageService myPageService;
+
     @GetMapping("/orders/products")
-    public ResponseEntity<List<PaymentHistoryResponse>> showOrderHistoryList(
-            @RequestParam("filter-month") String filterMonth,
-            @RequestParam("delivery-state") String deliveryState) {
+    public ResponseEntity<PaymentHistoryResponse> showOrderHistoryList(
+            @RequestParam(value = "filter-month", required = false) String filterMonth,
+            @RequestParam(value = "delivery-state", required = false) String deliveryState) throws Exception {
 
-        // todo: filter-month와 delivery-state 값을 사용하여 필터링된 데이터를 가져오는 로직을 작성합니다.
-        List<PaymentHistoryResponse> paymentHistoryResponseList = null;
-
-        // 필터링된 제품 목록을 반환합니다.
-        return ResponseEntity.ok(paymentHistoryResponseList);
+        List<PaymentHistoryDto> paymentHistoryResponseList = myPageService.getAllPaymentHistory();
+        return PaymentHistoryResponse.ok("조회 완료했습니다.", paymentHistoryResponseList);
     }
 }

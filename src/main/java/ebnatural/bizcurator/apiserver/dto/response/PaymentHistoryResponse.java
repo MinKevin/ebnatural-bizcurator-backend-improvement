@@ -1,21 +1,33 @@
 package ebnatural.bizcurator.apiserver.dto.response;
 
+import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.dto.ArticleDto;
+import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 
-public class PaymentHistoryResponse {
+@Setter
+public class PaymentHistoryResponse extends CommonResponse{
 
-    private int paymentId;
+    public PaymentHistoryResponse() {
+    }
 
-    private List<OrderHistoryResponse> orderInfo;
+    public PaymentHistoryResponse(String status, Integer code, String message, Map<String, Object> result) {
+        super(status, code, message, result);
+    }
 
-    public static class OrderHistoryResponse {
-        private int orderId;
-        private String image;
-        private int deliveryState;
-        private String orderTime;
-        private String name;
-        private int quantity;
-        private int amount;
+    public static PaymentHistoryResponse of(String status, Integer code, String message, List<PaymentHistoryDto> result) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("histories", result);
+        return new PaymentHistoryResponse(status, code, message, map);
+    }
+
+    public static ResponseEntity<PaymentHistoryResponse> ok(String message, List<PaymentHistoryDto> result) {
+        return ResponseEntity.ok(PaymentHistoryResponse.of("OK", 200, message, result));
     }
 
 }
