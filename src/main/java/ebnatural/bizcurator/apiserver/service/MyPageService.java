@@ -3,9 +3,7 @@ package ebnatural.bizcurator.apiserver.service;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
-import ebnatural.bizcurator.apiserver.dto.response.PaymentHistoryResponse;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 @RequiredArgsConstructor
 @Service
@@ -40,7 +37,7 @@ public class MyPageService {
             paymentGroup.add(orderDetail);
             paymentGroupMap.put(paymentId, paymentGroup);
         }
-        // PaymentHistoryResponse로 변환하여 반환할 리스트 생성
+
         List<PaymentHistoryDto> paymentHistoryDtoList = paymentGroupMap.entrySet().stream()
                 .map(entry -> createPaymentHistoryResponse(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());

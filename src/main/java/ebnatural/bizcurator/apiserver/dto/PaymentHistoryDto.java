@@ -32,7 +32,6 @@ public class PaymentHistoryDto {
             this.cost = cost;
         }
 
-
         public static OrderHistoryDto of(Long orderId, String image, DeliveryState deliveryState,
                 LocalDateTime orderTime, String name, int quantity, int cost) {
             return new OrderHistoryDto(orderId, image, deliveryState, orderTime, name, quantity,
