@@ -6,12 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,12 +27,18 @@ import lombok.ToString;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy"),
 })
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ToString.Exclude
+    @JoinColumn(name = "memberId")
+    @ManyToOne(optional = false, fetch= FetchType.LAZY)
+    private Member member;
 
     @Setter
     @Column(nullable = false)
@@ -41,6 +52,17 @@ public class Article extends AuditingFields {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BoardType boardType;
+
+    private Article(Member member, String title, String content, BoardType boardType) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+    }
+
+    public static Article of(Member member, String title, String content, BoardType boardType) {
+        return new Article(member, title, content, boardType);
+    }
 
     @Override
     public boolean equals(Object o) {

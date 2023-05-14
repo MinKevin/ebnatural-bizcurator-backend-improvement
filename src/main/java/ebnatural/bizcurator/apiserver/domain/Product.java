@@ -2,14 +2,18 @@ package ebnatural.bizcurator.apiserver.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,16 +42,8 @@ public class Product {
     private String name;
 
     @Setter
-    @Column(name = "main_image")
-    private String mainImage;
-
-    @Setter
-    @Column(name = "detail_image")
-    private String detailImage;
-
-    @Setter
-    @Column(name = "regular_price", precision = 10, scale = 2)
-    private BigDecimal regularPrice;
+    @Column(name = "regular_price")
+    private Integer regularPrice;
 
     @Setter
     @Column(name = "min_quantity")
@@ -58,8 +54,8 @@ public class Product {
     private Integer maxQuantity;
 
     @Setter
-    @Column(name = "discount_rate", precision = 3, scale = 2)
-    private BigDecimal discountRate;
+    @Column(name = "discount_rate")
+    private Integer discountRate;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -75,13 +71,16 @@ public class Product {
     @Column(name = "monthly_clicks")
     private Integer monthlyClicks;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> productImages = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
