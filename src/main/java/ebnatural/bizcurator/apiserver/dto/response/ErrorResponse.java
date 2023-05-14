@@ -1,32 +1,36 @@
 package ebnatural.bizcurator.apiserver.dto.response;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.FieldError;
 
+import java.util.List;
+
+@Builder
 @Getter
+@AllArgsConstructor
 public class ErrorResponse {
 
-    private Integer errorCode;
-    private String errorMessage;
-    private List<FieldError> fieldErrors;
+    private ResponseStatusType status;
+    private Integer code;
+    private String message;
+    private List<ValidationError> errors;
 
-    protected ErrorResponse() {
+    @Getter
+    @Builder
+    @RequiredArgsConstructor
+    public static class ValidationError {
+
+        private final String field;
+        private final String message;
+
+        public static ValidationError of(final FieldError fieldError) {
+            return ValidationError.builder()
+                    .field(fieldError.getField())
+                    .message(fieldError.getDefaultMessage())
+                    .build();
+        }
     }
-
-    private ErrorResponse(Integer errorCode, String errorMessage, List<FieldError> fieldErrors) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
-        this.fieldErrors = fieldErrors;
-    }
-
-    public static ErrorResponse of(Integer errorCode, String errorMessage) {
-        return new ErrorResponse(errorCode, errorMessage, null);
-    }
-
-    public static ErrorResponse of(Integer errorCode, String errorMessage, List fieldErrors) {
-        return new ErrorResponse(errorCode, errorMessage, fieldErrors);
-    }
-
 }
