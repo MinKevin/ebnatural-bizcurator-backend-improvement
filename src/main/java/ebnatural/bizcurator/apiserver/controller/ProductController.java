@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.dto.request.ProductSearchRequest;
 import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import ebnatural.bizcurator.apiserver.service.ProductService;
@@ -22,6 +23,16 @@ public class ProductController {
             @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "new") String sort) {
         List<ProductResponse> products = productService.getProducts(categoryId, sort);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponse>> searchProducts(
+            ProductSearchRequest productSearchRequest) {
+        List<ProductResponse> products = productService.searchProducts(productSearchRequest);
+        if (products.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(products);
     }
 }
