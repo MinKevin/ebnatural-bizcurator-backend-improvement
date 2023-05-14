@@ -1,11 +1,13 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.dto.request.ProductSearchRequest;
+import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
-import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import ebnatural.bizcurator.apiserver.service.ProductService;
+import java.util.HashMap;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,20 +21,24 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> getProducts(
+    public ResponseEntity<CommonResponse> getProducts(
             @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "new") String sort) {
         List<ProductResponse> products = productService.getProducts(categoryId, sort);
-        return ResponseEntity.ok(products);
+        HashMap<String, Object> productMap = new HashMap<>();
+        productMap.put("products", products);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 조회가 완료되었습니다.", productMap);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProductResponse>> searchProducts(
+    public ResponseEntity<CommonResponse> searchProducts(
             ProductSearchRequest productSearchRequest) {
         List<ProductResponse> products = productService.searchProducts(productSearchRequest);
+        HashMap<String, Object> productMap = new HashMap<>();
         if (products.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return CommonResponse.ok(HttpStatus.NOT_FOUND.value(), "해당 상품을 찾을 수 없습니다.", productMap);
         }
-        return ResponseEntity.ok(products);
+        productMap.put("products", products);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 검색이 완료되었습니다.", productMap);
     }
 }
