@@ -17,7 +17,9 @@ public enum ErrorCode {
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource not exists"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found")
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found"),
+    IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Image upload error"),
+    NOT_IMAGE_FILE(HttpStatus.BAD_REQUEST, "Not image file"),
     ;
 
     private final HttpStatus httpStatusCode;
