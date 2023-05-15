@@ -2,7 +2,6 @@ package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
-import ebnatural.bizcurator.apiserver.dto.request.ProductSearchRequest;
 import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
 import ebnatural.bizcurator.apiserver.repository.CategoryRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;

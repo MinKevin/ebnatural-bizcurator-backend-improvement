@@ -1,12 +1,10 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
-import ebnatural.bizcurator.apiserver.dto.request.ProductSearchRequest;
 import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
 import ebnatural.bizcurator.apiserver.dto.response.QProductResponse;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
