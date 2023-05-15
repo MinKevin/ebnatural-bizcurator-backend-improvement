@@ -1,8 +1,6 @@
 package ebnatural.bizcurator.apiserver.common.exception;
 
-import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
+import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
 import javax.persistence.EntityExistsException;
@@ -27,6 +25,18 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(NotImageFileException.class)
+    public ResponseEntity<Object> handleNotImageFileException(NotImageFileException e) {
+        log.warn("handleNotImageFileException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<Object> handleImageUploadException(ImageUploadException e) {
+        log.warn("handleImageUploadException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
 
     // CategoryNotFoundException 에러 처리
     @ExceptionHandler(CategoryNotFoundException.class)
