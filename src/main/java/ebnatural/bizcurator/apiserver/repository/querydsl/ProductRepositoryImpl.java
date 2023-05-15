@@ -19,17 +19,16 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
         super(Product.class);
     }
 
-    private BooleanExpression productNameLike(String keyWord) {
-        return StringUtils.isEmpty(keyWord) ? QProduct.product.name.like("%") : QProduct.product.name.like("%" + keyWord + "%");
+    private BooleanExpression productNameLike(String keyword) {
+        return StringUtils.isEmpty(keyword) ? QProduct.product.name.like("%") : QProduct.product.name.like("%" + keyword + "%");
     }
 
 
     @Override
-    public List<ProductResponse> searchByKeyword(ProductSearchRequest productSearchRequest) {
+    public List<ProductResponse> searchByKeyword(String keyword, String sort) {
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
 
-        String keyword = productSearchRequest.getKeyWord();
         JPAQuery<ProductResponse> query = (JPAQuery<ProductResponse>) from(product)
                 .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
                 .select(new QProductResponse(
@@ -44,7 +43,6 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
                 )
                 .where(productNameLike(keyword));
 
-        String sort = productSearchRequest.getSort();
         if ("new".equals(sort)) {
             query.orderBy(product.createdAt.desc());
         } else if ("popular".equals(sort)) {

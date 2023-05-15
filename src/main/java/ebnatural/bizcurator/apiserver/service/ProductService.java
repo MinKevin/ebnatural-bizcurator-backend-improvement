@@ -21,8 +21,8 @@ public class ProductService {
             throw new CategoryNotFoundException();
         }return productRepository.findByCategoryId(categoryId, sort);
     }
-    public List<ProductResponse> searchProducts(ProductSearchRequest productSearchRequest) {
-        List<ProductResponse> products = productRepository.searchByKeyword(productSearchRequest);
+    public List<ProductResponse> searchProducts(String keyword, String sort) {
+        List<ProductResponse> products = productRepository.searchByKeyword(keyword, sort);
 
         if (products.isEmpty()) {
             throw new ProductNotFoundException();

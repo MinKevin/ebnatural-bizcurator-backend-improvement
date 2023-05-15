@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface ProductRepositoryCustom {
     List<ProductResponse> findByCategoryId(Long categoryId, String sort);
-    List<ProductResponse> searchByKeyword(ProductSearchRequest productSearchRequest);
-
+    List<ProductResponse> searchByKeyword(String keyword, String sort);
 }
