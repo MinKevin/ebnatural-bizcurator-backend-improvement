@@ -18,7 +18,7 @@ public class PaymentHistoryDto {
         private Long orderId;
         private String image;
 
-        private int costperOne;
+        private int costPerOne;
         private String deliveryState;
         private LocalDateTime orderTime;
         private String name;
@@ -29,7 +29,7 @@ public class PaymentHistoryDto {
                 LocalDateTime orderTime, String name, int quantity, int cost) {
             this.orderId = orderId;
             this.image = image;
-            this.costperOne = costperOne;
+            this.costPerOne = costperOne;
             this.deliveryState = deliveryState;
             this.orderTime = orderTime;
             this.name = name;
