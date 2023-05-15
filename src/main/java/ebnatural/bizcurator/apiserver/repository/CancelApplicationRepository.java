@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CancelApplicationRepository extends JpaRepository<CancelApplication, Long> {
 
+    boolean existsByOrderDetailId(Long orderId);
 }

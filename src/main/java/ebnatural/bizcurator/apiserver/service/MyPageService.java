@@ -1,13 +1,17 @@
 package ebnatural.bizcurator.apiserver.service;
 
+import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
+import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
+import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
@@ -18,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.hibernate.LazyInitializationException;
@@ -27,6 +33,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyPageService {
 
+    private final CancelApplicationRepository cancelApplicationRepository;
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
@@ -96,7 +103,6 @@ public class MyPageService {
         return paymentHistoryDto;
     }
 
-
     public PaymentDetailDto getAllPaymentDetails(Long paymentId) {
 
         List<OrderDetail> orderDetailList = null;
@@ -141,6 +147,40 @@ public class MyPageService {
         );
 
         return paymentDetailDto;
+    }
+
+    public void cancelOrder(CancelOrderRequest cancelOrderRequest) {
+        // request body가 유효한지 검사
+        Optional<OrderDetail> orderDetail = orderDetailRepository.findById(cancelOrderRequest.getOrderId());
+        if(!orderDetail.isPresent()){
+            throw new EntityNotFoundException("취소하려고 하는 주문내역이 없습니다.");
+        }
+
+        // 이미 취소신청한 내역이라면
+        if(cancelApplicationRepository.existsByOrderDetailId(cancelOrderRequest.getOrderId())){
+            throw new EntityExistsException("이미 취소한 내역입니다.");
+        }
+
+        OrderCancelType orderCancelType = OrderCancelType.valueOf(cancelOrderRequest.getOpinion());
+        if (orderCancelType == null) {
+            throw new IllegalArgumentException();
+        }
+
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(!member.isPresent()){
+            throw new EntityNotFoundException();
+        }
+
+        // CancelApplication 객체 생성
+        CancelApplication cancelApplication = CancelApplication.of(
+                member.get(),
+                orderDetail.get(),
+                orderCancelType);
+
+        // db에 저장
+        cancelApplicationRepository.save(cancelApplication);
     }
 
 }
