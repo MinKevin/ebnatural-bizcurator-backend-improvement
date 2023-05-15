@@ -14,7 +14,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeRequests().antMatchers("/**").permitAll().and().cors().and().build();
+        return http.csrf().disable()
+                .authorizeRequests()
+                .anyRequest()
+                .permitAll()
+                .and()
+                .cors()
+                .and()
+                .build();
     }
 
     @Bean
