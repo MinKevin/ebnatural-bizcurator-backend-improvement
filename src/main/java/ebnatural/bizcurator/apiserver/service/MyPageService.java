@@ -77,4 +77,27 @@ public class MyPageService {
     }
 
 
+    public List<OrderHistoryDto> getAllPaymentDetails(Long paymentId) {
+
+        List<OrderDetail> orderDetailList = null;
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        orderDetailList = orderDetailRepository.findAllByPaymentIdAndMemberId(paymentId, memberId);
+
+        if (orderDetailList.isEmpty()) {
+            return null;
+        }
+
+        List<OrderHistoryDto> orderHistoryDtoList = new ArrayList<>();
+
+        for (OrderDetail orderDetail : orderDetailList) {
+            OrderHistoryDto orderHistoryResponse = OrderHistoryDto.of(orderDetail.getId(), "", orderDetail.getDeliveryState(), orderDetail.getOrderTime(),
+                    "", orderDetail.getQuantity(), orderDetail.getCost());
+
+            orderHistoryDtoList.add(orderHistoryResponse);
+        }
+        return orderHistoryDtoList;
+    }
+
 }

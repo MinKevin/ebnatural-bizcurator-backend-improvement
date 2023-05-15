@@ -15,4 +15,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     List<OrderDetail> findAllByMemberIdAndDeliveryState(Long memberId, DeliveryState deliveryState);
 
     List<OrderDetail> findAllByMemberId(Long memberId);
+
+    List<OrderDetail> findAllByPaymentIdAndMemberId(Long paymentId, Long memberId);
 }
