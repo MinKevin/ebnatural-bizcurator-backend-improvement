@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import ebnatural.bizcurator.apiserver.dto.request.ProductSearchRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
 import ebnatural.bizcurator.apiserver.service.ProductService;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
