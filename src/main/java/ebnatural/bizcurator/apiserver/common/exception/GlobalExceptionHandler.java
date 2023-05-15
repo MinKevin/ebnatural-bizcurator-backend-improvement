@@ -3,6 +3,8 @@ package ebnatural.bizcurator.apiserver.common.exception;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,6 +27,21 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+
+    // EntityExistsException 에러 처리
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<Object> handleEntityExistException(EntityExistsException e) {
+        log.warn("handleEntityExistException", e);
+        return handleExceptionInternal(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    // EntityNotFoundException 에러 처리
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
+        log.warn("EntityNotFoundException", e);
+        return handleExceptionInternal(ErrorCode.ENTITY_NOT_FOUND, ErrorCode.ENTITY_NOT_FOUND.getMessage());
+    }
 
     // IllegalArgumentException 에러 처리
     @ExceptionHandler(IllegalArgumentException.class)

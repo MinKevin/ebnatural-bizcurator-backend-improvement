@@ -15,6 +15,9 @@ public enum ErrorCode {
     BIND_EXCEPTION(HttpStatus.BAD_REQUEST, "Bind exception"),
     DATA_INTEGRITY_VIOLATION(HttpStatus.BAD_REQUEST, "Data integrity violation"),
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource not exists"),
+
+    ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "entity not exists"),
+
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error")
     ;
 
