@@ -6,7 +6,7 @@ import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
-import ebnatural.bizcurator.apiserver.dto.response.QProductResponse;
+import ebnatural.bizcurator.apiserver.dto.QProductListDto;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.StringUtils;
 
@@ -29,7 +29,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
         JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
                 .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
-                .select(new QProductResponse(
+                .select(new QProductListDto(
                                 product.id,
                                 product.category.id,
                                 product.name,
@@ -63,7 +63,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
         JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
                 .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
-                .select(new QProductResponse(
+                .select(new QProductListDto(
                         product.id,
                         product.category.id,
                         product.name,
@@ -73,7 +73,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
                         product.discountRate
                         )
                 );
-
+        // categoryId가 null이 아닐 때만 where 절에 categoryId 조건을 추가합니다.
         if (categoryId != null) {
             query.where(product.category.id.eq(categoryId));
         }
