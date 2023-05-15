@@ -14,11 +14,15 @@ public enum ErrorCode {
     METHOD_ARGUMENT_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "Method argument type mismatch"),
     BIND_EXCEPTION(HttpStatus.BAD_REQUEST, "Bind exception"),
     DATA_INTEGRITY_VIOLATION(HttpStatus.BAD_REQUEST, "Data integrity violation"),
+
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource not exists"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found"),
-    ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "entity not exists");
+    ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "entity not exists"),
+
+    ENTITY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "entity already exists")
+    ;
 
     private final HttpStatus httpStatusCode;
     private final String message;

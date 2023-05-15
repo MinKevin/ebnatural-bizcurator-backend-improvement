@@ -41,12 +41,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
     }
 
-
     // EntityExistsException 에러 처리
     @ExceptionHandler(EntityExistsException.class)
     public ResponseEntity<Object> handleEntityExistException(EntityExistsException e) {
         log.warn("handleEntityExistException", e);
-        return handleExceptionInternal(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
+        return handleExceptionInternal(ErrorCode.ENTITY_ALREADY_EXIST, ErrorCode.ENTITY_ALREADY_EXIST.getMessage());
     }
 
     // EntityNotFoundException 에러 처리
