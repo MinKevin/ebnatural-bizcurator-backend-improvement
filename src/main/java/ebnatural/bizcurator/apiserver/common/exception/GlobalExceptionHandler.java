@@ -30,13 +30,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException e) {
         log.warn("handleCategoryNotFoundException", e);
-        return handleExceptionInternal(ErrorCode.CATEGORY_NOT_FOUND, e.getMessage());
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
     }
     // ProductNotFoundException 에러 처리
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
         log.warn("handleProductNotFoundException", e);
-        return handleExceptionInternal(ErrorCode.PRODUCT_NOT_FOUND, e.getMessage());
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
     }
 
     // IllegalArgumentException 에러 처리
