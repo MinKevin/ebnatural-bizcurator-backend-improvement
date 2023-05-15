@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${{ secrets.RDS_HOST }}
-    username: ${{ secrets.RDS_USERNAME }}
-    password: ${{ secrets.RDS_PASSWORD }}
+    url: "jdbc:mysql://my-rds-instance.crrni39fxkfz.ap-northeast-2.rds.amazonaws.com:3306/my_rds_name"
+    username: "admin"
+    password: "!ebnatural12"
     hikari:
       maximum-pool-size: 20
   jpa:
