@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
@@ -37,9 +38,9 @@ public class MyPageController {
     public ResponseEntity<CommonResponse> showOrderHistoryDetailByPaymentId(
             @RequestParam(value = "payment-id") Long paymentId){
 
-        List<OrderHistoryDto> orderHistoryDtoList = myPageService.getAllPaymentDetails(paymentId);
+        PaymentDetailDto paymentDetailDtoList = myPageService.getAllPaymentDetails(paymentId);
         HashMap<String, Object> historyMap = new HashMap<>();
-        historyMap.put("details", orderHistoryDtoList);
+        historyMap.put("details", paymentDetailDtoList);
         return CommonResponse.ok(HttpStatus.OK.value(), "상세 조회가 완료됐습니다.", historyMap);
     }
 }
