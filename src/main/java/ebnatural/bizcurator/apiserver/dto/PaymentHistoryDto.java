@@ -1,10 +1,12 @@
 package ebnatural.bizcurator.apiserver.dto;
 
-import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 
+/**
+ * 주문 내역 조회 dto
+ */
 @Getter
 public class PaymentHistoryDto {
     private Long paymentId;
@@ -15,16 +17,19 @@ public class PaymentHistoryDto {
     public static class OrderHistoryDto {
         private Long orderId;
         private String image;
-        private DeliveryState deliveryState;
+
+        private int costPerOne;
+        private String deliveryState;
         private LocalDateTime orderTime;
         private String name;
         private int quantity;
         private int cost;
 
-        public OrderHistoryDto(Long orderId, String image, DeliveryState deliveryState,
+        private OrderHistoryDto(Long orderId, String image, int costperOne, String deliveryState,
                 LocalDateTime orderTime, String name, int quantity, int cost) {
             this.orderId = orderId;
             this.image = image;
+            this.costPerOne = costperOne;
             this.deliveryState = deliveryState;
             this.orderTime = orderTime;
             this.name = name;
@@ -32,9 +37,9 @@ public class PaymentHistoryDto {
             this.cost = cost;
         }
 
-        public static OrderHistoryDto of(Long orderId, String image, DeliveryState deliveryState,
+        public static OrderHistoryDto of(Long orderId, String image, int costperOne, String deliveryState,
                 LocalDateTime orderTime, String name, int quantity, int cost) {
-            return new OrderHistoryDto(orderId, image, deliveryState, orderTime, name, quantity,
+            return new OrderHistoryDto(orderId, image, costperOne, deliveryState, orderTime, name, quantity,
                     cost);
         }
     }

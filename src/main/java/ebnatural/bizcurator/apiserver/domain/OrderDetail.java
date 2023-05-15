@@ -40,7 +40,7 @@ public class OrderDetail {
 
     @JoinColumn(name = "product_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Product product;    // 주문자
+    private Product product;    // 물건
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
@@ -65,7 +65,7 @@ public class OrderDetail {
     @Column(length = 10)
     private String paymentMethod; // 결제수단
 
-    private int cost; // 결제금액
+    private int cost; // 결제금액 (물건 정가 + 할인율 + 배송비)
 
     @Enumerated(EnumType.STRING)
     private DeliveryState deliveryState = DeliveryState.PAID; // 배송상태

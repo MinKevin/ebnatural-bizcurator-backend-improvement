@@ -1,11 +1,11 @@
-package ebnatural.bizcurator.apiserver.dto.response;
+package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
-public class ProductResponse {
+public class ProductListDto {
     private Long id;
 
     @JsonProperty("category_id")
@@ -29,7 +29,7 @@ public class ProductResponse {
     private int salePrice;
 
     @QueryProjection
-    public ProductResponse(Long id, Long categoryId, String name, Long mainImageId, String mainImageUrl, int regularPrice, int discountRate) {
+    public ProductListDto(Long id, Long categoryId, String name, Long mainImageId, String mainImageUrl, int regularPrice, int discountRate) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
