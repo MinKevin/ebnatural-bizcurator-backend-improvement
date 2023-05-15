@@ -35,12 +35,10 @@ public class CancelApplication {
     @Column(length = 100)
     private String opinionDetail; // 취소 사유
 
-    @Column(columnDefinition = "ENUM('UNSELECTED', 'CHANGE_OF_MIND', 'UNSATISFIED', 'DELIVERY_DELAYED')")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
-    @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECTED', 'FINISHED')")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderCancelState state= OrderCancelState.WAIT; // 상태값
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간

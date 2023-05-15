@@ -36,16 +36,13 @@ public class RefundApplication {
     @Column(length = 100)
     private String opinionDetail; // 환불 상세 사유
 
-    @Column(columnDefinition = "ENUM('UNSELECTED', 'CHANGE_OF_MIND', 'UNSATISFIED', 'DEFECT', 'SHIPPING_ERROR')")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderRefundType opinionCategory = OrderRefundType.UNSELECTED; // 환불 사유 카테고리
 
-    @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECTED', 'FINISHED')")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderCancelState state= OrderCancelState.WAIT; // 상태값
 
-    @Column(columnDefinition = "ENUM('PICK_UP_BY_COMPANY', 'SEND_BY_USER')")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ReceiveWayType receiveWayType = ReceiveWayType.PICK_UP_BY_COMPANY;  // 수거신청상태값
 
     private String address; // 수거지 주소

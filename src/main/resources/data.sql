@@ -199,3 +199,28 @@ values (1, 'https://picsum.photos/200/300?random=0', 'Y', 1),
        (38, 'https://picsum.photos/200/300?random=37', 'N', 18),
        (39, 'https://picsum.photos/200/300?random=38', 'N', 19),
        (40, 'https://picsum.photos/200/300?random=39', 'N', 20);
+
+--  주문 내역
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address,
+                         request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                         buyer_id, product_id, order_detail_id)
+VALUES
+    (1, 2, 'John Doe', '1234567890', '123 Main St', 'Sample request', '12345', 'Credit', 100, 10, 'PAID',  'IMMEDIATE', '2023-05-14 00:07:58', 1, 1 , 1);
+
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address,
+                          request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, order_detail_id)
+VALUES
+(2, 3, 'Jane Smith', '9876543210', '456 Elm St', 'Sample request', '54321', 'PayPal', 200, 20, 'DELIVERING', 'REQUEST_DOCUMENT', '2023-02-01 00:07:58', 1, 1 , 1);
+
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address,
+                              request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                              buyer_id, product_id, order_detail_id)
+VALUES
+(3, 1, 'Michael Johnson', '5551112222', '789 Oak St', 'Sample request', '67890', 'Cash', 150, 15, 'DELIVER_DONE', 'IMMEDIATE','2023-03-23 00:07:58', 1, 1 , 1);
+
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address,
+                          request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, order_detail_id)
+VALUES
+    (3, 10, 'Kelly Johnson', '500002222', '789 Green St', 'Sample request', '67890', 'Cash', 150, 15, 'DELIVER_DONE', 'REQUEST_DOCUMENT','2022-09-23 00:12:58', 1, 2 , 2);

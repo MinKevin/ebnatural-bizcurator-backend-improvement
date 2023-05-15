@@ -99,4 +99,8 @@ public class Product {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    public String getProductMainImage() {
+        return this.productImages.get(0).getImgUrl();
+    }
 }
