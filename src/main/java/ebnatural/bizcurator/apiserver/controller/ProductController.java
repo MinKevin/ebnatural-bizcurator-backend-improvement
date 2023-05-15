@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -35,9 +35,6 @@ public class ProductController {
             ProductSearchRequest productSearchRequest) {
         List<ProductResponse> products = productService.searchProducts(productSearchRequest);
         HashMap<String, Object> productMap = new HashMap<>();
-        if (products.isEmpty()) {
-            return CommonResponse.ok(HttpStatus.NOT_FOUND.value(), "해당 상품을 찾을 수 없습니다.", productMap);
-        }
         productMap.put("products", products);
         return CommonResponse.ok(HttpStatus.OK.value(), "상품 검색이 완료되었습니다.", productMap);
     }
