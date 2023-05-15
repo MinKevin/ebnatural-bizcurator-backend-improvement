@@ -1,12 +1,13 @@
 package ebnatural.bizcurator.apiserver.common.exception;
 
+import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
+import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,25 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    // CategoryNotFoundException 에러 처리
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException e) {
+        log.warn("handleCategoryNotFoundException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
+    // ProductNotFoundException 에러 처리
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
+        log.warn("handleProductNotFoundException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
 
 
     // EntityExistsException 에러 처리
