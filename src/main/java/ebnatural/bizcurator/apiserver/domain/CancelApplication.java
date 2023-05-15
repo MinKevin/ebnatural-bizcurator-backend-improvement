@@ -37,7 +37,7 @@ public class CancelApplication {
     private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
     @Enumerated(EnumType.STRING)
-    private OrderCancelState state= OrderCancelState.WAIT; // 상태값
+    private OrderCancelState state = OrderCancelState.WAIT; // 상태값
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 
