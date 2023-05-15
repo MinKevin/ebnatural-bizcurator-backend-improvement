@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
-import ebnatural.bizcurator.apiserver.dto.response.ProductResponse;
+import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.dto.response.QProductResponse;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.StringUtils;
@@ -23,11 +23,11 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
 
     @Override
-    public List<ProductResponse> searchByKeyword(String keyword, String sort) {
+    public List<ProductListDto> searchByKeyword(String keyword, String sort) {
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
 
-        JPAQuery<ProductResponse> query = (JPAQuery<ProductResponse>) from(product)
+        JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
                 .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
                 .select(new QProductResponse(
                                 product.id,
@@ -57,11 +57,11 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
 
     @Override
-    public List<ProductResponse> findByCategoryId(Long categoryId, String sort) {
+    public List<ProductListDto> findByCategoryId(Long categoryId, String sort) {
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
 
-        JPAQuery<ProductResponse> query = (JPAQuery<ProductResponse>) from(product)
+        JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
                 .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
                 .select(new QProductResponse(
                         product.id,
