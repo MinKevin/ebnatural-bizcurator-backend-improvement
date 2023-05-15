@@ -10,6 +10,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -309,5 +310,43 @@ public class MyPageService {
 
         // db에 저장
         refundApplicationRepository.save(refundApplication);
+    }
+
+
+    public List<ApplicationDetailDto> showCancelApplicationDetail(Integer filterMonth) {
+        // member pid 에 해당하는 주문 취소 리스트가 있는지 조회
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<CancelApplication> cancelHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            cancelHistories = cancelApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            cancelHistories = cancelApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(cancelHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDetailDto> applicationDetailDtoList = new ArrayList<>();
+        for (CancelApplication cancelApplication : cancelHistories) {
+            ApplicationDetailDto applicationDetailDto = ApplicationDetailDto.of(
+                    // todo: lazy 조인 이슈 수정하기
+                    cancelApplication.getOrderDetail().getPaymentId(),
+                    cancelApplication.getOrderDetail().getProduct().getProductMainImage(),
+                    cancelApplication.getOrderDetail().getId(),
+                    cancelApplication.getOrderDetail().getOrderTime().toString(),
+                    cancelApplication.getOrderDetail().getProduct().getName(),
+                    cancelApplication.getOrderDetail().getQuantity(),
+                    cancelApplication.getOrderDetail().getCost(),
+                    cancelApplication.getState().getMeaning()
+            );
+
+            applicationDetailDtoList.add(applicationDetailDto);
+        }
+
+        return applicationDetailDtoList;
     }
 }
