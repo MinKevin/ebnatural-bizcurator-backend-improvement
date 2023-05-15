@@ -234,7 +234,7 @@ public class MyPageService {
         }
 
         // 이미 환불신청한 내역이라면
-        if(cancelApplicationRepository.existsByOrderDetailId(refundOrderRequest.getOrderId())){
+        if(refundApplicationRepository.existsByOrderDetailId(refundOrderRequest.getOrderId())){
             throw new EntityExistsException("이미 환불 신청한 내역입니다.");
         }
 
