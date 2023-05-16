@@ -58,4 +58,8 @@ public class Member extends TimeEntity {
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name = "order_detail_id")
     private List<OrderDetail> orderDetail;
+
+    // todo: 로그인 기능 머지되면 삭제 예정
+    @Column
+    LocalDate lastLoginTime = LocalDate.now();
 }
