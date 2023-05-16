@@ -22,7 +22,8 @@ public enum ErrorCode {
     IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Image upload error"),
     NOT_IMAGE_FILE(HttpStatus.BAD_REQUEST, "Not image file"),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "entity not exists"),
-    ENTITY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "entity already exists")
+    ENTITY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "entity already exists"),
+    ALREADY_REGISTERED_USER_EXCEPTION(HttpStatus.CONFLICT, "username already exists")
     ;
 
     private final HttpStatus httpStatusCode;
