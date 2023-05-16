@@ -34,6 +34,9 @@ public class ProductService {
         return products;
     }
     public ProductDetailDto getProductDetail(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ProductNotFoundException();
+        }
         ProductDetailDto productDetail = productRepository.findDetailById(productId);
         if (productDetail == null) {
             throw new ProductNotFoundException();
