@@ -29,35 +29,14 @@ public class SpringSecurityConfig {
         http.csrf().disable();
         http.rememberMe().disable();
         http.cors();
-        //http.sessionManagement()
-        //        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(new JwtAuthenticationFilter(new ProviderManager(customAuthenticationProvider())),
-//                        UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JwtAuthorizationFilter(memberRepository),
-//                        BasicAuthenticationFilter.class);
-// authorization
+
         http.authorizeRequests()
-                // /와 /home은 모두에게 허용
                 .antMatchers("/login", "/signup", "/api/users/login", "/api/users/signup").permitAll()
-                // hello 페이지는 USER 롤을 가진 유저에게만 허용
-                .antMatchers("/note/**").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/notice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/notice/**").hasRole("ADMIN")
+                .antMatchers("/api/admins/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
-        // login
-        http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/api/users/login")
-                .permitAll() // 모두 허용
-                .successHandler(authSuccessHandler)
-                .failureHandler(authFailureHandler);
-        // logout
-        http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/users/logout"))
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remember-me");
 
         return http.build();
     }
