@@ -25,10 +25,11 @@ public class ArticleDto {
     }
 
     @QueryProjection
-    public ArticleDto(Long id, String title, String content, LocalDateTime createdAt) {
+    public ArticleDto(Long id, String title, String content, Boolean isFixed, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.isFixed = isFixed;
         this.createdAt = createdAt;
     }
 
