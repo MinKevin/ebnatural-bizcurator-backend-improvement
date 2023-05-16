@@ -7,6 +7,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -16,10 +17,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 환불신청내역 클래스
  */
+
+@Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class RefundApplication {
     @Id
@@ -48,6 +56,11 @@ public class RefundApplication {
     private String postalCode; // 우편번호
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;    // 신청 시간
     public RefundApplication() {
 
     }
