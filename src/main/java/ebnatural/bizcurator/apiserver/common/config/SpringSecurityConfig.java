@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.common.config;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import ebnatural.bizcurator.apiserver.common.exception.FilterExceptionHandler;
 import ebnatural.bizcurator.apiserver.common.config.filter.JwtFilter;
 import ebnatural.bizcurator.apiserver.common.jwt.JwtProvider;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -104,5 +106,10 @@ public class SpringSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder(){
+        return new Jackson2ObjectMapperBuilder().propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
 }

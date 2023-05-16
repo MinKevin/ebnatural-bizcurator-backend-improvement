@@ -27,16 +27,9 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberAuthService memberAuthService;
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("username : " + MemberUtil.getUsername());
-        System.out.println("memberId : " + MemberUtil.getMemberId());
-        return new ResponseEntity<>(authentication, HttpStatus.OK);
-    }
-
     /**
      * 로그인 시 access 토큰, refresh 토큰 모두 새로 만들어준다.
+     *
      * @param user
      * @return
      * @throws Exception
@@ -60,27 +53,33 @@ public class MemberController {
      * @throws Exception
      */
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> refresh(@RequestBody Map<String, String> accessToken) throws Exception {
-        return new ResponseEntity<>(memberAuthService.refreshToken(accessToken.get("accessToken")), HttpStatus.OK);
+    public ResponseEntity<CommonResponse> refresh(@RequestBody Map<String, String> accessToken) throws Exception {
+        Map<String, Object> mp = new HashMap<>();
+        TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
+        mp.put("result", tokenDto);
+        return new ResponseEntity<>(CommonResponse.of(200, "refresh success", mp), HttpStatus.OK);
     }
 
     /**
      * accessToken에 담긴 유저정보를 꺼내서 refresh token을 지워준다.
+     *
      * @param accessToken 엑세스 토큰
      * @return
      */
     @PostMapping("/logout")
-    public ResponseEntity logout(@RequestBody Map<String, String> accessToken) {
-        return new ResponseEntity(memberAuthService.logout(accessToken.get("accessToken")), HttpStatus.OK);
+    public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
+        return new ResponseEntity(CommonResponse.of(200, "logout success",
+                Map.of("result", (Object)(memberAuthService.logout(accessToken.get("accessToken"))))),
+                HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()){
+    public ResponseEntity<CommonResponse> signup(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException();
         }
-
-        memberService.signup(memberDto);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(CommonResponse.of(200, "signup success",
+                Map.of("result", (Object)(memberService.signup(memberDto)))),
+                HttpStatus.OK);
     }
 }

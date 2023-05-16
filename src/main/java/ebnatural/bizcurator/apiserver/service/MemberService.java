@@ -27,7 +27,7 @@ public class MemberService implements UserDetailsService {
 
 
     @Transactional
-    public Member signup(MemberDto memberDto) {
+    public Boolean signup(MemberDto memberDto) {
         String username = memberDto.getUsername();;
         Optional.ofNullable(memberRepository.findByUsername(username))
                 .ifPresent(foundedMember -> {
@@ -37,8 +37,8 @@ public class MemberService implements UserDetailsService {
         memberDto.encodePrivacy(passwordEncoder);
         Member member = memberDto.toEntity();
 
-        return Optional.of(memberRepository.save(member))
-                .orElseThrow();
+        return !Optional.of(memberRepository.save(member))
+                .isEmpty();
     }
 
     @Override
