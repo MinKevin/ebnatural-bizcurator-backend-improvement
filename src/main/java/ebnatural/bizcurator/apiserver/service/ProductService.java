@@ -3,6 +3,7 @@ package ebnatural.bizcurator.apiserver.service;
 import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
 import ebnatural.bizcurator.apiserver.domain.ProductImage;
+import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.repository.CategoryRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
@@ -31,6 +32,24 @@ public class ProductService {
         }
 
         return products;
+    }
+    public ProductDetailDto getProductDetail(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ProductNotFoundException();
+        }
+        ProductDetailDto productDetail = productRepository.findDetailById(productId);
+        if (productDetail == null) {
+            throw new ProductNotFoundException();
+        }
+        return productDetail;
+    }
+
+    public List<ProductListDto> getTop3ProductsWeekly() {
+        return productRepository.findTop3ByWeeklyClicks();
+    }
+
+    public List<ProductListDto> getTop3ProductsMonthly() {
+        return productRepository.findTop3ByMonthlyClicks();
     }
 
     /**

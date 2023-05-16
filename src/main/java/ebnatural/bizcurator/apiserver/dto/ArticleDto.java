@@ -1,6 +1,8 @@
 package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.querydsl.core.annotations.QueryProjection;
 import ebnatural.bizcurator.apiserver.domain.Article;
 import ebnatural.bizcurator.apiserver.domain.Member;
@@ -9,6 +11,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 public class ArticleDto {
 
