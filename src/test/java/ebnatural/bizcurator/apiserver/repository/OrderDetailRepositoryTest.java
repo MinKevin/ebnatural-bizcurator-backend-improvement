@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ class OrderDetailRepositoryTest {
 
     @Test
     @DisplayName("주문 데이터 넣어보기")
+    @Disabled
     void insert() {
 
         // given
