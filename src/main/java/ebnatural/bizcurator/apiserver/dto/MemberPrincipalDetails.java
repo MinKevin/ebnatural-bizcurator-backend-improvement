@@ -20,7 +20,9 @@ public class MemberPrincipalDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(String.valueOf(member.getMemberRole())));
     }
-
+    public long getId(){
+        return member.getId();
+    }
     @Override
     public String getPassword() {
         return member.getPassword();

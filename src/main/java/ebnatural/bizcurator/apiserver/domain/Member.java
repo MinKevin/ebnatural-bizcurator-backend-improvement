@@ -4,16 +4,19 @@ import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import ebnatural.bizcurator.apiserver.domain.constant.TimeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
-@RequiredArgsConstructor
 @Getter
 public class Member extends TimeEntity{
     @Id
@@ -45,9 +48,14 @@ public class Member extends TimeEntity{
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name = "order_detail_id")
     private List<OrderDetail> orderDetail;
-    @Column
-    LocalDate lastLogin = LocalDate.now();
 
+    @OrderBy("loginTime DESC")
+    @JoinColumn(name = "member_login_logs_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
+    @Setter
+    @Column
+    private String refreshToken;
     private Member(String username, String password, MemberRole memberRole, String businessName, String businessNumber, String postalCode, String address,
                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
         this.username = username;
@@ -62,6 +70,10 @@ public class Member extends TimeEntity{
         this.managerEmail = managerEmail;
         this.managerPhoneNumber = managerPhoneNumber;
     }
+
+    public Member() {}
+
+
     public static Member of(String username,
                             String password,
                             MemberRole memberRole,

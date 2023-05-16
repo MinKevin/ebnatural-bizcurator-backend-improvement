@@ -90,6 +90,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
 
+    @ExceptionHandler(InvalidUsernamePasswordException.class)
+    public ResponseEntity<Object> InvalidUsernamePasswordException(DataIntegrityViolationException e) {
+        log.warn("handleAlreadyRegisteredUserException", e);
+        return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
+    }
+    @ExceptionHandler(FieldValidationException.class)
+    public ResponseEntity<Object> FieldValidationException(DataIntegrityViolationException e) {
+        log.warn("handleAlreadyRegisteredUserException", e);
+        return handleExceptionInternal(ErrorCode.FIELD_VALIDATION_FAILED, ErrorCode.FIELD_VALIDATION_FAILED.getMessage());
+    }
+
     // @Valid 어노테이션으로 넘어오는 에러 처리
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

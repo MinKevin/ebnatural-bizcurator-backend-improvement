@@ -16,4 +16,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query(value = "update member set last_login = now() where username = :username", nativeQuery = true)
     public int updateMemberLastLogin(@Param("username") String username);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("update Member u set u.refreshToken = ?1 where u.id = ?2")
+    void updateRefreshToken(String newRefreshToken, Long id);
 }
