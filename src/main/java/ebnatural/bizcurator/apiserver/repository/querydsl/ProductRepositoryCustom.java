@@ -7,4 +7,6 @@ public interface ProductRepositoryCustom {
     List<ProductListDto> findByCategoryId(Long categoryId, String sort);
     List<ProductListDto> searchByKeyword(String keyword, String sort);
     ProductDetailDto findDetailById(Long productId);
+    List<ProductListDto> findTop3ByWeeklyClicks();
+
 }

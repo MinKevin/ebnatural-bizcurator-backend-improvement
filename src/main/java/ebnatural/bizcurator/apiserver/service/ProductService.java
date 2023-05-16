@@ -44,6 +44,11 @@ public class ProductService {
         return productDetail;
     }
 
+    public List<ProductListDto> getTop3ProductsWeekly() {
+        return productRepository.findTop3ByWeeklyClicks();
+    }
+
+
     /**
      * 물품의 이미지들을 반환한다.
      * @param productId
