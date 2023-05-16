@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain.constant;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -10,5 +11,6 @@ public enum OrderRefundType {
     DEFECT("상품불량"),
     SHIPPING_ERROR("오류배송");
 
+    @Getter
     private final String meaning;
 }
