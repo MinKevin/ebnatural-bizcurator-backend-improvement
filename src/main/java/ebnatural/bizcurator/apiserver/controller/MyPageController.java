@@ -70,4 +70,14 @@ public class MyPageController {
         historyMap.put("details", applicationDetailDtoList);
         return CommonResponse.ok(HttpStatus.OK.value(), "주문 취소 리스트 조회가 완료되었습니다.", historyMap);
     }
+
+    @GetMapping("/orders/applications/refunds")
+    public ResponseEntity<CommonResponse> showRefundApplicationsList(
+            @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
+
+        List<ApplicationDetailDto> applicationDetailDtoList = myPageService.showRefundApplicationDetail(filterMonth);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", applicationDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "주문 환불 리스트 조회가 완료되었습니다.", historyMap);
+    }
 }

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 환불신청내역 클래스
  */
 
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class RefundApplication {

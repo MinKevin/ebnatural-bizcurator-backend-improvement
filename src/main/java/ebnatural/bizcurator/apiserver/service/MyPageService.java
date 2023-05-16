@@ -20,6 +20,7 @@ import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
+import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
 import java.time.LocalDateTime;
@@ -45,6 +46,8 @@ public class MyPageService {
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
+
+    private final ProductService productService;
     // todo: 시큐리티 완성되면 수정
     //private final JwtProvider jwtProvider;
 
@@ -313,8 +316,12 @@ public class MyPageService {
     }
 
 
+    /**
+     * 취소 신청 상세내역 조회
+     * @param filterMonth
+     * @return
+     */
     public List<ApplicationDetailDto> showCancelApplicationDetail(Integer filterMonth) {
-        // member pid 에 해당하는 주문 취소 리스트가 있는지 조회
         // todo: 시큐리티 완성되면 수정
         Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
 
@@ -332,16 +339,61 @@ public class MyPageService {
 
         List<ApplicationDetailDto> applicationDetailDtoList = new ArrayList<>();
         for (CancelApplication cancelApplication : cancelHistories) {
+            OrderDetail orderDetail = cancelApplicationRepository.findOrderDetailById(cancelApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
             ApplicationDetailDto applicationDetailDto = ApplicationDetailDto.of(
-                    // todo: lazy 조인 이슈 수정하기
-                    cancelApplication.getOrderDetail().getPaymentId(),
-                    cancelApplication.getOrderDetail().getProduct().getProductMainImage(),
-                    cancelApplication.getOrderDetail().getId(),
-                    cancelApplication.getOrderDetail().getOrderTime().toString(),
-                    cancelApplication.getOrderDetail().getProduct().getName(),
-                    cancelApplication.getOrderDetail().getQuantity(),
-                    cancelApplication.getOrderDetail().getCost(),
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
                     cancelApplication.getState().getMeaning()
+            );
+
+            applicationDetailDtoList.add(applicationDetailDto);
+        }
+
+        return applicationDetailDtoList;
+    }
+
+    /**
+     * 환불 신청 상세내역 조회
+     * @param filterMonth
+     * @return
+     */
+    public List<ApplicationDetailDto> showRefundApplicationDetail(Integer filterMonth) {
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<RefundApplication> refundHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            refundHistories = refundApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            refundHistories = refundApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(refundHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDetailDto> applicationDetailDtoList = new ArrayList<>();
+        for (RefundApplication refundApplication : refundHistories) {
+            OrderDetail orderDetail = refundApplicationRepository.findOrderDetailById(refundApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
+            ApplicationDetailDto applicationDetailDto = ApplicationDetailDto.of(
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
+                    refundApplication.getState().getMeaning()
             );
 
             applicationDetailDtoList.add(applicationDetailDto);
