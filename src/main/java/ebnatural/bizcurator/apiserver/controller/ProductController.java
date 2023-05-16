@@ -57,5 +57,12 @@ public class ProductController {
         return CommonResponse.ok(HttpStatus.OK.value(), "주간 인기 상품 정보 조회가 완료되었습니다.", productsMap);
     }
 
+    @GetMapping("/top-monthly")
+    public ResponseEntity<CommonResponse> getTopMonthlyProducts() {
+        List<ProductListDto> products = productService.getTop3ProductsMonthly();
+        HashMap<String, Object> productsMap = new HashMap<>();
+        productsMap.put("topMonthlyProducts", products);
+        return CommonResponse.ok(HttpStatus.OK.value(), "월간 인기 상품 정보 조회가 완료되었습니다.", productsMap);
+    }
 
 }
