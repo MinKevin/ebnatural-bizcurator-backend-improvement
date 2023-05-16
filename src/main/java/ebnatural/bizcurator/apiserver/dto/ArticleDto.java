@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import ebnatural.bizcurator.apiserver.domain.Article;
 import ebnatural.bizcurator.apiserver.domain.Member;
@@ -17,6 +18,7 @@ public class ArticleDto {
     private String content;
     private BoardType boardType;
     private Boolean isFixed;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
 
     public ArticleDto() {
