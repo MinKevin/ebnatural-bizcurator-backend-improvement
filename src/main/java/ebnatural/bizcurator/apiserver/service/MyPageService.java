@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.service;
 
+import com.querydsl.core.Tuple;
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
@@ -10,6 +11,8 @@ import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -31,8 +34,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
-import org.hibernate.LazyInitializationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -44,6 +45,8 @@ public class MyPageService {
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
+
+    private final ProductService productService;
     // todo: 시큐리티 완성되면 수정
     //private final JwtProvider jwtProvider;
 
@@ -309,5 +312,160 @@ public class MyPageService {
 
         // db에 저장
         refundApplicationRepository.save(refundApplication);
+    }
+
+
+    /**
+     * 취소 신청 내역 조회
+     * @param filterMonth
+     * @return
+     */
+    public List<ApplicationDto> showCancelApplicationList(Integer filterMonth) {
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<CancelApplication> cancelHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            cancelHistories = cancelApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            cancelHistories = cancelApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(cancelHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDto> applicationDtoList = new ArrayList<>();
+        for (CancelApplication cancelApplication : cancelHistories) {
+            OrderDetail orderDetail = cancelApplicationRepository.findOrderDetailById(cancelApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
+            ApplicationDto applicationDto = ApplicationDto.of(
+                    cancelApplication.getId(),
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
+                    cancelApplication.getState().getMeaning()
+            );
+
+            applicationDtoList.add(applicationDto);
+        }
+
+        return applicationDtoList;
+    }
+
+    /**
+     * 환불 신청 내역 조회
+     * @param filterMonth
+     * @return
+     */
+    public List<ApplicationDto> showRefundApplicationList(Integer filterMonth) {
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<RefundApplication> refundHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            refundHistories = refundApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            refundHistories = refundApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(refundHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDto> applicationDtoList = new ArrayList<>();
+        for (RefundApplication refundApplication : refundHistories) {
+            OrderDetail orderDetail = refundApplicationRepository.findOrderDetailById(refundApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
+            ApplicationDto applicationDto = ApplicationDto.of(
+                    refundApplication.getId(),
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
+                    refundApplication.getState().getMeaning()
+            );
+
+            applicationDtoList.add(applicationDto);
+        }
+
+        return applicationDtoList;
+    }
+
+    /**
+     * 취소 신청 상세내역 조회
+     * @param cancelId
+     * @return
+     */
+    public ApplicationDetailDto showCancelApplicationDetail(Long cancelId) {
+        // todo: 시큐리티 완성되면 수정
+        Member member = null;
+        Optional<CancelApplication> cancelApplicationOptional= cancelApplicationRepository.findById(cancelId);
+        if(!cancelApplicationOptional.isPresent()){
+            throw new EntityNotFoundException();
+        }
+
+        CancelApplication cancelApplication = cancelApplicationOptional.get();
+        OrderDetail orderDetail = cancelApplicationRepository.findOrderDetailById(cancelId);
+        Product product = orderDetailRepository.findProductById(orderDetail.getId());
+        return ApplicationDetailDto.of(
+                product.getName(),
+                productService.getProductMainImage(product.getId()).getImgUrl(),
+                product.getRegularPrice(),
+                orderDetail.getQuantity(),
+                orderDetail.getPaymentMethod(),
+                orderDetail.getShippingFee(),
+                cancelApplication.getApproveTime() != null ? cancelApplication.getApproveTime().toString() : "",
+                orderDetail.getCost(),
+                // todo: 시큐리티 적용 후 수정
+                "username", //member.getUsername(),
+                orderDetail.getPostalCode(),
+                orderDetail.getAddress(),
+                cancelApplication.getOpinionCategory().getMeaning()
+        );
+    }
+
+    /**
+     * 환불 신청 상세내역 조회
+     * @param refundId
+     * @return
+     */
+    public ApplicationDetailDto showRefundApplicationDetail(Long refundId) {
+        // todo: 시큐리티 완성되면 수정
+        Member member = null;
+        Optional<RefundApplication> refundApplicationOptional = refundApplicationRepository.findById(refundId);
+        if(!refundApplicationOptional.isPresent()){
+            throw new EntityNotFoundException();
+        }
+        RefundApplication refundApplication = refundApplicationOptional.get();
+
+        OrderDetail orderDetail = refundApplicationRepository.findOrderDetailById(refundId);
+        Product product = orderDetailRepository.findProductById(orderDetail.getId());
+        return ApplicationDetailDto.of(
+                product.getName(),
+                productService.getProductMainImage(product.getId()).getImgUrl(),
+                product.getRegularPrice(),
+                orderDetail.getQuantity(),
+                orderDetail.getPaymentMethod(),
+                orderDetail.getShippingFee(),
+                refundApplication.getApproveTime() != null ? refundApplication.getApproveTime().toString() : "",
+                orderDetail.getCost(),
+               // todo: 시큐리티 적용 후 수정
+               "username", //member.getUsername(),
+                refundApplication.getPostalCode(),
+                refundApplication.getAddress(),
+                refundApplication.getOpinionCategory().getMeaning()
+        );
     }
 }

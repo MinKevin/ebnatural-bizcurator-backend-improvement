@@ -1,5 +1,7 @@
 package ebnatural.bizcurator.apiserver.repository;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.group.QPair;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
@@ -7,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
 
@@ -22,4 +26,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 
     Optional<OrderDetail> findById(Long id);
 
+    @Query("SELECT o.product FROM OrderDetail o WHERE o.id = :id")
+    Product findProductById(@Param("id") Long id);
 }

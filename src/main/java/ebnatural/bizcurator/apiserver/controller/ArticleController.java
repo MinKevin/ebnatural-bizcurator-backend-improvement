@@ -23,8 +23,8 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/api/notices")
-    public ResponseEntity<CommonResponse> getNoticesLowerThanId(@RequestParam("lastArticleId") Long lastArticleId, @RequestParam("size") Integer size) {
-        List<ArticleDto> notices = articleService.fetchArticlePagesBy(lastArticleId, BoardType.NOTICE, size);
+    public ResponseEntity<CommonResponse> getNoticesLowerThanId(@RequestParam("lastArticleId") Long lastArticleId, @RequestParam("size") Integer size, @RequestParam("firstPage") Boolean firstPage) {
+        List<ArticleDto> notices = articleService.fetchNoticePagesBy(lastArticleId, BoardType.NOTICE, size, firstPage);
         HashMap<String, Object> noticeMap = new HashMap<>();
         noticeMap.put("notices", notices);
         return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 조회가 완료되었습니다.", noticeMap);
@@ -32,7 +32,7 @@ public class ArticleController {
 
     @GetMapping("/api/faqs")
     public ResponseEntity<CommonResponse> getFaqsLowerThanId(@RequestParam("lastArticleId") Long lastArticleId, @RequestParam("size") Integer size) {
-        List<ArticleDto> faqs = articleService.fetchArticlePagesBy(lastArticleId, BoardType.FAQ, size);
+        List<ArticleDto> faqs = articleService.fetchFaqPagesBy(lastArticleId, BoardType.FAQ, size);
         HashMap<String, Object> faqsMap = new HashMap<>();
         faqsMap.put("faqs", faqs);
         return CommonResponse.ok(HttpStatus.OK.value(), "자주 묻는 질문 조회가 완료되었습니다.", faqsMap);

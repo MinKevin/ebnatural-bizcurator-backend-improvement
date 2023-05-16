@@ -5,7 +5,9 @@ import com.querydsl.jpa.impl.JPAQuery;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
+import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
+import ebnatural.bizcurator.apiserver.dto.QProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.QProductListDto;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.StringUtils;
@@ -87,6 +89,78 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
         } else if ("high_price".equals(sort)) {
             query.orderBy(product.regularPrice.desc());
         }
+
+        return query.fetch();
+    }
+
+    @Override
+    public ProductDetailDto findDetailById(Long productId) {
+        QProduct product = QProduct.product;
+        QProductImage productImage = QProductImage.productImage;
+        QProductImage detailImage = new QProductImage("detailImage");
+
+        JPAQuery<ProductDetailDto> query = (JPAQuery<ProductDetailDto>) from(product)
+                .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
+                .leftJoin(detailImage).on(product.id.eq(detailImage.product.id).and(detailImage.repimgYn.eq("N")))
+                .select(new QProductDetailDto(
+                        product.id,
+                        product.category.id,
+                        product.name,
+                        productImage.id,
+                        productImage.imgUrl,
+                        detailImage.id,
+                        detailImage.imgUrl,
+                        product.regularPrice,
+                        product.discountRate,
+                        product.minQuantity
+                ))
+                .where(product.id.eq(productId));
+
+        return query.fetchOne();
+    }
+
+    @Override
+    public List<ProductListDto> findTop3ByWeeklyClicks() {
+        QProduct product = QProduct.product;
+        QProductImage productImage = QProductImage.productImage;
+
+        JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
+                .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
+                .select(new QProductListDto(
+                                product.id,
+                                product.category.id,
+                                product.name,
+                                productImage.id,
+                                productImage.imgUrl,
+                                product.regularPrice,
+                                product.discountRate
+                        )
+                )
+                .orderBy(product.weeklyClicks.desc())
+                .limit(3);
+
+        return query.fetch();
+    }
+
+    @Override
+    public List<ProductListDto> findTop3ByMonthlyClicks(){
+        QProduct product = QProduct.product;
+        QProductImage productImage = QProductImage.productImage;
+
+        JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
+                .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
+                .select(new QProductListDto(
+                                product.id,
+                                product.category.id,
+                                product.name,
+                                productImage.id,
+                                productImage.imgUrl,
+                                product.regularPrice,
+                                product.discountRate
+                        )
+                )
+                .orderBy(product.monthlyClicks.desc())
+                .limit(3);
 
         return query.fetch();
     }
