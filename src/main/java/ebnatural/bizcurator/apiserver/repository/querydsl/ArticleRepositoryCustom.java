@@ -7,4 +7,5 @@ import org.springframework.data.domain.PageRequest;
 
 public interface ArticleRepositoryCustom {
     Page<ArticleDto> findByIdLessThanAndBoardTypeOrderByIdDesc(Long lastArticleId, BoardType boardType, PageRequest pageRequest);
+    Page<ArticleDto> findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(Long lastArticleId, BoardType boardType, PageRequest pageRequest);
 }

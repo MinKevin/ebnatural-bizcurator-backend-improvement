@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.domain.constant.BoardType;
 import ebnatural.bizcurator.apiserver.dto.ArticleDto;
 import ebnatural.bizcurator.apiserver.dto.QArticleDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static ebnatural.bizcurator.apiserver.domain.QArticle.article;
 
+@Slf4j
 public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
@@ -23,14 +25,48 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
     }
 
     @Override
+    public Page<ArticleDto> findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(Long lastArticleId, BoardType boardType, PageRequest pageRequest) {
+        List<ArticleDto> fixed_content = queryFactory
+                .select(new QArticleDto(
+                        article.id,
+                        article.title,
+                        article.content,
+                        article.createdAt))
+                .from(article)
+                .where(boardTypeEq(boardType), article.isFixed.isTrue())
+                .orderBy(article.id.desc())
+                .fetch();
+
+        fixed_content.addAll(queryFactory
+                .select(new QArticleDto(
+                        article.id,
+                        article.title,
+                        article.content,
+                        article.createdAt))
+                .from(article)
+                .where(idLessThan(lastArticleId), boardTypeEq(boardType), article.isFixed.isFalse())
+                .orderBy(article.id.desc())
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize() - fixed_content.size())
+                .fetch());
+
+        int total = queryFactory.selectFrom(article)
+                .where(idLessThan(lastArticleId), boardTypeEq(boardType))
+                .fetch().size();
+
+        return new PageImpl<>(fixed_content, pageRequest, total);
+    }
+
+    @Override
     public Page<ArticleDto> findByIdLessThanAndBoardTypeOrderByIdDesc(Long lastArticleId, BoardType boardType, PageRequest pageRequest) {
         List<ArticleDto> content = queryFactory
                 .select(new QArticleDto(
                         article.id,
                         article.title,
-                        article.content))
+                        article.content,
+                        article.createdAt))
                 .from(article)
-                .where(idLessThan(lastArticleId), boardTypeEq(boardType))
+                .where(idLessThan(lastArticleId), boardTypeEq(boardType), article.isFixed.isFalse())
                 .orderBy(article.id.desc())
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
