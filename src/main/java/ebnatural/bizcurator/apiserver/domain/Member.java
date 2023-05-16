@@ -27,7 +27,7 @@ public class Member extends TimeEntity{
     String password;
     @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
-    private MemberRole memberRole = MemberRole.ROLE_USER;
+    private MemberRole memberRole;
     @Column(nullable = false)
     String businessName;
     @Column(nullable = false)
@@ -48,21 +48,7 @@ public class Member extends TimeEntity{
     @Column
     LocalDate lastLogin = LocalDate.now();
 
-    public Member(String username, String password, String businessName, String businessNumber, String postalCode, String address,
-                  String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
-        this.username = username;
-        this.password = password;
-        this.businessName = businessName;
-        this.businessNumber = businessNumber;
-        this.postalCode = postalCode;
-        this.address = address;
-        this.businessRegistration = businessRegistration;
-        this.manager = manager;
-        this.managerEmail = managerEmail;
-        this.managerPhoneNumber = managerPhoneNumber;
-    }
-
-    public Member(String username, String password, MemberRole memberRole, String businessName, String businessNumber, String postalCode, String address,
+    private Member(String username, String password, MemberRole memberRole, String businessName, String businessNumber, String postalCode, String address,
                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
         this.username = username;
         this.password = password;
@@ -76,16 +62,9 @@ public class Member extends TimeEntity{
         this.managerEmail = managerEmail;
         this.managerPhoneNumber = managerPhoneNumber;
     }
-
-    public Member of(String username, String password, MemberRole memberType) {
-        this.username = username;
-        this.password = password;
-        this.memberRole = memberType;
-        return this;
-    }
-
     public static Member of(String username,
                             String password,
+                            MemberRole memberRole,
                             String businessName,
                             String businessNumber,
                             String postalCode,
@@ -96,6 +75,7 @@ public class Member extends TimeEntity{
                             String managerPhoneNumber){
         return new Member(username,
                 password,
+                memberRole,
                 businessName,
                 businessNumber,
                 postalCode,

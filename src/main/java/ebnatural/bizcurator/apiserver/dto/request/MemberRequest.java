@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.dto.request;
 
 import ebnatural.bizcurator.apiserver.domain.Member;
+import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -23,6 +24,8 @@ public class MemberRequest {
     @NonNull
     String passwordConfirm;
     @NonNull
+    MemberRole memberRole = MemberRole.ROLE_USER;
+    @NonNull
     String businessName;
     @NonNull
     String businessNumber;
@@ -40,7 +43,7 @@ public class MemberRequest {
     String managerPhoneNumber;
 
     public Member toEntity () {
-        return new Member(username, password, businessName, businessNumber, postalCode, address,
+        return Member.of(username, password, memberRole, businessName, businessNumber, postalCode, address,
                 businessRegistration, manager, managerEmail, managerPhoneNumber);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
