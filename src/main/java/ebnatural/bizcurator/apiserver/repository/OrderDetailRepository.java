@@ -1,5 +1,7 @@
 package ebnatural.bizcurator.apiserver.repository;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.group.QPair;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
