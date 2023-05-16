@@ -5,6 +5,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -14,11 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 구매취소신청내역 클래스
  */
 
+@Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class CancelApplication {
     @Id
@@ -37,11 +44,16 @@ public class CancelApplication {
     private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
     @Enumerated(EnumType.STRING)
-    private OrderCancelState state= OrderCancelState.WAIT; // 상태값
+    private OrderCancelState state = OrderCancelState.WAIT; // 상태값
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 
-    private CancelApplication() {
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;    // 신청 시간
+
+    public CancelApplication() {
 
     }
 

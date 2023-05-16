@@ -4,17 +4,25 @@ import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
+import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
+import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
+import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
+import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
+import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
+import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,13 +41,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyPageService {
 
+    private final RefundApplicationRepository refundApplicationRepository;
     private final CancelApplicationRepository cancelApplicationRepository;
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
+
+    private final ProductService productService;
     // todo: 시큐리티 완성되면 수정
     //private final JwtProvider jwtProvider;
 
+    /**
+     * 주문 내역 리스트 조회
+     * @param filterMonth
+     * @param deliveryStateText
+     * @return
+     */
     public List<PaymentHistoryDto> getAllPaymentHistory(Integer filterMonth, String deliveryStateText) {
 
         List<OrderDetail> orderDetailList = null;
@@ -74,13 +91,19 @@ public class MyPageService {
         }
 
         List<PaymentHistoryDto> paymentHistoryDtoList = paymentGroupMap.entrySet().stream()
-                .map(entry -> createPaymentHistoryResponse(entry.getKey(), entry.getValue()))
+                .map(entry -> createPaymentHistoryDto(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
         return paymentHistoryDtoList;
     }
 
-    private PaymentHistoryDto createPaymentHistoryResponse(Long paymentId, List<OrderDetail> orderDetails) {
+    /**
+     * 결제 내역 map형 정보를 PaymentHistoryDto형태로 만들어주는 함수
+     * @param paymentId
+     * @param orderDetails
+     * @return
+     */
+    private PaymentHistoryDto createPaymentHistoryDto(Long paymentId, List<OrderDetail> orderDetails) {
         List<OrderHistoryDto> orderHistoryDtoList = new ArrayList<>();
 
         for (OrderDetail orderDetail : orderDetails) {
@@ -103,6 +126,11 @@ public class MyPageService {
         return paymentHistoryDto;
     }
 
+    /**
+     * 주문내역 상세보기
+     * @param paymentId
+     * @return
+     */
     public PaymentDetailDto getAllPaymentDetails(Long paymentId) {
 
         List<OrderDetail> orderDetailList = null;
@@ -149,11 +177,20 @@ public class MyPageService {
         return paymentDetailDto;
     }
 
+    /**
+     * 주문한 물건 취소 신청하기
+     * @param cancelOrderRequest
+     */
     public void cancelOrder(CancelOrderRequest cancelOrderRequest) {
         // request body가 유효한지 검사
         Optional<OrderDetail> orderDetail = orderDetailRepository.findById(cancelOrderRequest.getOrderId());
         if(!orderDetail.isPresent()){
             throw new EntityNotFoundException("취소하려고 하는 주문내역이 없습니다.");
+        }
+
+        // 주문 상태가 "결제 완료"인 상태만 취소 가능함
+        if(DeliveryState.PAID != orderDetail.get().getDeliveryState()) {
+            throw new IllegalArgumentException("결제완료인 상태만 취소 가능합니다.");
         }
 
         // 이미 취소신청한 내역이라면
@@ -183,4 +220,185 @@ public class MyPageService {
         cancelApplicationRepository.save(cancelApplication);
     }
 
+
+    /**
+     * 주문한 물건 환불 신청하기
+     * @param refundOrderRequest RefundOrderRequest
+     */
+    public void refundOrder(RefundOrderRequest refundOrderRequest) {
+        // request body가 유효한지 검사
+        Optional<OrderDetail> orderDetail = orderDetailRepository.findById(refundOrderRequest.getOrderId());
+        if(!orderDetail.isPresent()){
+            throw new EntityNotFoundException("환불하려고 하는 주문내역이 없습니다.");
+        }
+
+        // 주문 상태가 "배송 완료"인 상태만 환불 가능함
+        if(DeliveryState.DELIVER_DONE != orderDetail.get().getDeliveryState()) {
+            throw new IllegalArgumentException("배송 완료인 상태만 환불 가능합니다.");
+        }
+
+        // 이미 환불신청한 내역이라면
+        if(refundApplicationRepository.existsByOrderDetailId(refundOrderRequest.getOrderId())){
+            throw new EntityExistsException("이미 환불 신청한 내역입니다.");
+        }
+
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(!member.isPresent()){
+            throw new EntityNotFoundException();
+        }
+
+        // enum타입 검사 - 환불 사유
+        OrderRefundType orderRefundType = OrderRefundType.valueOf(refundOrderRequest.getOpinionCategory());
+        if (orderRefundType == null) {
+            throw new IllegalArgumentException();
+        }
+
+        // enum타입 검사 - 제품 발송 방법
+        ReceiveWayType receiveWayType = ReceiveWayType.valueOf(refundOrderRequest.getReceiveWayType());
+        if (receiveWayType == null) {
+            throw new IllegalArgumentException();
+        }
+
+        // 직접 발송일 때 -> 더 세팅해줄 데이터 없어서 db에 저장하고 return
+        if (ReceiveWayType.SEND_BY_USER == receiveWayType) {
+            // RefundApplication 객체 생성
+            RefundApplication refundApplication = RefundApplication.of(
+                    member.get(),
+                    orderDetail.get(),
+                    orderRefundType,
+                    receiveWayType);
+
+            // db에 저장
+            refundApplicationRepository.save(refundApplication);
+            return;
+        }
+
+        // enum타입 검사 - 수거지 선택
+        ReceiveAddressType receiveAddressType = ReceiveAddressType.valueOf(refundOrderRequest.getReceiveAddressType());
+        if (receiveAddressType == null) {
+            throw new IllegalArgumentException();
+        }
+
+        String address = "";
+        String postalCode = "";
+        // 수거지 선택값(receiveAddressType)이 "배송지 정보와 동일"일 때
+        switch(receiveAddressType){
+            case UNSELECTED:{
+                throw new IllegalArgumentException();
+            }
+            case SAME_WITH_MEMBER_INFO:{
+                // 배송지 정보와 동일하면, 주문 내역에서 가져온다.
+                address = orderDetail.get().getAddress();
+                postalCode = orderDetail.get().getPostalCode();
+            }break;
+            case CHANGE_ADDRESS:{
+                // 수거지 변경이면, request 값에서 가져온다.
+                address = refundOrderRequest.getAddress();
+                postalCode = refundOrderRequest.getPostalCode();
+            }break;
+        }
+
+        // RefundApplication 객체 생성
+        RefundApplication refundApplication = RefundApplication.of(
+                member.get(),
+                orderDetail.get(),
+                orderRefundType,
+                receiveWayType,
+                receiveAddressType,
+                address,
+                postalCode
+                );
+
+        // db에 저장
+        refundApplicationRepository.save(refundApplication);
+    }
+
+
+    /**
+     * 취소 신청 상세내역 조회
+     * @param filterMonth
+     * @return
+     */
+    public List<ApplicationDetailDto> showCancelApplicationDetail(Integer filterMonth) {
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<CancelApplication> cancelHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            cancelHistories = cancelApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            cancelHistories = cancelApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(cancelHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDetailDto> applicationDetailDtoList = new ArrayList<>();
+        for (CancelApplication cancelApplication : cancelHistories) {
+            OrderDetail orderDetail = cancelApplicationRepository.findOrderDetailById(cancelApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
+            ApplicationDetailDto applicationDetailDto = ApplicationDetailDto.of(
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
+                    cancelApplication.getState().getMeaning()
+            );
+
+            applicationDetailDtoList.add(applicationDetailDto);
+        }
+
+        return applicationDetailDtoList;
+    }
+
+    /**
+     * 환불 신청 상세내역 조회
+     * @param filterMonth
+     * @return
+     */
+    public List<ApplicationDetailDto> showRefundApplicationDetail(Integer filterMonth) {
+        // todo: 시큐리티 완성되면 수정
+        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+
+        List<RefundApplication> refundHistories = null;
+        if (null != filterMonth) {
+            LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
+            refundHistories = refundApplicationRepository.findAllByMemberIdAndCreatedAtAfter(memberId, filterDate);
+        } else{
+            refundHistories = refundApplicationRepository.findAllByMemberId(memberId);
+        }
+
+        if(refundHistories.isEmpty()){
+            return null;
+        }
+
+        List<ApplicationDetailDto> applicationDetailDtoList = new ArrayList<>();
+        for (RefundApplication refundApplication : refundHistories) {
+            OrderDetail orderDetail = refundApplicationRepository.findOrderDetailById(refundApplication.getId());
+            Product product = orderDetailRepository.findProductById(orderDetail.getId());
+
+            ApplicationDetailDto applicationDetailDto = ApplicationDetailDto.of(
+                    orderDetail.getPaymentId(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    orderDetail.getId(),
+                    orderDetail.getOrderTime().toString(),
+                    product.getName(),
+                    orderDetail.getQuantity(),
+                    orderDetail.getCost(),
+                    refundApplication.getState().getMeaning()
+            );
+
+            applicationDetailDtoList.add(applicationDetailDto);
+        }
+
+        return applicationDetailDtoList;
+    }
 }

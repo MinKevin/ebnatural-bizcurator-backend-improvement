@@ -1,10 +1,12 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
+import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MyPageService;
 import java.util.HashMap;
@@ -51,5 +53,31 @@ public class MyPageController {
     public ResponseEntity<CommonResponse> cancelOrder(@RequestBody CancelOrderRequest cancelOrderRequest) {
         myPageService.cancelOrder(cancelOrderRequest);
         return CommonResponse.ok(HttpStatus.OK.value(), "취소 신청이 완료되었습니다.");
+    }
+
+    @PostMapping("/orders/refunds")
+    public ResponseEntity<CommonResponse> refundOrder(@RequestBody RefundOrderRequest refundOrderRequest) {
+        myPageService.refundOrder(refundOrderRequest);
+        return CommonResponse.ok(HttpStatus.OK.value(), "환불 신청이 완료되었습니다.");
+    }
+
+    @GetMapping("/orders/applications/cancellations")
+    public ResponseEntity<CommonResponse> showCancelApplicationsList(
+                                @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
+
+        List<ApplicationDetailDto> applicationDetailDtoList = myPageService.showCancelApplicationDetail(filterMonth);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", applicationDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "주문 취소 리스트 조회가 완료되었습니다.", historyMap);
+    }
+
+    @GetMapping("/orders/applications/refunds")
+    public ResponseEntity<CommonResponse> showRefundApplicationsList(
+            @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
+
+        List<ApplicationDetailDto> applicationDetailDtoList = myPageService.showRefundApplicationDetail(filterMonth);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", applicationDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "주문 환불 리스트 조회가 완료되었습니다.", historyMap);
     }
 }
