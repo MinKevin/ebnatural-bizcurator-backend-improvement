@@ -20,3 +20,22 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAULJLHSTRP7GGTAFO
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: s3-ebnatural
+      product-dir: product_images
+      document-dir: document_images
+

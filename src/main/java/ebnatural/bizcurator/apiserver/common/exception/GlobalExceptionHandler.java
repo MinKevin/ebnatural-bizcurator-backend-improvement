@@ -1,10 +1,10 @@
 package ebnatural.bizcurator.apiserver.common.exception;
 
-import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
+import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +26,18 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(NotImageFileException.class)
+    public ResponseEntity<Object> handleNotImageFileException(NotImageFileException e) {
+        log.warn("handleNotImageFileException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<Object> handleImageUploadException(ImageUploadException e) {
+        log.warn("handleImageUploadException", e);
+        return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
+
     // CategoryNotFoundException 에러 처리
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException e) {
@@ -37,6 +49,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
         log.warn("handleProductNotFoundException", e);
         return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
+    }
+
+    // EntityExistsException 에러 처리
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<Object> handleEntityExistException(EntityExistsException e) {
+        log.warn("handleEntityExistException", e);
+        return handleExceptionInternal(ErrorCode.ENTITY_ALREADY_EXIST, ErrorCode.ENTITY_ALREADY_EXIST.getMessage());
+    }
+
+    // EntityNotFoundException 에러 처리
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
+        log.warn("EntityNotFoundException", e);
+        return handleExceptionInternal(ErrorCode.ENTITY_NOT_FOUND, ErrorCode.ENTITY_NOT_FOUND.getMessage());
     }
 
     // IllegalArgumentException 에러 처리

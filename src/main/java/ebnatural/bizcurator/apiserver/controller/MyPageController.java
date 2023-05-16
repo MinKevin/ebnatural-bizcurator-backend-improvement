@@ -1,7 +1,12 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.domain.constant.DeliveryState;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
+import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
+import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto.OrderHistoryDto;
+import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
+import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MyPageService;
 import java.util.HashMap;
@@ -10,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +37,47 @@ public class MyPageController {
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("histories", paymentHistoryResponseList);
         return CommonResponse.ok(HttpStatus.OK.value(), "조회가 완료됐습니다.", historyMap);
+    }
+
+    @GetMapping("/orders/products/details")
+    public ResponseEntity<CommonResponse> showOrderHistoryDetailByPaymentId(
+            @RequestParam(value = "payment-id") Long paymentId){
+
+        PaymentDetailDto paymentDetailDtoList = myPageService.getAllPaymentDetails(paymentId);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", paymentDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상세 조회가 완료됐습니다.", historyMap);
+    }
+
+    @PostMapping("/orders/cancellations")
+    public ResponseEntity<CommonResponse> cancelOrder(@RequestBody CancelOrderRequest cancelOrderRequest) {
+        myPageService.cancelOrder(cancelOrderRequest);
+        return CommonResponse.ok(HttpStatus.OK.value(), "취소 신청이 완료되었습니다.");
+    }
+
+    @PostMapping("/orders/refunds")
+    public ResponseEntity<CommonResponse> refundOrder(@RequestBody RefundOrderRequest refundOrderRequest) {
+        myPageService.refundOrder(refundOrderRequest);
+        return CommonResponse.ok(HttpStatus.OK.value(), "환불 신청이 완료되었습니다.");
+    }
+
+    @GetMapping("/orders/applications/cancellations")
+    public ResponseEntity<CommonResponse> showCancelApplicationsList(
+                                @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
+
+        List<ApplicationDetailDto> applicationDetailDtoList = myPageService.showCancelApplicationDetail(filterMonth);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", applicationDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "주문 취소 리스트 조회가 완료되었습니다.", historyMap);
+    }
+
+    @GetMapping("/orders/applications/refunds")
+    public ResponseEntity<CommonResponse> showRefundApplicationsList(
+            @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
+
+        List<ApplicationDetailDto> applicationDetailDtoList = myPageService.showRefundApplicationDetail(filterMonth);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", applicationDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "주문 환불 리스트 조회가 완료되었습니다.", historyMap);
     }
 }

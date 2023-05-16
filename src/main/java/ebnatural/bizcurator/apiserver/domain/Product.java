@@ -99,8 +99,11 @@ public class Product {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-    public String getProductMainImage() {
-        return this.productImages.get(0).getImgUrl();
+    /**
+     *
+     * @return 할인율을 포함한 물건 가격 반환
+     */
+    public int getCostWithDiscount() {
+        return this.regularPrice * (100 - this.discountRate)/100;
     }
 }
