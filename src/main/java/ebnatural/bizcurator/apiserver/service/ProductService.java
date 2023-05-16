@@ -48,6 +48,9 @@ public class ProductService {
         return productRepository.findTop3ByWeeklyClicks();
     }
 
+    public List<ProductListDto> getTop3ProductsMonthly() {
+        return productRepository.findTop3ByMonthlyClicks();
+    }
 
     /**
      * 물품의 이미지들을 반환한다.

@@ -142,5 +142,27 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
         return query.fetch();
     }
 
+    @Override
+    public List<ProductListDto> findTop3ByMonthlyClicks(){
+        QProduct product = QProduct.product;
+        QProductImage productImage = QProductImage.productImage;
+
+        JPAQuery<ProductListDto> query = (JPAQuery<ProductListDto>) from(product)
+                .leftJoin(productImage).on(product.id.eq(productImage.product.id).and(productImage.repimgYn.eq("Y")))
+                .select(new QProductListDto(
+                                product.id,
+                                product.category.id,
+                                product.name,
+                                productImage.id,
+                                productImage.imgUrl,
+                                product.regularPrice,
+                                product.discountRate
+                        )
+                )
+                .orderBy(product.monthlyClicks.desc())
+                .limit(3);
+
+        return query.fetch();
+    }
 
 }
