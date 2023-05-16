@@ -6,6 +6,8 @@ import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.constant.BoardType;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class ArticleDto {
 
@@ -14,29 +16,33 @@ public class ArticleDto {
     private String title;
     private String content;
     private BoardType boardType;
+    private Boolean isFixed;
+    private LocalDateTime createdAt;
 
     public ArticleDto() {
     }
 
     @QueryProjection
-    public ArticleDto(Long id, String title, String content) {
+    public ArticleDto(Long id, String title, String content, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.createdAt = createdAt;
     }
 
-    private ArticleDto(MemberDto memberDto, String title, String content, BoardType boardType) {
+    private ArticleDto(MemberDto memberDto, String title, String content, BoardType boardType, Boolean isFixed) {
         this.memberDto = memberDto;
         this.title = title;
         this.content = content;
         this.boardType = boardType;
+        this.isFixed = isFixed;
     }
 
-    public static ArticleDto of(MemberDto memberDto, String title, String content, BoardType boardType) {
-        return new ArticleDto(memberDto, title, content, boardType);
+    public static ArticleDto of(MemberDto memberDto, String title, String content, BoardType boardType, Boolean isFixed) {
+        return new ArticleDto(memberDto, title, content, boardType, isFixed);
     }
 
     public Article toEntity(Member member) {
-        return Article.of(member, title, content, boardType);
+        return Article.of(member, title, content, boardType, isFixed);
     }
 }
