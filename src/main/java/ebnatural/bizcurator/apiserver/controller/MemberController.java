@@ -42,7 +42,7 @@ public class MemberController {
         MemberDto member = memberAuthService.login(user);
         Map<String, Object> mp = new HashMap<>();
         mp.put("login", member);
-        return new ResponseEntity<>(CommonResponse.of(200, "login Success", mp), HttpStatus.OK);
+        return CommonResponse.ok(200, "login Success", mp);
     }
 
     /**
@@ -57,7 +57,7 @@ public class MemberController {
         Map<String, Object> mp = new HashMap<>();
         TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
         mp.put("result", tokenDto);
-        return new ResponseEntity<>(CommonResponse.of(200, "refresh success", mp), HttpStatus.OK);
+        return CommonResponse.ok(200, "refresh success", mp);
     }
 
     /**
@@ -68,9 +68,8 @@ public class MemberController {
      */
     @PostMapping("/logout")
     public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
-        return new ResponseEntity(CommonResponse.of(200, "logout success",
-                Map.of("result", (Object)(memberAuthService.logout(accessToken.get("accessToken"))))),
-                HttpStatus.OK);
+        return CommonResponse.ok(200, "logout success",
+                Map.of("result", (Object)(memberAuthService.logout(accessToken.get("accessToken")))));
     }
 
     @PostMapping("/signup")
@@ -78,8 +77,7 @@ public class MemberController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException();
         }
-        return new ResponseEntity(CommonResponse.of(200, "signup success",
-                Map.of("result", (Object)(memberService.signup(memberDto)))),
-                HttpStatus.OK);
+        return CommonResponse.ok(200, "signup success",
+                Map.of("result", (Object)(memberService.signup(memberDto))));
     }
 }
