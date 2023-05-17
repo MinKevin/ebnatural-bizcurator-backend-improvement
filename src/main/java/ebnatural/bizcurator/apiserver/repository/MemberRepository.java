@@ -18,8 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("update Member u set u.refreshToken = ?1 where u.id = ?2")
     void updateRefreshToken(String newRefreshToken, Long id);
 
-
     //todo 수정
-//    @Query("SELECT COUNT(m) FROM Member m WHERE m.lastLoginTime = :currentDate")
-    //int countByLastLoginTime(@Param("currentDate") LocalDate currentDate);
+    @Query("SELECT COUNT(m) FROM Member m WHERE m.lastLoginTime = :currentDate")
+    int countByLastLoginTime(@Param("currentDate") LocalDate currentDate);
 }

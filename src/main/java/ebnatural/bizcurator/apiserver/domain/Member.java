@@ -53,6 +53,11 @@ public class Member extends TimeEntity{
     @JoinColumn(name = "member_login_logs_id")
     @OneToMany(cascade = CascadeType.ALL)
     private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
+
+    // todo: 로그인 기능 머지되면 삭제 예정
+    @Column
+    LocalDate lastLoginTime = LocalDate.now();
+
     @Setter
     @Column
     private String refreshToken;
