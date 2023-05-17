@@ -24,6 +24,5 @@ public class Swagger2Config {
                 .description("BizCurator 프로젝트 API 명세서 입니다.")
                 .version("v1.0.0")
                 );
-
     }
 }
