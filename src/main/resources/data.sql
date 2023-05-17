@@ -1,7 +1,7 @@
 -- 회원 데이터
 INSERT INTO member (username, password, member_role, business_name, business_number, postal_code, address,
                     business_registration, manager, manager_email, manager_phone_number, created_at, modified_at)
-VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_USER', 'user', '123-4512-1234',
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user', '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
        ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user', '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
@@ -266,7 +266,7 @@ values (1, '슬찬이네'),
        (5, '포포네');
 
 insert into product (id, created_at, discount_rate, max_quantity, min_quantity, monthly_clicks,
-                     name, regular_price, updated_at, weekly_clicks, category_id, manufacturer_id)
+                     name, regular_price, modified_at, weekly_clicks, category_id, manufacturer_id)
 values (1, '2022-01-23 00:07:58', 10, 100, 1, 1000, 'ProductA 1', 1000, '2022-01-23 00:07:58', 1000, 1, 1),
        (2, '2022-02-23 00:07:58', 15, 200, 2, 1500, 'ProductB 2', 2000, '2022-02-23 00:07:58', 1500, 2, 2),
        (3, '2022-03-23 00:07:58', 20, 300, 3, 2000, 'ProductC 3', 3000, '2022-03-23 00:07:58', 2000, 3, 3),
