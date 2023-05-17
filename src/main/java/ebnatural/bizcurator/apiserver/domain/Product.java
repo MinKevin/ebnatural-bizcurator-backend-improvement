@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -99,11 +92,5 @@ public class Product {
     public int hashCode() {
         return getClass().hashCode();
     }
-    /**
-     *
-     * @return 할인율을 포함한 물건 가격 반환
-     */
-    public int getCostWithDiscount() {
-        return this.regularPrice * (100 - this.discountRate)/100;
-    }
+
 }

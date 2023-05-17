@@ -1,13 +1,9 @@
 -- 회원 데이터
 INSERT INTO member (username, password, member_role, business_name, business_number, postal_code, address,
                     business_registration, manager, manager_email, manager_phone_number)
-VALUES ('user', '$2a$10$LzE0lOWV3xyyXdFcl12VJOb0oLr7cduFZHL51X5z5a5bezwJ5b5lm', 'ROLE_USER', 'John Doe Inc.',
-        '123-45-67890', '12345', '123 Main Street, Anytown USA', '12345678-9', 'John Doe', 'john.doe@example.com',
-        '+1-123-456-7890'),
-       ('admin123', '$2a$10$Ald8g8dDd24x1JhYdTmC.OAA4bEhA65GP5GLOcSdrRkftqeFdztk6', 'ROLE_ADMIN', 'Jane Doe Inc.',
-        '098-76-54321', '54321', '543 Maple Avenue, Anytown USA', '98765432-1', 'Jane Doe', 'jane.doe@example.com',
-        '+1-987-654-3210'),
-       ('user123', '$2a$10$NDcbTahormwJsIgwfoctXO47jK3n5pmKbx7xnkMxTnf5rr6yIjQ22', 'ROLE_USER', 'user', '123-4512-1234',
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_USER', 'user', '123-4512-1234',
+        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567'),
+       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user', '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567');
 
 -- 공지사항
