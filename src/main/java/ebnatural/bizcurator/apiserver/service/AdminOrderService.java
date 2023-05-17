@@ -9,12 +9,9 @@ import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
-import java.awt.print.Pageable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,7 +43,7 @@ public class AdminOrderService {
      */
     public List<AdminOrderDetailDto> showOrderDetailListByPageIndexAndSearchKeyword(Integer page, String search) {
         if (null == page) {
-            page = 1;
+            page = 0;
         }
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
@@ -60,10 +57,10 @@ public class AdminOrderService {
         List<AdminOrderDetailDto> adminOrderDetailDtoList = new ArrayList<>();
         for (OrderDetail orderDetail : orderDetailPage) {
             Product product = orderDetailRepository.findProductById(orderDetail.getId());
-            Optional<Object[]> results = productRepository.findManufacturerAndCategoryById(product.getId());
-            Object[] result = results.get();
-            Manufacturer manufacturer = (Manufacturer) result[0];
-            Category category = (Category) result[1];
+            Object[] results = (Object[]) productRepository.findManufacturerAndCategoryById(product.getId());
+
+            Manufacturer manufacturer = (Manufacturer) ((Object[]) results[0])[0];
+            Category category = (Category) ((Object[]) results[0])[1];
 
             AdminOrderDetailDto adminOrderDetailDto = AdminOrderDetailDto.of(
                     orderDetail.getId(),

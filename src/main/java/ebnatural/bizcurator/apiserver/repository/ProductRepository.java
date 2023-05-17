@@ -25,5 +25,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     void incrementClicks(@Param("productId") Long productId);
 
     @Query("SELECT p.manufacturer, p.category FROM Product p WHERE p.id = :id")
-    Optional<Object[]> findManufacturerAndCategoryById(@Param("id") Long id);
+    Object[] findManufacturerAndCategoryById(@Param("id") Long id);
 }

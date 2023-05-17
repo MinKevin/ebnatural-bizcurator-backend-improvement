@@ -267,26 +267,26 @@ values (1, '슬찬이네'),
 
 insert into product (id, created_at, discount_rate, max_quantity, min_quantity, monthly_clicks,
                      name, regular_price, updated_at, weekly_clicks, category_id, manufacturer_id)
-values (1, '2022-01-23 00:07:58', 10, 100, 1, 1000, 'Product 1', 1000, '2022-01-23 00:07:58', 1000, 1, 1),
-       (2, '2022-02-23 00:07:58', 15, 200, 2, 1500, 'Product 2', 2000, '2022-02-23 00:07:58', 1500, 2, 2),
-       (3, '2022-03-23 00:07:58', 20, 300, 3, 2000, 'Product 3', 3000, '2022-03-23 00:07:58', 2000, 3, 3),
-       (4, '2022-04-23 00:07:58', 25, 400, 4, 2500, 'Product 4', 4000, '2022-04-23 00:07:58', 2500, 4, 4),
-       (5, '2022-05-23 00:07:58', 30, 500, 5, 3000, 'Product 5', 5000, '2022-05-23 00:07:58', 3000, 5, 5),
-       (6, '2022-06-23 00:07:58', 35, 600, 6, 3500, 'Product 6', 6000, '2022-06-23 00:07:58', 3500, 6, 4),
-       (7, '2022-07-23 00:07:58', 40, 700, 7, 4000, 'Product 7', 7000, '2022-07-23 00:07:58', 4000, 7, 3),
-       (8, '2022-08-23 00:07:58', 45, 800, 8, 4500, 'Product 8', 8000, '2022-08-23 00:07:58', 4500, 8, 2),
-       (9, '2022-09-23 00:07:58', 2, 900, 9, 5000, 'Product 9', 9000, '2022-09-23 00:07:58', 5000, 9, 1),
-       (10, '2022-10-23 00:07:58', 3, 1000, 10, 5500, 'Product 10', 10000, '2022-10-23 00:07:58', 5500, 10, 1),
-       (11, '2022-11-23 00:07:58', 5, 1100, 11, 6000, 'Product 11', 11000, '2022-11-23 00:07:58', 6000, 1, 5),
-       (12, '2022-12-23 00:07:58', 1, 1200, 12, 6500, 'Product 12', 12000, '2022-12-23 00:07:58', 6500, 2, 4),
-       (13, '2023-01-23 00:07:58', 11, 1300, 13, 7000, 'Product 13', 13000, '2023-01-23 00:07:58', 7000, 3, 3),
-       (14, '2023-02-23 00:07:58', 11, 1400, 14, 7500, 'Product 14', 14000, '2023-02-23 00:07:58', 7500, 4, 2),
-       (15, '2023-03-23 00:07:58', 11, 1500, 15, 8000, 'Product 15', 15000, '2023-03-23 00:07:58', 8000, 5, 1),
-       (16, '2023-04-23 00:07:58', 14, 1600, 16, 8500, 'Product 16', 16000, '2023-04-23 00:07:58', 8500, 6, 5),
-       (17, '2023-05-23 00:07:58', 12, 1700, 17, 9000, 'Product 17', 17000, '2023-05-23 00:07:58', 9000, 7, 4),
-       (18, '2023-06-23 00:07:58', 23, 1800, 18, 9500, 'Product 18', 18000, '2023-06-23 00:07:58', 9500, 8, 3),
-       (19, '2023-07-23 00:07:58', 22, 1900, 19, 10000, 'Product 19', 19000, '2023-07-23 00:07:58', 10000, 9, 2),
-       (20, '2023-08-23 00:07:58', 23, 2000, 20, 10500, 'Product 20', 20000, '2023-08-23 00:07:58', 10500, 10, 1);
+values (1, '2022-01-23 00:07:58', 10, 100, 1, 1000, 'ProductA 1', 1000, '2022-01-23 00:07:58', 1000, 1, 1),
+       (2, '2022-02-23 00:07:58', 15, 200, 2, 1500, 'ProductB 2', 2000, '2022-02-23 00:07:58', 1500, 2, 2),
+       (3, '2022-03-23 00:07:58', 20, 300, 3, 2000, 'ProductC 3', 3000, '2022-03-23 00:07:58', 2000, 3, 3),
+       (4, '2022-04-23 00:07:58', 25, 400, 4, 2500, 'ProductD 4', 4000, '2022-04-23 00:07:58', 2500, 4, 4),
+       (5, '2022-05-23 00:07:58', 30, 500, 5, 3000, 'ProductE 5', 5000, '2022-05-23 00:07:58', 3000, 5, 5),
+       (6, '2022-06-23 00:07:58', 35, 600, 6, 3500, 'ProductF 6', 6000, '2022-06-23 00:07:58', 3500, 6, 4),
+       (7, '2022-07-23 00:07:58', 40, 700, 7, 4000, 'ProductG 7', 7000, '2022-07-23 00:07:58', 4000, 7, 3),
+       (8, '2022-08-23 00:07:58', 45, 800, 8, 4500, 'ProductH 8', 8000, '2022-08-23 00:07:58', 4500, 8, 2),
+       (9, '2022-09-23 00:07:58', 2, 900, 9, 5000, 'ProductI 9', 9000, '2022-09-23 00:07:58', 5000, 9, 1),
+       (10, '2022-10-23 00:07:58', 3, 1000, 10, 5500, 'ProductJ 10', 10000, '2022-10-23 00:07:58', 5500, 10, 1),
+       (11, '2022-11-23 00:07:58', 5, 1100, 11, 6000, 'ProductK 11', 11000, '2022-11-23 00:07:58', 6000, 1, 5),
+       (12, '2022-12-23 00:07:58', 1, 1200, 12, 6500, 'ProductL 12', 12000, '2022-12-23 00:07:58', 6500, 2, 4),
+       (13, '2023-01-23 00:07:58', 11, 1300, 13, 7000, 'ProductM 13', 13000, '2023-01-23 00:07:58', 7000, 3, 3),
+       (14, '2023-02-23 00:07:58', 11, 1400, 14, 7500, 'ProductN 14', 14000, '2023-02-23 00:07:58', 7500, 4, 2),
+       (15, '2023-03-23 00:07:58', 11, 1500, 15, 8000, 'ProductO 15', 15000, '2023-03-23 00:07:58', 8000, 5, 1),
+       (16, '2023-04-23 00:07:58', 14, 1600, 16, 8500, 'ProductP 16', 16000, '2023-04-23 00:07:58', 8500, 6, 5),
+       (17, '2023-05-23 00:07:58', 12, 1700, 17, 9000, 'ProductQ 17', 17000, '2023-05-23 00:07:58', 9000, 7, 4),
+       (18, '2023-06-23 00:07:58', 23, 1800, 18, 9500, 'ProductR 18', 18000, '2023-06-23 00:07:58', 9500, 8, 3),
+       (19, '2023-07-23 00:07:58', 22, 1900, 19, 10000, 'ProductS 19', 19000, '2023-07-23 00:07:58', 10000, 9, 2),
+       (20, '2023-08-23 00:07:58', 23, 2000, 20, 10500, 'ProductT 20', 20000, '2023-08-23 00:07:58', 10500, 10, 1);
 
 insert into product_image (id, img_url, repimg_yn, product_id)
 values (1, 'https://picsum.photos/200/300?random=0', 'Y', 1),
@@ -343,11 +343,11 @@ INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_numbe
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (948, 751, 'Jane Doe', '5217390516', 'Address737', 'Request756', 'PostalCode734', 'PayPal', 562, 111, 'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 10, 10);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (614, 54, 'Jane Doe', '5228754101', 'Address891', 'Request598', 'PostalCode640', 'PayPal', 419, 992, 'DELIVER_DONE', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 1, 11);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (195, 331, 'Jane Doe', '5278241713', 'Address124', 'Request34', 'PostalCode527', 'Card', 665, 732, 'FINISH', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 2, 12);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (547, 51, 'John Smith', '5243207671', 'Address444', 'Request57', 'PostalCode119', 'Card', 278, 769, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 3, 13);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 4, 14);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (459, 831, 'Michael Johnson', '5260220314', 'Address634', 'Request199', 'PostalCode974', 'Card', 166, 257, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 5, 15);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (530, 690, 'Michael Johnson', '5135564978', 'Address899', 'Request108', 'PostalCode822', 'PayPal', 356, 853, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 6, 16);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (286, 79, 'Jane Doe', '5258309082', 'Address44', 'Request681', 'PostalCode646', 'PayPal', 271, 543, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 7, 17);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 8, 18);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 9, 19);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 10, 20);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (547, 51, 'John Smith', '5243207671', 'Address444', 'Request57', 'PostalCode119', 'Card', 278, 769, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-13 12:00:00', 2, 3, 13);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4, 14);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (459, 831, 'Michael Johnson', '5260220314', 'Address634', 'Request199', 'PostalCode974', 'Card', 166, 257, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-15 12:00:00', 2, 5, 15);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (530, 690, 'Michael Johnson', '5135564978', 'Address899', 'Request108', 'PostalCode822', 'PayPal', 356, 853, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-16 12:00:00', 2, 6, 16);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (286, 79, 'Jane Doe', '5258309082', 'Address44', 'Request681', 'PostalCode646', 'PayPal', 271, 543, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:04', 2, 7, 17);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:30', 2, 8, 18);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:02:00', 2, 9, 19);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:10:00', 2, 10, 20);
