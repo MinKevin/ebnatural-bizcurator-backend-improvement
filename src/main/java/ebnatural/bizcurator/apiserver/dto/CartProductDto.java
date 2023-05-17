@@ -1,21 +1,23 @@
-package ebnatural.bizcurator.apiserver.dto.response;
+package ebnatural.bizcurator.apiserver.dto;
 
 import ebnatural.bizcurator.apiserver.domain.ProductImage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
-public class CartProductResponse {
+@Getter
+public class CartProductDto {
 
     private String name; //상품이름
     private double discountPrice;//할인가
     private double regularPrice;//정가
     private int quantity;//수량
-    private ProductImage productImage;
+    private List<ProductImage> productImage;
 
 
-    public String getProductImage() {
 
-        return productImage.getImgUrl();
-    }
 }

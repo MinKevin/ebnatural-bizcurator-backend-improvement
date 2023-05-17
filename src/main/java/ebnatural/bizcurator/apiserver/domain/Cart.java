@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Table(name = "cart")
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Cart {
 
     @Id
@@ -20,13 +19,12 @@ public class Cart {
     private Long id;
 
     @Setter
-    //Member_id 추가 필요
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "product_id")
     private Product product;
 
