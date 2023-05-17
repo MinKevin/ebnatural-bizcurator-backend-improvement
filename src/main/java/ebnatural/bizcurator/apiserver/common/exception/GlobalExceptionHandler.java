@@ -8,7 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -97,6 +100,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> InvalidUsernamePasswordException(InvalidUsernamePasswordException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.HTTP_MESSAGE_NOT_READABLE, ErrorCode.HTTP_MESSAGE_NOT_READABLE.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.HTTP_MESSAGE_NOT_WRITABLE, ErrorCode.HTTP_MESSAGE_NOT_WRITABLE.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.METHOD_NOT_ALLOWED, ErrorCode.METHOD_NOT_ALLOWED.getMessage());
     }
 
     @Override

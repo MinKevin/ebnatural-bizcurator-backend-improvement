@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-
+    HTTP_MESSAGE_NOT_WRITABLE(HttpStatus.BAD_REQUEST, "Http message not writable"),
+    HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "Http message not readable"),
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "HTTP Method not allowed"),
     ILLEGAL_ARGUMENT(HttpStatus.BAD_REQUEST, "Illegal argument"),
     MISSING_SERVLET_REQUEST_PARAMETER(HttpStatus.BAD_REQUEST, "Missing servlet request parameter"),
     MISSING_PATH_VARIABLE(HttpStatus.BAD_REQUEST, "Missing path variable"),
