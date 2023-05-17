@@ -8,4 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
     @Modifying
+    @Query("update Product p set p.weeklyClicks = 0")
+    void resetWeeklyClicks();
+
+    @Modifying
+    @Query("update Product p set p.monthlyClicks = 0")
+    void resetMonthlyClicks();
 }
