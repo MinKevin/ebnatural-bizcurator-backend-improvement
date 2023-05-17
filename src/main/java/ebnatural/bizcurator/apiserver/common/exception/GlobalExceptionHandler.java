@@ -3,8 +3,6 @@ package ebnatural.bizcurator.apiserver.common.exception;
 import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +17,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,18 +85,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ErrorCode.DATA_INTEGRITY_VIOLATION, ErrorCode.DATA_INTEGRITY_VIOLATION.getMessage());
     }
     @ExceptionHandler(AlreadyRegisteredUserException.class)
-    public ResponseEntity<Object> handleAlreadyRegisteredUserException(DataIntegrityViolationException e) {
+    public ResponseEntity<Object> handleAlreadyRegisteredUserException(AlreadyRegisteredUserException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
 
     @ExceptionHandler(InvalidUsernamePasswordException.class)
-    public ResponseEntity<Object> InvalidUsernamePasswordException(DataIntegrityViolationException e) {
+    public ResponseEntity<Object> InvalidUsernamePasswordException(InvalidUsernamePasswordException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
     @ExceptionHandler(FieldValidationException.class)
-    public ResponseEntity<Object> FieldValidationException(DataIntegrityViolationException e) {
+    public ResponseEntity<Object> FieldValidationException(FieldValidationException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.FIELD_VALIDATION_FAILED, ErrorCode.FIELD_VALIDATION_FAILED.getMessage());
     }
