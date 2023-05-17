@@ -351,3 +351,21 @@ INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_numbe
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:30', 2, 8, 18);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:02:00', 2, 9, 19);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:10:00', 2, 10, 20);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
