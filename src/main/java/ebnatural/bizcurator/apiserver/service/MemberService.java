@@ -31,7 +31,7 @@ public class MemberService implements UserDetailsService {
         String username = memberDto.getUsername();;
         Optional.ofNullable(memberRepository.findByUsername(username))
                 .ifPresent(foundedMember -> {
-                    throw new AlreadyRegisteredUserException();
+                    throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
                 });
 
         memberDto.encodePrivacy(passwordEncoder);
