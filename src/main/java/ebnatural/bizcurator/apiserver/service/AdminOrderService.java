@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -38,10 +39,10 @@ public class AdminOrderService {
     }
 
     /**
-     * 주문내역 리스트를 페이지네이션과 검색 키워드를 통해 반환
+     * 총주문수 와 주문내역 리스트를 페이지네이션과 검색 키워드를 통해 반환
      * @return
      */
-    public List<AdminOrderDetailDto> showOrderDetailListByPageIndexAndSearchKeyword(Integer page, String search) {
+    public Pair<Integer, List<AdminOrderDetailDto>> showOrderDetailListByPageIndexAndSearchKeyword(Integer page, String search) {
         if (null == page) {
             page = 0;
         }
@@ -77,6 +78,6 @@ public class AdminOrderService {
             adminOrderDetailDtoList.add(adminOrderDetailDto);
         }
 
-        return adminOrderDetailDtoList;
+        return Pair.of((int) orderDetailPage.getTotalElements() ,adminOrderDetailDtoList);
     }
 }

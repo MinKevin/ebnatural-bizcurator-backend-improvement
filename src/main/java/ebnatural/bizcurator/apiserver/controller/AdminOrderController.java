@@ -8,8 +8,10 @@ import ebnatural.bizcurator.apiserver.service.AdminOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,10 +47,12 @@ public class AdminOrderController {
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
 
-        List<AdminOrderDetailDto> adminOrderDetailDtoList =
+        Pair<Integer, List<AdminOrderDetailDto>> adminOrderDetailsPair =
                 adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(page, search);
-        HashMap<String, Object> historyMap = new HashMap<>();
-        historyMap.put("histories", adminOrderDetailDtoList);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminOrderDetailsPair.getFirst());
+        historyMap.put("histories", adminOrderDetailsPair.getSecond());
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 주문내역 조회 완료했습니다.", historyMap);
     }
 }
