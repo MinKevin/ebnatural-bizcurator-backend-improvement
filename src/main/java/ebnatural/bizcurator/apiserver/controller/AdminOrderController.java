@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
+import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.AdminOrderService;
@@ -33,5 +34,15 @@ public class AdminOrderController {
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("histories", adminHomeInfoDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 홈화면 로드 완료했습니다.", historyMap);
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<CommonResponse> showOrderDetailList(
+            @RequestParam(value = "search", required = false) String search) {
+        // todo : 페이지 네이션이 있는지
+        List<AdminOrderDetailDto> adminOrderDetailDtoList = null;
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("histories", adminOrderDetailDtoList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 주문내역 조회 완료했습니다.", historyMap);
     }
 }
