@@ -3,14 +3,16 @@ package ebnatural.bizcurator.apiserver.common.exception;
 import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.dto.response.ErrorResponse;
 import ebnatural.bizcurator.apiserver.dto.response.ResponseStatusType;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +21,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +48,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleCategoryNotFoundException", e);
         return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
     }
+
     // ProductNotFoundException 에러 처리
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
@@ -84,24 +89,40 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleDataIntegrityViolation", e);
         return handleExceptionInternal(ErrorCode.DATA_INTEGRITY_VIOLATION, ErrorCode.DATA_INTEGRITY_VIOLATION.getMessage());
     }
+
     @ExceptionHandler(AlreadyRegisteredUserException.class)
-    public ResponseEntity<Object> handleAlreadyRegisteredUserException(DataIntegrityViolationException e) {
+    public ResponseEntity<Object> handleAlreadyRegisteredUserException(AlreadyRegisteredUserException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
 
     @ExceptionHandler(InvalidUsernamePasswordException.class)
-    public ResponseEntity<Object> InvalidUsernamePasswordException(DataIntegrityViolationException e) {
+    public ResponseEntity<Object> InvalidUsernamePasswordException(InvalidUsernamePasswordException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
-    @ExceptionHandler(FieldValidationException.class)
-    public ResponseEntity<Object> FieldValidationException(DataIntegrityViolationException e) {
-        log.warn("handleAlreadyRegisteredUserException", e);
-        return handleExceptionInternal(ErrorCode.FIELD_VALIDATION_FAILED, ErrorCode.FIELD_VALIDATION_FAILED.getMessage());
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.HTTP_MESSAGE_NOT_READABLE, ErrorCode.HTTP_MESSAGE_NOT_READABLE.getMessage());
     }
 
-    // @Valid 어노테이션으로 넘어오는 에러 처리
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.HTTP_MESSAGE_NOT_WRITABLE, ErrorCode.HTTP_MESSAGE_NOT_WRITABLE.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleExceptionInternal(ErrorCode.METHOD_NOT_ALLOWED, ErrorCode.METHOD_NOT_ALLOWED.getMessage());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn("handleMethodArgumentNotValid", ex);
+        return handleExceptionInternal(ex);
+    }
+
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.warn("handleBindException", ex);

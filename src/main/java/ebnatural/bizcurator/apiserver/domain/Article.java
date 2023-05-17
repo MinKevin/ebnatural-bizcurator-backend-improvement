@@ -15,12 +15,13 @@ import java.util.Objects;
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Article extends AuditingFields {
+public class Article extends WriterTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @ToString.Exclude
     @JoinColumn(name = "memberId")
     @ManyToOne(optional = false, fetch= FetchType.LAZY)

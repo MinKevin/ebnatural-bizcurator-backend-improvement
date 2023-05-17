@@ -1,20 +1,17 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
-import ebnatural.bizcurator.apiserver.common.exception.custom.FieldValidationException;
-import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
-import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
+import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import ebnatural.bizcurator.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -35,14 +32,11 @@ public class MemberController {
      * @throws Exception
      */
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse> login(@Valid @RequestBody MemberDto user, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors())
-            throw new FieldValidationException(ErrorCode.FIELD_VALIDATION_FAILED);
-
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody MemberDto user) throws Exception {
         MemberDto member = memberAuthService.login(user);
         Map<String, Object> mp = new HashMap<>();
         mp.put("login", member);
-        return CommonResponse.ok(200, "login Success", mp);
+        return CommonResponse.ok(HttpStatus.OK.value(), "login Success", mp);
     }
 
     /**
@@ -57,7 +51,7 @@ public class MemberController {
         Map<String, Object> mp = new HashMap<>();
         TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
         mp.put("result", tokenDto);
-        return CommonResponse.ok(200, "refresh success", mp);
+        return CommonResponse.ok(HttpStatus.OK.value(), "refresh success", mp);
     }
 
     /**
@@ -68,16 +62,13 @@ public class MemberController {
      */
     @PostMapping("/logout")
     public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
-        return CommonResponse.ok(200, "logout success",
-                Map.of("result", (Object)(memberAuthService.logout(accessToken.get("accessToken")))));
+        return CommonResponse.ok(HttpStatus.OK.value(), "logout success",
+                Map.of("result", (Object) (memberAuthService.logout(accessToken.get("accessToken")))));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonResponse> signup(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException();
-        }
-        return CommonResponse.ok(200, "signup success",
-                Map.of("result", (Object)(memberService.signup(memberDto))));
+    public ResponseEntity<CommonResponse> signup(@Valid @RequestBody MemberDto memberDto) throws Exception {
+        return CommonResponse.ok(HttpStatus.OK.value(), "signup success",
+                Map.of("result", (Object) (memberService.signup(memberDto))));
     }
 }
