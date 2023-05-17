@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
 
@@ -19,8 +21,9 @@ import javax.validation.constraints.Pattern;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MemberDto {
     private Long id;
-    @Pattern(regexp = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",
-            message = "이메일을 올바르게 작성해주세요.")
+
+    @Email(message = "이메일 형식에 맞지 않습니다.")
+    @Length(max = 320, message = "이메일은 320자리를 넘을 수 없습니다.")
     @NonNull
     private String username;
     @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
