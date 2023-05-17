@@ -2,16 +2,18 @@ package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.BoardType;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Getter
 @ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "title"),
-        @Index(columnList = "createdAt"),
-        @Index(columnList = "createdBy"),
+        @Index(columnList = "createdAt")
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -28,10 +30,14 @@ public class Article extends WriterTimeEntity {
     private Member member;
 
     @Setter
-    @Column(nullable = false)
+    @Length(max = 100, message = "제목은 100자리를 넘을 수 없습니다.")
+    @NotBlank(message = "제목은 필수 입력값입니다.")
+    @Column(nullable = false, length = 100)
     private String title;
 
     @Setter
+    @Length(max = 1000, message = "내용은 1000자리를 넘을 수 없습니다.")
+    @NotBlank(message = "내용은 필수 입력값입니다.")
     @Column(nullable = false, length = 1000)
     private String content;
 
@@ -41,6 +47,7 @@ public class Article extends WriterTimeEntity {
     private BoardType boardType;
 
     @Setter
+    @NotNull(message = "고정 여부는 필수 입력값입니다.")
     @Column(nullable = false)
     private Boolean isFixed;
 
