@@ -21,6 +21,7 @@ public class Article extends WriterTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @ToString.Exclude
     @JoinColumn(name = "memberId")
     @ManyToOne(optional = false, fetch= FetchType.LAZY)

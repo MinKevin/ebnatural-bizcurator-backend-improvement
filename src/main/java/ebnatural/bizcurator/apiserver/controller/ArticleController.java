@@ -3,7 +3,8 @@ package ebnatural.bizcurator.apiserver.controller;
 import ebnatural.bizcurator.apiserver.domain.constant.BoardType;
 import ebnatural.bizcurator.apiserver.dto.ArticleDto;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
-import ebnatural.bizcurator.apiserver.dto.request.ArticleRequest;
+import ebnatural.bizcurator.apiserver.dto.request.ArticleCreateRequest;
+import ebnatural.bizcurator.apiserver.dto.request.ArticleModifyRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,17 +40,22 @@ public class ArticleController {
         return CommonResponse.ok(HttpStatus.OK.value(), "자주 묻는 질문 조회가 완료되었습니다.", faqsMap);
     }
 
+    // TODO: 인증기능 재개 전까지 임시로 1번 회원으로 고정, 후에 삭제 필요
     @PostMapping("/api/notices")
-    public ResponseEntity<CommonResponse> postNewNotice(@RequestBody ArticleRequest articleRequest) {
-        // TODO: 로그인 완성되면 MemberDto.of() 수정
-        articleService.saveArticle(articleRequest.toDto(MemberDto.of(1L)));
+    public ResponseEntity<CommonResponse> postNewNotice(@Valid @RequestBody ArticleCreateRequest articleCreateRequest) {
+        articleService.saveArticle(articleCreateRequest.toDto(MemberDto.of(1L)));
         return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 등록이 완료되었습니다.");
     }
 
+//    @PostMapping("/api/notices")
+//    public ResponseEntity<CommonResponse> postNewNotice(@AuthenticationPrincipal MemberPrincipalDetails memberPrincipalDetails, @Valid @RequestBody ArticleCreateRequest articleCreateRequest) {
+//        articleService.saveArticle(articleCreateRequest.toDto(MemberDto.of(memberPrincipalDetails.getId())));
+//        return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 등록이 완료되었습니다.");
+//    }
+
     @PutMapping("/api/notices/{articleId}")
-    public ResponseEntity<CommonResponse> updateNotice(@PathVariable("articleId") Long articleId, @RequestBody ArticleRequest articleRequest) {
-        // TODO: 로그인 완성되면 MemberDto.of() 수정
-        articleService.updateArticle(articleId, articleRequest.toDto(MemberDto.of(1L)));
+    public ResponseEntity<CommonResponse> updateNotice(@PathVariable("articleId") Long articleId, @Valid @RequestBody ArticleModifyRequest articleModifyRequest) {
+        articleService.updateArticle(articleId, articleModifyRequest.toDto());
         return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 수정이 완료되었습니다.");
     }
 
