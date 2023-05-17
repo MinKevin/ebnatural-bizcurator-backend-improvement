@@ -38,6 +38,7 @@ public class SpringSecurityConfig {
 //        http.authorizeRequests()
 //                .antMatchers("/login", "/signup", "/api/users/login", "/api/users/signup").permitAll()
 //                .antMatchers("/api/admins/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")

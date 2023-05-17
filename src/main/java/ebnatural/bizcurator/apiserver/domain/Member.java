@@ -20,24 +20,16 @@ public class Member extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 320)
-    @Email(message = "이메일 형식에 맞지 않습니다.")
     String username;
-    @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
-            message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
     String password;
     @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
-    @Column(nullable = false)
+    String representative;
     String businessName;
-    @Column(nullable = false)
     String businessNumber;
-    @Column(nullable = false)
     String postalCode;
-    @Column(nullable = false)
     String address;
-    @Column(nullable = false)
     String businessRegistration;
     String manager;
     String managerEmail;
