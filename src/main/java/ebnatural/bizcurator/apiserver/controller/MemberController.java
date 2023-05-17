@@ -107,12 +107,8 @@ public class MemberController {
     }
 
     @DeleteMapping
-    public ResponseEntity<CommonResponse> deleteMember(@RequestParam long userId) {
-        if (userId == 0) {
-            throw new BadRequestException(ErrorCode.BIND_EXCEPTION);
-        }
-
-        memberService.delete(userId);
+    public ResponseEntity<CommonResponse> deleteMember() {
+        memberService.delete();
 
         return CommonResponse.ok(HttpStatus.OK.value(), "deleteMember success");
     }

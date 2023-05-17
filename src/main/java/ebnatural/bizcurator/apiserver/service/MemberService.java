@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.apache.tika.mime.MediaType.image;
 
@@ -84,8 +85,10 @@ public class MemberService implements UserDetailsService {
         memberLoginLogRepository.save(MemberLoginLog.of(member, userAgent, ipAddress));
     }
 
-    public void delete(long userId) {
-        memberRepository.delete(memberRepository.findByUserId(userId));
+    public void delete() {
+        Long userId = MemberUtil.getMemberId();
+        Member member = memberRepository.findByUserId(userId).expire();
+        memberRepository.save(member);
     }
 
     /**
@@ -93,7 +96,10 @@ public class MemberService implements UserDetailsService {
      * @return
      */
     public List<MemberDto> getAllMember() {
-        return memberRepository.getAllMember();
+        return memberRepository.getAllMember()
+                .stream()
+                .map(m -> MemberDto.from(m))
+                .collect(Collectors.toList());
     }
 
     public MemberDto getMyInfo() {

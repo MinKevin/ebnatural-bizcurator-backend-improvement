@@ -30,7 +30,6 @@ public class MemberDto {
     MemberRole memberRole = MemberRole.ROLE_USER;
     String businessName;
     String representative;
-
     String businessNumber;
     String postalCode;
     String address;
@@ -53,6 +52,14 @@ public class MemberDto {
         memberDto.setId(member.getId());
         memberDto.setUsername(member.getUsername());
         memberDto.setMemberRole(member.getMemberRole());
+        memberDto.setBusinessName(member.getBusinessName());
+        memberDto.setRepresentative(member.getRepresentative());
+        memberDto.setBusinessNumber(member.getBusinessNumber());
+        memberDto.setBusinessRegistration(member.getBusinessRegistration());
+        memberDto.setAddress(member.getAddress());
+        memberDto.setManager(member.getManager());
+        memberDto.setManagerEmail(member.getManagerEmail());
+        memberDto.setManagerPhoneNumber(member.getManagerPhoneNumber());
         return memberDto;
     }
 

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
+    @Query("SELECT m FROM Member m WHERE m.isNonExpired = true")
     Member findByUsername(String userName);
     Optional<Member> findById(Long id);
 
@@ -22,12 +23,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.lastLoginTime = :currentDate")
     int countByLastLoginTime(@Param("currentDate") LocalDate currentDate);
-
     @Query("SELECT m FROM Member m WHERE m.id = :id")
     Member findByUserId(@Param("id") Long userId);
 
-    @Query("SELECT m FROM Member m ORDER BY m.id ASC")
-    List<MemberDto> getAllMember();
-    @Query("SELECT m FROM Member m WHERE m.id = :id")
-    List<MemberDto> getMemberInfo(@Param("id") Long userId);
+    @Query("SELECT m FROM Member m WHERE m.isNonExpired = true ORDER BY m.id ASC")
+    List<Member> getAllMember();
+
 }

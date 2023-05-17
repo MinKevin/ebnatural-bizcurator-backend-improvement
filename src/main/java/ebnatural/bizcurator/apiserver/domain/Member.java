@@ -34,6 +34,7 @@ public class Member extends TimeEntity {
     String manager;
     String managerEmail;
     String managerPhoneNumber;
+    Boolean isNonExpired = true;
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY)
@@ -90,5 +91,10 @@ public class Member extends TimeEntity {
                 manager,
                 managerEmail,
                 managerPhoneNumber);
+    }
+
+    public Member expire() {
+        this.isNonExpired = false;
+        return this;
     }
 }

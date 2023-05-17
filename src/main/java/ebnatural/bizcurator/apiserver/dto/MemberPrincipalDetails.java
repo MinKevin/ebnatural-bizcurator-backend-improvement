@@ -35,7 +35,7 @@ public class MemberPrincipalDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return member.getIsNonExpired();
     }
 
     @Override
