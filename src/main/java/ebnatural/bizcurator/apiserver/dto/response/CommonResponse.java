@@ -1,24 +1,39 @@
 package ebnatural.bizcurator.apiserver.dto.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
 @Getter
-public abstract class CommonResponse {
+@NoArgsConstructor
+public class CommonResponse {
 
-    private String status;
+    private ResponseStatusType status = ResponseStatusType.OK;
     private Integer code;
     private String message;
     private Map<String, Object> result;
 
-    public CommonResponse() {
-    }
-
-    public CommonResponse(String status, Integer code, String message, Map<String, Object> result) {
-        this.status = status;
+    private CommonResponse(Integer code, String message, Map<String, Object> result) {
         this.code = code;
         this.message = message;
         this.result = result;
+    }
+
+    public static CommonResponse of(Integer code, String message, Map<String, Object> result) {
+        return new CommonResponse(code, message, result);
+    }
+
+    public static CommonResponse of(Integer code, String message) {
+        return new CommonResponse(code, message, null);
+    }
+
+    public static ResponseEntity<CommonResponse> ok(Integer code, String message, Map<String, Object> result) {
+        return ResponseEntity.ok(CommonResponse.of(code, message, result));
+    }
+
+    public static ResponseEntity<CommonResponse> ok(Integer code, String message) {
+        return ResponseEntity.ok(CommonResponse.of(code, message));
     }
 }

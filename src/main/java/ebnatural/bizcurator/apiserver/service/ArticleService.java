@@ -26,7 +26,20 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final MemberRepository memberRepository;
 
-    public List<ArticleDto> fetchArticlePagesBy(Long lastArticleId, BoardType boardType, Integer size) {
+    public List<ArticleDto> fetchNoticePagesBy(Long lastArticleId, BoardType boardType, Integer size, Boolean firstPage) {
+
+        PageRequest pageRequest = PageRequest.of(0, size);
+        
+        if (firstPage) {
+            Page<ArticleDto> articlePage = articleRepository.findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(lastArticleId, boardType, pageRequest);
+            return articlePage.getContent();
+        }
+
+        Page<ArticleDto> articlePage = articleRepository.findByIdLessThanAndBoardTypeOrderByIdDesc(lastArticleId, boardType, pageRequest);
+        return articlePage.getContent();
+    }
+
+    public List<ArticleDto> fetchFaqPagesBy(Long lastArticleId, BoardType boardType, Integer size) {
 
         PageRequest pageRequest = PageRequest.of(0, size);
         Page<ArticleDto> articlePage = articleRepository.findByIdLessThanAndBoardTypeOrderByIdDesc(lastArticleId, boardType, pageRequest);
@@ -35,7 +48,7 @@ public class ArticleService {
 
     public void saveArticle(ArticleDto articleDto) {
         // TODO: 로그인 파트 완성되면 수정
-        Member member = memberRepository.getReferenceById(articleDto.getMemberDto().getMemberId());
+        Member member = memberRepository.getReferenceById(articleDto.getMemberDto().getId());
         Article article = articleDto.toEntity(member);
         articleRepository.save(article);
     }
@@ -43,6 +56,7 @@ public class ArticleService {
     public void updateArticle(Long articleId, ArticleDto articleDto) {
         try {
             Article article = articleRepository.getReferenceById(articleId);
+
             if (articleDto.getTitle() != null) {
                 article.setTitle(articleDto.getTitle());
             }
@@ -50,6 +64,11 @@ public class ArticleService {
             if (articleDto.getContent() != null) {
                 article.setContent(articleDto.getContent());
             }
+
+            if (articleDto.getIsFixed() != null) {
+                article.setIsFixed(articleDto.getIsFixed());
+            }
+
         } catch (EntityNotFoundException e) {
             // TODO: 후에 공통 에러 처리 로직 추가 예정
             log.error("ArticleService.updateArticle: {}", e.getMessage());

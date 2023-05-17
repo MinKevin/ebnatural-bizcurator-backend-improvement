@@ -1,24 +1,10 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.BoardType;
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @ToString(callSuper = true)
@@ -53,15 +39,24 @@ public class Article extends AuditingFields {
     @Column(nullable = false)
     private BoardType boardType;
 
-    private Article(Member member, String title, String content, BoardType boardType) {
+    @Setter
+    @Column(nullable = false)
+    private Boolean isFixed;
+
+    private Article(Member member, String title, String content, BoardType boardType, Boolean isFixed) {
         this.member = member;
         this.title = title;
         this.content = content;
         this.boardType = boardType;
+        this.isFixed = isFixed;
+    }
+
+    public static Article of(Member member, String title, String content, BoardType boardType, Boolean isFixed) {
+        return new Article(member, title, content, boardType, isFixed);
     }
 
     public static Article of(Member member, String title, String content, BoardType boardType) {
-        return new Article(member, title, content, boardType);
+        return new Article(member, title, content, boardType, null);
     }
 
     @Override

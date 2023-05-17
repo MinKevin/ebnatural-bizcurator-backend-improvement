@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://my-rds-instance.crrni39fxkfz.ap-northeast-2.rds.amazonaws.com:3306/my_rds_name"
+    username: "admin"
+    password: "!ebnatural12"
+
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+
+  # data.sql 실행
+  sql.init.mode: always
+
+  # 컨트롤러에서 프론트로 보내줄 때 null field 생략
+  jackson:
+    default-property-inclusion: non_null
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAULJLHSTRP7GGTAFO
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: s3-ebnatural
+      product-dir: product_images
+      document-dir: document_images

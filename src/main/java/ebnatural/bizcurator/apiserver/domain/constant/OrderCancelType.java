@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain.constant;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -9,5 +10,6 @@ public enum OrderCancelType {
     UNSATISFIED("서비스 불만족"),
     DELIVERY_DELAYED("배송지연");
 
+    @Getter
     private final String meaning;
 }
