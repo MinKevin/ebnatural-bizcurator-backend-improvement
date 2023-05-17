@@ -55,6 +55,7 @@ public class SpringSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/products/").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.exceptionHandling()
