@@ -18,11 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     void resetMonthlyClicks();
 
     @Modifying
-    @Query("update Product p set p.weeklyClicks = p.weeklyClicks + 1 where p.id = :productId")
-    void incrementWeeklyClicks(@Param("productId") Long productId);
-
-    @Modifying
-    @Query("update Product p set p.monthlyClicks = p.monthlyClicks + 1 where p.id = :productId")
-    void incrementMonthlyClicks(@Param("productId") Long productId);
+    @Query("update Product p set p.weeklyClicks = p.weeklyClicks + 1, p.monthlyClicks = p.monthlyClicks + 1 where p.id = :productId")
+    void incrementClicks(@Param("productId") Long productId);
 
 }

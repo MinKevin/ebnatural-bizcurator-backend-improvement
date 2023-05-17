@@ -41,8 +41,7 @@ public class ProductService {
             throw new ProductNotFoundException();
         }
 
-        productRepository.incrementWeeklyClicks(productId);
-        productRepository.incrementMonthlyClicks(productId);
+        productRepository.incrementClicks(productId);
 
         ProductDetailDto productDetail = productRepository.findDetailById(productId);
         if (productDetail == null) {
