@@ -22,7 +22,17 @@ public enum ErrorCode {
     IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Image upload error"),
     NOT_IMAGE_FILE(HttpStatus.BAD_REQUEST, "Not image file"),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "entity not exists"),
-    ENTITY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "entity already exists")
+    ENTITY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "entity already exists"),
+    ALREADY_REGISTERED_USER_EXCEPTION(HttpStatus.CONFLICT, "username already exists"),
+    JWT_EXPIRED(HttpStatus.BAD_REQUEST, "토큰이 만료됐습니다."),
+    JWT_WRONG(HttpStatus.BAD_REQUEST, "토큰값이 올바르지 않습니다."),
+    AUTHENTICATION_WRONG(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다."),
+    AUTHORIZATION_WRONG(HttpStatus.FORBIDDEN, "권한이 없는 사용자입니다."),
+    BAD_CREDENTIALS(HttpStatus.BAD_REQUEST, "Access Token 의 잘못된 계정정보입니다."),
+    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR ,"서버 오류로 정상적으로 요청을 처리할 수 없습니다."),
+    USERNAME_OR_PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 올바르지 않습니다."),
+    FIELD_VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "입력한 값이 올바르지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "회원을 찾을 수 없습니다.")
     ;
 
     private final HttpStatus httpStatusCode;

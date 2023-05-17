@@ -48,7 +48,7 @@ public class ArticleService {
 
     public void saveArticle(ArticleDto articleDto) {
         // TODO: 로그인 파트 완성되면 수정
-        Member member = memberRepository.getReferenceById(articleDto.getMemberDto().getMemberId());
+        Member member = memberRepository.getReferenceById(articleDto.getMemberDto().getId());
         Article article = articleDto.toEntity(member);
         articleRepository.save(article);
     }

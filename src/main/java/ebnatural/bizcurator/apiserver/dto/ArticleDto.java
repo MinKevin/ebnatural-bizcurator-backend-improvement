@@ -1,6 +1,9 @@
 package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.querydsl.core.annotations.QueryProjection;
 import ebnatural.bizcurator.apiserver.domain.Article;
 import ebnatural.bizcurator.apiserver.domain.Member;
@@ -9,6 +12,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 public class ArticleDto {
 
@@ -17,6 +21,7 @@ public class ArticleDto {
     private String title;
     private String content;
     private BoardType boardType;
+    @JsonProperty("isFixed")
     private Boolean isFixed;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
@@ -25,10 +30,11 @@ public class ArticleDto {
     }
 
     @QueryProjection
-    public ArticleDto(Long id, String title, String content, LocalDateTime createdAt) {
+    public ArticleDto(Long id, String title, String content, Boolean isFixed, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.isFixed = isFixed;
         this.createdAt = createdAt;
     }
 

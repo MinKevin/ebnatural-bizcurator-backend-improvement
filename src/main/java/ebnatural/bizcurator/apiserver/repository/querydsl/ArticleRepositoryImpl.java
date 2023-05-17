@@ -31,6 +31,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
                         article.id,
                         article.title,
                         article.content,
+                        article.isFixed,
                         article.createdAt))
                 .from(article)
                 .where(boardTypeEq(boardType), article.isFixed.isTrue())
@@ -42,6 +43,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
                         article.id,
                         article.title,
                         article.content,
+                        article.isFixed,
                         article.createdAt))
                 .from(article)
                 .where(idLessThan(lastArticleId), boardTypeEq(boardType), article.isFixed.isFalse())
@@ -64,6 +66,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
                         article.id,
                         article.title,
                         article.content,
+                        article.isFixed,
                         article.createdAt))
                 .from(article)
                 .where(idLessThan(lastArticleId), boardTypeEq(boardType), article.isFixed.isFalse())
