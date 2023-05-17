@@ -1,11 +1,7 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
-import ebnatural.bizcurator.apiserver.domain.constant.TimeEntity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -15,18 +11,19 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class Member extends TimeEntity{
+public class Member extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 15)
     @Size(min = 2, max = 15)
     String username;
-    @Pattern(regexp="[a-zA-Z1-9!@#$%^&*()]{8,16}",
-    message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
+    @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
+            message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
     String password;
     @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
@@ -45,7 +42,8 @@ public class Member extends TimeEntity{
     String managerEmail;
     String managerPhoneNumber;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_id")
     private List<OrderDetail> orderDetail;
 
@@ -61,8 +59,9 @@ public class Member extends TimeEntity{
     @Setter
     @Column
     private String refreshToken;
+
     private Member(String username, String password, MemberRole memberRole, String businessName, String businessNumber, String postalCode, String address,
-                  String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
+                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
         this.username = username;
         this.password = password;
         this.memberRole = memberRole;
@@ -76,9 +75,6 @@ public class Member extends TimeEntity{
         this.managerPhoneNumber = managerPhoneNumber;
     }
 
-    public Member() {}
-
-
     public static Member of(String username,
                             String password,
                             MemberRole memberRole,
@@ -89,7 +85,7 @@ public class Member extends TimeEntity{
                             String businessRegistration,
                             String manager,
                             String managerEmail,
-                            String managerPhoneNumber){
+                            String managerPhoneNumber) {
         return new Member(username,
                 password,
                 memberRole,
