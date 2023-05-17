@@ -42,6 +42,7 @@ public class AdminOrderController {
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 홈화면 로드 완료했습니다.", historyMap);
     }
 
+    @Operation(summary = "주문내역 조회 메서드", description = "주문내역 조회 메서드입니다.")
     @GetMapping("/orders")
     public ResponseEntity<CommonResponse> showOrderDetailList(
             @RequestParam(value = "page", required = false) Integer page,
