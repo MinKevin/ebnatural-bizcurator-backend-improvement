@@ -11,6 +11,8 @@ import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +35,15 @@ public class ProductService {
 
         return products;
     }
+    @Transactional
     public ProductDetailDto getProductDetail(Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException();
         }
+
+        productRepository.incrementWeeklyClicks(productId);
+        productRepository.incrementMonthlyClicks(productId);
+
         ProductDetailDto productDetail = productRepository.findDetailById(productId);
         if (productDetail == null) {
             throw new ProductNotFoundException();

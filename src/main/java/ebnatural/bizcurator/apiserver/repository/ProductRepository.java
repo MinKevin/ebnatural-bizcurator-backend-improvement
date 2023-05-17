@@ -2,8 +2,10 @@ package ebnatural.bizcurator.apiserver.repository;
 
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.repository.querydsl.ProductRepositoryCustom;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
@@ -14,4 +16,13 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     @Modifying
     @Query("update Product p set p.monthlyClicks = 0")
     void resetMonthlyClicks();
+
+    @Modifying
+    @Query("update Product p set p.weeklyClicks = p.weeklyClicks + 1 where p.id = :productId")
+    void incrementWeeklyClicks(@Param("productId") Long productId);
+
+    @Modifying
+    @Query("update Product p set p.monthlyClicks = p.monthlyClicks + 1 where p.id = :productId")
+    void incrementMonthlyClicks(@Param("productId") Long productId);
+
 }
