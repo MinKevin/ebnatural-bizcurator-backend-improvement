@@ -1,20 +1,26 @@
 -- 회원 데이터
 INSERT INTO member (username, password, member_role, business_name, business_number, postal_code, address,
                     business_registration, manager, manager_email, manager_phone_number, created_at, modified_at)
-VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user', '123-4512-1234',
-        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
-       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user', '123-4512-1234',
-        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
-       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user', '123-4512-1234',
-        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user',
+        '123-4512-1234',
+        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
+        '2022-11-02 10:18:32'),
+       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user',
+        '123-4512-1234',
+        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
+        '2022-11-02 10:18:32'),
+       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user',
+        '123-4512-1234',
+        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
+        '2022-11-02 10:18:32');
 
 -- 공지사항
 insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
+values (1, '[안내] 배송관련 소비자 분쟁해결 기준 안내',
         'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
         'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
 insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
+values (1, '[이벤트] 여름이니까 아이스커피! 맥심 할인 판매!',
         'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
         'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
 insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
@@ -125,124 +131,29 @@ insert into article (member_id, title, content, board_type, is_fixed, created_by
 values (1, 'Integer a nibh.',
         'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
         'NOTICE', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, '[안내] 환불관련 소비자 분쟁해결 기준 안내',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, '[이벤트] 여름이니까 아이스 아메리카노! 카누 할인 판매!',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
 
 -- 자묻질
 insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+values (1, '[배송/물류] 물건이 도착하지 않았습니다.',
+        '물건이 도착하지 않은 경우 배송업체와 먼저 연락해보시고 연락주세요. 감사합니다.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
+       (1, '[의뢰서] 견적 의뢰한 내용을 수정하고 싶습니다.',
+        '[마이페이지]의 [내 의뢰내역]에서 수정이 가능합니다. 다만 의뢰구분 상태값이 대기인 경우에만 가능하며, 승인 및 반려인 상태에서는 수정이 불가능합니다. 감사합니다.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
+       (1, '[바로구매] 비즈큐레이터 바로구매는 무엇인가요?',
+        '기존 비즈큐레이터의 시스템인 구매 및 견적의뢰를 거치지 않으며, 고객들이 합리적인 가격에 대량으로 바로 제품구매가 가능하게끔 만든 구매형태입니다. 감사합니다.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
+       (1, '[회원정보] 회원탈퇴는 어떻게 하나요?',
+        '[마이페이지]의 [회원정보 수정]의 맨 아래 회원탈퇴 텍스트를 누르신 후 탈퇴하실 수 있습니다. 감사합니다.',
         'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
 
 
 -- product
@@ -333,41 +244,145 @@ values (1, 'https://picsum.photos/200/300?random=0', 'Y', 1),
        (40, 'https://picsum.photos/200/300?random=39', 'N', 20);
 
 --  주문 내역
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (961, 823, 'Michael Johnson', '5166392274', 'Address777', 'Request433', 'PostalCode803', 'PayPal', 776, 977, 'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 1, 1);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (670, 619, 'John Smith', '5138545969', 'Address309', 'Request31', 'PostalCode612', 'Card', 699, 773, 'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 2, 2);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (529, 584, 'John Smith', '5251333195', 'Address492', 'Request648', 'PostalCode335', 'PayPal', 801, 37, 'FINISH', 'IMMEDIATE', '2023-03-17 12:00:00', 1, 3, 3);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (501, 628, 'Jane Doe', '5274567819', 'Address867', 'Request373', 'PostalCode882', 'Cash', 496, 420, 'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 4, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (827, 167, 'John Smith', '5159384926', 'Address491', 'Request303', 'PostalCode337', 'PayPal', 221, 547, 'DELIVERING', 'IMMEDIATE', '2023-05-17 12:00:00', 1, 5, 5);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (206, 724, 'Michael Johnson', '5282879563', 'Address869', 'Request813', 'PostalCode742', 'Card', 791, 226, 'DELIVER_DONE', 'IMMEDIATE', '2022-12-17 12:00:00', 1, 6, 6);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (32, 542, 'John Smith', '5137860168', 'Address563', 'Request319', 'PostalCode722', 'PayPal', 835, 836, 'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 7, 7);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (190, 784, 'Michael Johnson', '5130653182', 'Address688', 'Request604', 'PostalCode622', 'Card', 257, 724, 'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 8, 8);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (478, 690, 'Jane Doe', '5245672103', 'Address144', 'Request820', 'PostalCode112', 'Cash', 145, 372, 'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 9, 9);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (948, 751, 'Jane Doe', '5217390516', 'Address737', 'Request756', 'PostalCode734', 'PayPal', 562, 111, 'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 10, 10);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (614, 54, 'Jane Doe', '5228754101', 'Address891', 'Request598', 'PostalCode640', 'PayPal', 419, 992, 'DELIVER_DONE', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 1, 11);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (195, 331, 'Jane Doe', '5278241713', 'Address124', 'Request34', 'PostalCode527', 'Card', 665, 732, 'FINISH', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 2, 12);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (547, 51, 'John Smith', '5243207671', 'Address444', 'Request57', 'PostalCode119', 'Card', 278, 769, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-13 12:00:00', 2, 3, 13);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4, 14);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (459, 831, 'Michael Johnson', '5260220314', 'Address634', 'Request199', 'PostalCode974', 'Card', 166, 257, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-15 12:00:00', 2, 5, 15);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (530, 690, 'Michael Johnson', '5135564978', 'Address899', 'Request108', 'PostalCode822', 'PayPal', 356, 853, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-16 12:00:00', 2, 6, 16);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (286, 79, 'Jane Doe', '5258309082', 'Address44', 'Request681', 'PostalCode646', 'PayPal', 271, 543, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:04', 2, 7, 17);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:30', 2, 8, 18);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:02:00', 2, 9, 19);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:10:00', 2, 10, 20);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (961, 823, 'Michael Johnson', '5166392274', 'Address777', 'Request433', 'PostalCode803', 'PayPal', 776, 977,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 1, 1);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (670, 619, 'John Smith', '5138545969', 'Address309', 'Request31', 'PostalCode612', 'Card', 699, 773,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 2, 2);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (529, 584, 'John Smith', '5251333195', 'Address492', 'Request648', 'PostalCode335', 'PayPal', 801, 37, 'FINISH',
+        'IMMEDIATE', '2023-03-17 12:00:00', 1, 3, 3);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (501, 628, 'Jane Doe', '5274567819', 'Address867', 'Request373', 'PostalCode882', 'Cash', 496, 420,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 4, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (827, 167, 'John Smith', '5159384926', 'Address491', 'Request303', 'PostalCode337', 'PayPal', 221, 547,
+        'DELIVERING', 'IMMEDIATE', '2023-05-17 12:00:00', 1, 5, 5);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (206, 724, 'Michael Johnson', '5282879563', 'Address869', 'Request813', 'PostalCode742', 'Card', 791, 226,
+        'DELIVER_DONE', 'IMMEDIATE', '2022-12-17 12:00:00', 1, 6, 6);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (32, 542, 'John Smith', '5137860168', 'Address563', 'Request319', 'PostalCode722', 'PayPal', 835, 836,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 7, 7);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (190, 784, 'Michael Johnson', '5130653182', 'Address688', 'Request604', 'PostalCode622', 'Card', 257, 724,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 8, 8);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (478, 690, 'Jane Doe', '5245672103', 'Address144', 'Request820', 'PostalCode112', 'Cash', 145, 372,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 9, 9);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (948, 751, 'Jane Doe', '5217390516', 'Address737', 'Request756', 'PostalCode734', 'PayPal', 562, 111,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 10, 10);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (614, 54, 'Jane Doe', '5228754101', 'Address891', 'Request598', 'PostalCode640', 'PayPal', 419, 992,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 1, 11);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (195, 331, 'Jane Doe', '5278241713', 'Address124', 'Request34', 'PostalCode527', 'Card', 665, 732, 'FINISH',
+        'IMMEDIATE', '2023-03-17 12:00:00', 2, 2, 12);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (547, 51, 'John Smith', '5243207671', 'Address444', 'Request57', 'PostalCode119', 'Card', 278, 769,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-13 12:00:00', 2, 3, 13);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4, 14);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (459, 831, 'Michael Johnson', '5260220314', 'Address634', 'Request199', 'PostalCode974', 'Card', 166, 257,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-15 12:00:00', 2, 5, 15);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (530, 690, 'Michael Johnson', '5135564978', 'Address899', 'Request108', 'PostalCode822', 'PayPal', 356, 853,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-16 12:00:00', 2, 6, 16);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (286, 79, 'Jane Doe', '5258309082', 'Address44', 'Request681', 'PostalCode646', 'PayPal', 271, 543,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:04', 2, 7, 17);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:30', 2, 8, 18);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:02:00', 2, 9, 19);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id, id)
+VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297,
+        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:10:00', 2, 10, 20);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
 
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
 
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID', 'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
+                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
+                          buyer_id, product_id)
+VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
+        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
