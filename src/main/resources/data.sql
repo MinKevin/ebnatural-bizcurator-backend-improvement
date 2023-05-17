@@ -1,76 +1,246 @@
 -- 회원 데이터
 INSERT INTO member (username, password, member_role, business_name, business_number, postal_code, address,
                     business_registration, manager, manager_email, manager_phone_number)
-VALUES ('user', '$2a$10$LzE0lOWV3xyyXdFcl12VJOb0oLr7cduFZHL51X5z5a5bezwJ5b5lm', 'ROLE_USER', 'John Doe Inc.',
-        '123-45-67890', '12345', '123 Main Street, Anytown USA', '12345678-9', 'John Doe', 'john.doe@example.com',
-        '+1-123-456-7890'),
-       ('admin123', '$2a$10$Ald8g8dDd24x1JhYdTmC.OAA4bEhA65GP5GLOcSdrRkftqeFdztk6', 'ROLE_ADMIN', 'Jane Doe Inc.',
-        '098-76-54321', '54321', '543 Maple Avenue, Anytown USA', '98765432-1', 'Jane Doe', 'jane.doe@example.com',
-        '+1-987-654-3210'),
-       ('user123', '$2a$10$NDcbTahormwJsIgwfoctXO47jK3n5pmKbx7xnkMxTnf5rr6yIjQ22', 'ROLE_USER', 'user', '123-4512-1234',
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_USER', 'user', '123-4512-1234',
+        '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567'),
+       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user', '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567');
 
 -- 공지사항
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, '고정 1', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', true, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, '고정 2', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', true, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, '고정 3', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', true, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'NOTICE', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, '고정 1',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', true, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, '고정 2',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', true, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, '고정 3',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', true, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
 
 -- 자묻질
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at) values (1, 'Integer a nibh.', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.', 'FAQ', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
+insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+values (1, 'Integer a nibh.',
+        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
+        'FAQ', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
 
 
 -- product
@@ -181,13 +351,3 @@ INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_numbe
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 8, 18);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 9, 19);
 INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 2, 10, 20);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (879, 92, 'Michael Johnson', '5121137693', 'Address866', 'Request484', 'PostalCode167', 'PayPal', 330, 616, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 1, 21);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (515, 254, 'John Smith', '5119987997', 'Address867', 'Request28', 'PostalCode431', 'Card', 286, 36, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 2, 22);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (677, 543, 'Michael Johnson', '5286966125', 'Address775', 'Request376', 'PostalCode436', 'PayPal', 258, 856, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 3, 23);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (824, 995, 'John Smith', '5279447541', 'Address360', 'Request150', 'PostalCode826', 'Card', 713, 633, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 4, 24);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (938, 235, 'Jane Doe', '5277433727', 'Address388', 'Request698', 'PostalCode547', 'PayPal', 938, 503, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 5, 25);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (782, 409, 'Michael Johnson', '5220778401', 'Address623', 'Request244', 'PostalCode794', 'Cash', 646, 155, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 6, 26);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (402, 625, 'Michael Johnson', '5116013539', 'Address616', 'Request19', 'PostalCode787', 'PayPal', 867, 823, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 7, 27);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (534, 32, 'John Smith', '5299940621', 'Address510', 'Request722', 'PostalCode358', 'Card', 881, 748, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 8, 28);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (451, 22, 'Michael Johnson', '5181123671', 'Address31', 'Request209', 'PostalCode442', 'Cash', 188, 534, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 9, 29);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time, buyer_id, product_id, id) VALUES (901, 515, 'John Smith', '5297367310', 'Address265', 'Request145', 'PostalCode636', 'Card', 303, 940, 'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:00', 3, 10, 30);

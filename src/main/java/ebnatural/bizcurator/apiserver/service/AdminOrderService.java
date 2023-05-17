@@ -60,9 +60,10 @@ public class AdminOrderService {
         List<AdminOrderDetailDto> adminOrderDetailDtoList = new ArrayList<>();
         for (OrderDetail orderDetail : orderDetailPage) {
             Product product = orderDetailRepository.findProductById(orderDetail.getId());
-            Optional<Object[]> result = productRepository.findManufacturerAndCategoryById(product.getId());
-            Manufacturer manufacturer = (Manufacturer) result.get()[0];
-            Category category = (Category) result.get()[1];
+            Optional<Object[]> results = productRepository.findManufacturerAndCategoryById(product.getId());
+            Object[] result = results.get();
+            Manufacturer manufacturer = (Manufacturer) result[0];
+            Category category = (Category) result[1];
 
             AdminOrderDetailDto adminOrderDetailDto = AdminOrderDetailDto.of(
                     orderDetail.getId(),
