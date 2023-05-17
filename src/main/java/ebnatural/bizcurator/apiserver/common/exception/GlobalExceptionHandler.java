@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,6 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleCategoryNotFoundException", e);
         return handleExceptionInternal(e.getErrorCode(), e.getErrorCode().getMessage());
     }
+
     // ProductNotFoundException 에러 처리
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
@@ -84,6 +86,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleDataIntegrityViolation", e);
         return handleExceptionInternal(ErrorCode.DATA_INTEGRITY_VIOLATION, ErrorCode.DATA_INTEGRITY_VIOLATION.getMessage());
     }
+
     @ExceptionHandler(AlreadyRegisteredUserException.class)
     public ResponseEntity<Object> handleAlreadyRegisteredUserException(AlreadyRegisteredUserException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
@@ -95,13 +98,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleAlreadyRegisteredUserException", e);
         return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
     }
-    @ExceptionHandler(FieldValidationException.class)
-    public ResponseEntity<Object> FieldValidationException(FieldValidationException e) {
-        log.warn("handleAlreadyRegisteredUserException", e);
-        return handleExceptionInternal(ErrorCode.FIELD_VALIDATION_FAILED, ErrorCode.FIELD_VALIDATION_FAILED.getMessage());
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn("handleMethodArgumentNotValid", ex);
+        return handleExceptionInternal(ex);
     }
 
-    // @Valid 어노테이션으로 넘어오는 에러 처리
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.warn("handleBindException", ex);

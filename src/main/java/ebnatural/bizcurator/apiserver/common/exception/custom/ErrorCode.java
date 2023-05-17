@@ -14,7 +14,6 @@ public enum ErrorCode {
     METHOD_ARGUMENT_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "Method argument type mismatch"),
     BIND_EXCEPTION(HttpStatus.BAD_REQUEST, "Bind exception"),
     DATA_INTEGRITY_VIOLATION(HttpStatus.BAD_REQUEST, "Data integrity violation"),
-
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource not exists"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
@@ -31,7 +30,6 @@ public enum ErrorCode {
     BAD_CREDENTIALS(HttpStatus.BAD_REQUEST, "Access Token 의 잘못된 계정정보입니다."),
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR ,"서버 오류로 정상적으로 요청을 처리할 수 없습니다."),
     USERNAME_OR_PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 올바르지 않습니다."),
-    FIELD_VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "입력한 값이 올바르지 않습니다."),
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "회원을 찾을 수 없습니다.")
     ;
 
