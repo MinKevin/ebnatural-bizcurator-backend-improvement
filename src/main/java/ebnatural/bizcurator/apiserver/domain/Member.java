@@ -4,8 +4,8 @@ import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -19,8 +19,9 @@ public class Member extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 15)
-    @Size(min = 2, max = 15)
+
+    @Column(length = 320)
+    @Email(message = "이메일 형식에 맞지 않습니다.")
     String username;
     @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
             message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
