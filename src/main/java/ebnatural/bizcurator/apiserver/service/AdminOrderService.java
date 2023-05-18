@@ -6,6 +6,8 @@ import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.RefundApplication;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelState;
+import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
@@ -17,6 +19,9 @@ import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CancellationException;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -173,4 +178,15 @@ public class AdminOrderService {
         return Pair.of((int) refundApplicationPage.getTotalElements() ,adminApplicationDtoList);
     }
 
+    /**
+     * 주문 취소 신청서 승인, 거절 처리를 한다.
+     */
+    public void changeStateCancelApplication(Long applicationId, boolean isApproved) {
+        CancelApplication cancelApplication = cancelApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        cancelApplication.setState((true == isApproved) ? OrderCancelState.APPROVE : OrderCancelState.REJECTED);
+
+        cancelApplicationRepository.save(cancelApplication);
+    }
 }

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +44,7 @@ public class CancelApplication {
     @Enumerated(EnumType.STRING)
     private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private OrderCancelState state = OrderCancelState.WAIT; // 상태값
 
