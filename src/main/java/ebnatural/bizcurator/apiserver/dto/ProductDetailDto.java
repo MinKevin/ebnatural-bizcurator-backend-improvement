@@ -9,6 +9,7 @@ public class ProductDetailDto {
     @JsonProperty("category_id")
     private Long categoryId;
 
+    @JsonProperty("product_name")
     private String name;
 
     @JsonProperty("main_image_id")
