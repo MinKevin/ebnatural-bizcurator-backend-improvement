@@ -7,7 +7,7 @@ import lombok.Getter;
 
 import java.util.List;
 
-@AllArgsConstructor
+
 @Builder
 @Getter
 public class CartProductDto {
@@ -16,8 +16,14 @@ public class CartProductDto {
     private double discountPrice;//할인가
     private double regularPrice;//정가
     private int quantity;//수량
-    private List<ProductImage> productImage;
 
+    private List<ProductImageDto> productImageDtos;
 
-
+    public CartProductDto(String name, double discountPrice, double regularPrice, int quantity, List<ProductImageDto> productImageDtos) {
+        this.name = name;
+        this.discountPrice = discountPrice;
+        this.regularPrice = regularPrice;
+        this.quantity = quantity;
+        this.productImageDtos = productImageDtos;
+    }
 }

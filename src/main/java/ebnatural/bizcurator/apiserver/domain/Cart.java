@@ -2,7 +2,6 @@ package ebnatural.bizcurator.apiserver.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class Cart {
     private Member member;
 
     @Setter
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "product_id")
     private Product product;
 

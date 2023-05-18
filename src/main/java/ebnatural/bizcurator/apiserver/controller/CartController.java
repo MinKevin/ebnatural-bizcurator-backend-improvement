@@ -6,9 +6,11 @@ import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class CartController {
-    private final CartService cartService;
 
-    public static final String CONTAINING_SUCCESS = "장바구니담기 성공";
-    public static final String UPDATE_SUCCESS = "상품 수정 성공";
+  private final CartService cartService;
+
 
     @GetMapping("/api/carts")//장바구니 조회
     public ResponseEntity<CommonResponse> getCartsList() {
@@ -36,7 +37,7 @@ public class CartController {
     @PostMapping("/api/carts/add")
     public ResponseEntity<CommonResponse> containingProduct(@RequestBody CartProductRequest productRequest) {
         cartService.containingCartProducts(productRequest);
-        return CommonResponse.ok(HttpStatus.OK.value(), CONTAINING_SUCCESS);
+        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니담기 성공");
     }
 
     //장바구니 상품 수량 수정
@@ -44,7 +45,7 @@ public class CartController {
     public ResponseEntity<CommonResponse> updateProductQuantity(@RequestBody CartProductRequest productRequest) {
 
         cartService.updateProductQuantity(productRequest);
-        return CommonResponse.ok(HttpStatus.OK.value(), CONTAINING_SUCCESS);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 수정 성공");
     }
 
     //장바구니 상품 삭제
