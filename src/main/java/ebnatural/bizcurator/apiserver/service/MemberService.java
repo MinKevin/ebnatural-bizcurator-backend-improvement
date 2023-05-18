@@ -7,8 +7,8 @@ import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePas
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
-import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
+import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
 import ebnatural.bizcurator.apiserver.repository.MemberLoginLogRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
@@ -23,14 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.apache.tika.mime.MediaType.image;
 
 @Service
 @RequiredArgsConstructor
@@ -49,28 +44,23 @@ public class MemberService implements UserDetailsService {
      *
      * @param memberDto
      * @param image
-     * @return
      */
-    public Boolean signup(MemberRequest memberDto, MultipartFile image) throws IOException {
+    public void signup(MemberRequest memberDto, MultipartFile image) {
 
         if (memberDto.checkPassword())
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
 
         String storedPath = s3ImageUploadService.uploadImage(dir, image);
-        image.getInputStream().close();
         memberDto.setBusinessRegistration(storedPath);
 
         String username = memberDto.getUsername();
-        ;
         Optional.ofNullable(memberRepository.findByUsername(username))
                 .ifPresent(foundedMember -> {
                     throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
                 });
         memberDto.encodePrivacy(passwordEncoder);
         Member member = memberDto.toEntity();
-        image.getInputStream().close();
-        return !Optional.of(memberRepository.save(member))
-                .isEmpty();
+        memberRepository.save(member);
     }
 
     public void updateMember(MemberRequest memberDto, MultipartFile image) {
