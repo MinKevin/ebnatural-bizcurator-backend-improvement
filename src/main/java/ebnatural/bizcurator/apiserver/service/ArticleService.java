@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Slf4j
@@ -29,7 +28,7 @@ public class ArticleService {
     public List<ArticleDto> fetchNoticePagesBy(Long lastArticleId, BoardType boardType, Integer size, Boolean firstPage) {
 
         PageRequest pageRequest = PageRequest.of(0, size);
-        
+
         if (firstPage) {
             Page<ArticleDto> articlePage = articleRepository.findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(lastArticleId, boardType, pageRequest);
             return articlePage.getContent();
@@ -47,31 +46,24 @@ public class ArticleService {
     }
 
     public void saveArticle(ArticleDto articleDto) {
-        // TODO: 로그인 파트 완성되면 수정
         Member member = memberRepository.getReferenceById(articleDto.getMemberDto().getId());
         Article article = articleDto.toEntity(member);
         articleRepository.save(article);
     }
 
     public void updateArticle(Long articleId, ArticleDto articleDto) {
-        try {
-            Article article = articleRepository.getReferenceById(articleId);
+        Article article = articleRepository.getReferenceById(articleId);
 
-            if (articleDto.getTitle() != null) {
-                article.setTitle(articleDto.getTitle());
-            }
+        if (articleDto.getTitle() != null) {
+            article.setTitle(articleDto.getTitle());
+        }
 
-            if (articleDto.getContent() != null) {
-                article.setContent(articleDto.getContent());
-            }
+        if (articleDto.getContent() != null) {
+            article.setContent(articleDto.getContent());
+        }
 
-            if (articleDto.getIsFixed() != null) {
-                article.setIsFixed(articleDto.getIsFixed());
-            }
-
-        } catch (EntityNotFoundException e) {
-            // TODO: 후에 공통 에러 처리 로직 추가 예정
-            log.error("ArticleService.updateArticle: {}", e.getMessage());
+        if (articleDto.getIsFixed() != null) {
+            article.setIsFixed(articleDto.getIsFixed());
         }
     }
 
