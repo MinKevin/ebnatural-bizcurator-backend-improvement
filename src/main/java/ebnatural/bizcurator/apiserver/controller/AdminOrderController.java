@@ -72,4 +72,19 @@ public class AdminOrderController {
         historyMap.put("histories", adminApplicationPair.getSecond());
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 주문 취소신청 조회 완료했습니다.", historyMap);
     }
+
+    @Operation(summary = "주문 환불신청 내역", description = "조회 메서드")
+    @GetMapping("/applications/refunds")
+    public ResponseEntity<CommonResponse> showRefundApplications(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "search", required = false) String search) {
+
+        Pair<Integer, List<AdminApplicationDto>> adminApplicationPair =
+                adminOrderService.showOrderRefundListByPageIndexAndSearchKeyword(page, search);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminApplicationPair.getFirst());
+        historyMap.put("histories", adminApplicationPair.getSecond());
+        return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 주문 환불신청 조회 완료했습니다.", historyMap);
+    }
 }
