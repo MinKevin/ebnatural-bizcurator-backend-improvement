@@ -1,10 +1,5 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import ebnatural.bizcurator.apiserver.common.config.aop.CleanAuth;
-import ebnatural.bizcurator.apiserver.common.config.aop.CleanFile;
-import ebnatural.bizcurator.apiserver.common.exception.custom.BadRequestException;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
-import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,20 +92,16 @@ public class MemberController {
                 Map.of("info", (memberService.getMyInfo())));
     }
 
-    @CleanFile
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
-                                                 @RequestPart(value = "image", required = true) MultipartFile image) throws IOException {
-
+                                                 @RequestPart(value = "image", required = true) MultipartFile image) {
         memberService.signup(memberDto, image);
-        image.getInputStream().close();
         return CommonResponse.ok(HttpStatus.CREATED.value(), "signup success");
     }
-    @CleanFile
+
     @PatchMapping
     public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
-                                                       @RequestPart(value = "image") MultipartFile image) throws IOException {
-
+                                                       @RequestPart(value = "image") MultipartFile image) {
         memberService.updateMember(memberDto, image);
         return CommonResponse.ok(HttpStatus.CREATED.value(), "update success");
     }
