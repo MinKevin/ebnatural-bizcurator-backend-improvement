@@ -33,7 +33,8 @@ public enum ErrorCode {
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR ,"서버 오류로 정상적으로 요청을 처리할 수 없습니다."),
     USERNAME_OR_PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 올바르지 않습니다."),
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "회원을 찾을 수 없습니다."),
-    INVALID_DOCUMENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "요청서의 종류를 올바르게 선택해주세요.")
+    INVALID_DOCUMENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "요청서의 종류를 올바르게 선택해주세요."),
+    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "비밀번호가 올바르지 않습니다.")
     ;
 
     private final HttpStatus httpStatusCode;

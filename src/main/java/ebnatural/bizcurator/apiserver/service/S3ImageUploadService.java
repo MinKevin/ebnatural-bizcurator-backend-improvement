@@ -20,9 +20,7 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class S3ImageUploadService {
-
     private final AmazonS3 amazonS3Client;
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 

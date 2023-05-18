@@ -1,5 +1,7 @@
 package ebnatural.bizcurator.apiserver.common.config.filter;
 
+import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
+import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
 import ebnatural.bizcurator.apiserver.common.jwt.JwtProvider;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
@@ -44,8 +46,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 Member member = Optional.of(memberRepository.findByUsername(claims.getSubject())).orElseThrow(() ->
                         new BadCredentialsException("Access Token의 잘못된 계정정보입니다."));
 
+                if (member.getIsEnable() == false)
+                    new InvalidUsernamePasswordException(ErrorCode.USERNAME_OR_PASSWORD_WRONG);
+
                 Authentication auth = jwtProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(auth);
+
             } catch (ExpiredJwtException e) {
                 throw e;
             } catch (Exception e){
