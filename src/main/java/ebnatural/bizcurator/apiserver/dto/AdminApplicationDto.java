@@ -13,26 +13,15 @@ import lombok.Getter;
  */
 @Getter
 public class AdminApplicationDto {
-    @NotNull
     private Long applicationId;
-    @NotBlank
     private String productName;
-    @NotBlank
     private String manufacturerName;
-    @NotBlank
     private String productCategory;
-    @NotBlank
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime orderTime;
-    @NotBlank
     private String state;
-    @Positive
-    @NotNull
     private int quantity;
-    @Positive
-    @NotNull
     private int cost;
-    @NotBlank
     private String opinionCategory;
 
     private AdminApplicationDto(Long applicationId, String productName, String manufacturerName,
