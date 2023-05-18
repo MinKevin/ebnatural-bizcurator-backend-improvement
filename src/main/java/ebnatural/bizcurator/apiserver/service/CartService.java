@@ -1,30 +1,22 @@
 package ebnatural.bizcurator.apiserver.service;
 
 
-import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Cart;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.Product;
-import ebnatural.bizcurator.apiserver.domain.ProductImage;
 import ebnatural.bizcurator.apiserver.dto.CartProductDto;
-import ebnatural.bizcurator.apiserver.dto.ProductImageDto;
 import ebnatural.bizcurator.apiserver.dto.request.CartProductRequest;
 import ebnatural.bizcurator.apiserver.repository.CartRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -86,7 +78,8 @@ public class CartService {
     }
 
     public Member getMember() { // 로그인한 유저의 로그인정보 반환
-        Long memberId = MemberUtil.getMemberId();
+        // Long memberId = MemberUtil.getMemberId();
+        Long memberId = 1L;
         return memberRepository.findById(memberId).orElseThrow(NoSuchElementException::new);
     }
 
