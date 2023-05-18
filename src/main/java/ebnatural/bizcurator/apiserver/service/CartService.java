@@ -86,7 +86,8 @@ public class CartService {
     }
 
     public Member getMember() { // 로그인한 유저의 로그인정보 반환
-        Long memberId = MemberUtil.getMemberId();
+        //Long memberId = MemberUtil.getMemberId();
+        Long memberId = 1L;
         return memberRepository.findById(memberId).orElseThrow(NoSuchElementException::new);
     }
 
