@@ -25,6 +25,7 @@ public class Article extends WriterTimeEntity {
 
     @Setter
     @ToString.Exclude
+    @NotNull(message = "회원은 필수 입력값입니다.")
     @JoinColumn(name = "memberId")
     @ManyToOne(optional = false, fetch= FetchType.LAZY)
     private Member member;
@@ -42,6 +43,7 @@ public class Article extends WriterTimeEntity {
     private String content;
 
     @Setter
+    @NotNull(message = "게시판 종류는 필수 입력값입니다.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BoardType boardType;
