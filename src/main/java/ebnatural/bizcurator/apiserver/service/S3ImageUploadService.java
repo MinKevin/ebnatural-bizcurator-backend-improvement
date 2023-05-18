@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.IOUtils;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ImageUploadException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.NotImageFileException;
 import ebnatural.bizcurator.apiserver.common.util.ConvertDataType;
@@ -15,14 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
 public class S3ImageUploadService {
-
     private final AmazonS3 amazonS3Client;
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
@@ -37,10 +37,9 @@ public class S3ImageUploadService {
         String newFileName = changeFileName(dir, multipartFile);
 
         try {
-            String fileType = checkFileType(multipartFile);
+            InputStream inputStream = multipartFile.getInputStream();
+            ObjectMetadata objectMetadata = checkFileType(inputStream);
 
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentType(fileType);
 
             amazonS3Client.putObject(new PutObjectRequest(bucket, newFileName, multipartFile.getInputStream(), objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
@@ -63,19 +62,25 @@ public class S3ImageUploadService {
     /**
      * 파일 타입 확인
      *
-     * @param multipartFile
+     * @param inputStream
      * @return fileType
      */
-    public String checkFileType(MultipartFile multipartFile) throws IOException {
+    public ObjectMetadata checkFileType(InputStream inputStream) throws IOException {
         try {
-            String fileType = new Tika().detect(multipartFile.getInputStream());
+
+            String fileType = new Tika().detect(inputStream);
+
 
             // MIME타입이 이미지가 아니면 exception 발생
             if (!fileType.startsWith("image/")) {
                 throw new NotImageFileException();
             }
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(fileType);
+            objectMetadata.setContentLength(bytes.length);
 
-            return fileType;
+            return objectMetadata;
         } catch (IOException exception) {
             throw new ImageUploadException();
         }

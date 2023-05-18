@@ -39,7 +39,5 @@ public class CommonAspect {
     public void cleanAuth(){
         MemberUtil.clean();
     }
-
-
-
+    
 }
