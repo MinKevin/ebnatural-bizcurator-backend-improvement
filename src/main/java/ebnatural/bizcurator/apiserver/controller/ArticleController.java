@@ -44,13 +44,13 @@ public class ArticleController {
     @PostMapping("/api/notices")
     public ResponseEntity<CommonResponse> postNewNotice(@Valid @RequestBody ArticleCreateRequest articleCreateRequest) {
         articleService.saveArticle(articleCreateRequest.toDto(MemberDto.of(1L)));
-        return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 등록이 완료되었습니다.");
+        return CommonResponse.created(HttpStatus.CREATED.value(), "공지사항 등록이 완료되었습니다.");
     }
 
 //    @PostMapping("/api/notices")
 //    public ResponseEntity<CommonResponse> postNewNotice(@AuthenticationPrincipal MemberPrincipalDetails memberPrincipalDetails, @Valid @RequestBody ArticleCreateRequest articleCreateRequest) {
 //        articleService.saveArticle(articleCreateRequest.toDto(MemberDto.of(memberPrincipalDetails.getId())));
-//        return CommonResponse.ok(HttpStatus.OK.value(), "공지사항 등록이 완료되었습니다.");
+//        return CommonResponse.created(HttpStatus.CREATED.value(), "공지사항 등록이 완료되었습니다.");
 //    }
 
     @PutMapping("/api/notices/{articleId}")
