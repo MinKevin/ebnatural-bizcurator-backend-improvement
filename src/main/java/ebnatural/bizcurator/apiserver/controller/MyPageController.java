@@ -1,7 +1,10 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import com.querydsl.core.Tuple;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
+import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
@@ -13,6 +16,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +30,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageController {
 
     private final MyPageService myPageService;
+
+    @GetMapping
+    // todo: 시큐리티 설정하면 주석 해제
+    //public ResponseEntity<CommonResponse> showHome(@AuthenticationPrincipal MemberPrincipalDetails memberPrincipalDetails) {
+    //    MyPageHomeDto myPageHomeDto = myPageService.showHome(memberPrincipalDetails.getId());
+    public ResponseEntity<CommonResponse> showHome() {
+        MyPageHomeDto myPageHomeDto = myPageService.showHome(1L);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("histories", myPageHomeDto);
+        return CommonResponse.ok(HttpStatus.OK.value(), "홈 화면 로드 완료됐습니다.", historyMap);
+    }
 
     @GetMapping("/orders/products")
     public ResponseEntity<CommonResponse> showOrderHistoryList(
