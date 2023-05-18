@@ -6,40 +6,55 @@ import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import java.util.ArrayList;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 public class ProductRequest {
 
-        @JsonProperty("category_id")
-        private Long categoryId;
+    @NotNull(message = "카테고리 ID는 필수 입력값입니다.")
+    @Positive(message = "카테고리 ID는 양수여야 합니다.")
+    @JsonProperty("category_id")
+    private Long categoryId;
 
-        @JsonProperty("manufacturer_name")
-        private String manufacturerName;
+    @NotBlank(message = "제조사 이름은 필수 입력값입니다.")
+    @Size(max = 50, message = "제조사 이름은 최대 50자까지 입력 가능합니다.")
+    @JsonProperty("manufacturer_name")
+    private String manufacturerName;
 
-        @Length(max = 50, message = "최대 50글자")
-        @NotBlank(message = "상품명은 필수 입력값입니다.")
-        @JsonProperty("product_name")
-        private String name;
+    @NotBlank(message = "상품명은 필수 입력값입니다.")
+    @Size(max = 50, message = "상품명은 최대 50자까지 입력 가능합니다.")
+    @JsonProperty("product_name")
+    private String name;
 
-        @JsonProperty("regular_price")
-        private int regularPrice;
+    @NotNull(message = "정상 가격은 필수 입력값입니다.")
+    @Positive(message = "정상 가격은 양수여야 합니다.")
+    @JsonProperty("regular_price")
+    private Integer regularPrice;
 
-        @JsonProperty("min_quantity")
-        private int minQuantity;
+    @NotNull(message = "최소 수량은 필수 입력값입니다.")
+    @Positive(message = "최소 수량은 양수여야 합니다.")
+    @JsonProperty("min_quantity")
+    private Integer minQuantity;
 
-        @JsonProperty("max_quantity")
-        private int maxQuantity;
+    @NotNull(message = "최대 수량은 필수 입력값입니다.")
+    @Positive(message = "최대 수량은 양수여야 합니다.")
+    @JsonProperty("max_quantity")
+    private Integer maxQuantity;
 
-        @JsonProperty("discount_rate")
-        private int discountRate;
+    @NotNull(message = "할인율은 필수 입력값입니다.")
+    @Positive(message = "할인율은 양수여야 합니다.")
+    @JsonProperty("discount_rate")
+    private Integer discountRate;
 
 
-        public ProductRequest() {
-        }
+    public ProductRequest() {
+    }
 
-    public ProductRequest(Long categoryId, String manufacturerName, String name, int regularPrice, int minQuantity, int maxQuantity, int discountRate) {
+    public ProductRequest(Long categoryId, String manufacturerName, String name, int regularPrice,
+            int minQuantity, int maxQuantity, int discountRate) {
         this.categoryId = categoryId;
         this.manufacturerName = manufacturerName;
         this.name = name;
@@ -49,7 +64,7 @@ public class ProductRequest {
         this.discountRate = discountRate;
     }
 
-    public Product toEntity(Category category, Manufacturer manufacturer){
+    public Product toEntity(Category category, Manufacturer manufacturer) {
         return Product.builder()
                 .category(category)
                 .manufacturer(manufacturer)

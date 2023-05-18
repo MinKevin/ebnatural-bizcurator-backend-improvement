@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,38 +38,52 @@ public class Product extends TimeEntity {
 
     @Setter
     @Column(name = "name", nullable = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     private String name;
 
     @Setter
     @Column(name = "regular_price")
+    @NotNull
+    @Min(1)
     private Integer regularPrice;
 
     @Setter
     @Column(name = "min_quantity")
+    @NotNull
+    @Min(1)
     private Integer minQuantity;
 
     @Setter
     @Column(name = "max_quantity")
+    @NotNull
+    @Min(1)
     private Integer maxQuantity;
 
     @Setter
     @Column(name = "discount_rate")
+    @NotNull
+    @Min(0)
     private Integer discountRate;
 
     @Column(name = "weekly_clicks")
+    @NotNull
     private Integer weeklyClicks;
 
     @Column(name = "monthly_clicks")
+    @NotNull
     private Integer monthlyClicks;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @NotNull
     private Category category;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
+    @NotNull
     private Manufacturer manufacturer;
 
 
