@@ -2,6 +2,7 @@ package ebnatural.bizcurator.apiserver.repository;
 
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
+import ebnatural.bizcurator.apiserver.repository.querydsl.MemberRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
     @Query("SELECT m FROM Member m WHERE m.username = ?1 and m.isEnable = true")
     Member findByUsername(String username);
     @Query("SELECT m FROM Member m WHERE m.id = ?1 and m.isEnable = true")
