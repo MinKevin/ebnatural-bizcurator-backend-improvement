@@ -104,4 +104,14 @@ public class AdminOrderController {
         adminOrderService.changeStateCancelApplication(applicationId, applicationChangeStateDto.getType().equals("approve"));
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 주문 취소신청서 처리 완료했습니다.");
     }
+
+    @Operation(summary = "주문 환불 신청서 상태 처리", description = "승인,거절 처리를 합니다.")
+    @PutMapping("/applications/refunds/{application-id}")
+    public ResponseEntity<CommonResponse> changeStateRefundApplication(
+            @PathVariable("application-id") Long applicationId,
+            @Valid @RequestBody ApplicationChangeStateDto applicationChangeStateDto) {
+
+        adminOrderService.changeStateRefundApplication(applicationId, applicationChangeStateDto.getType().equals("approve"));
+        return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 주문 환불신청서 처리 완료했습니다.");
+    }
 }

@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelState;
+import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
@@ -18,7 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Length;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -53,9 +53,10 @@ public class RefundApplication {
     @Enumerated(EnumType.STRING)
     private ReceiveAddressType receiveAddressType = ReceiveAddressType.UNSELECTED; // 수거지 선택
 
+    @Setter
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    private OrderCancelState state = OrderCancelState.WAIT; // 상태값
+    private ApplicationState state = ApplicationState.WAIT; // 상태값
     private String address; // 수거지 주소
 
     @Column(length = 20)
