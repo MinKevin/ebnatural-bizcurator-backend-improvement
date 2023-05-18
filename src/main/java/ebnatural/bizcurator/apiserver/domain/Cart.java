@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Getter
@@ -29,6 +30,7 @@ public class Cart {
     private Product product;
 
     @Setter
+    @Min(value = 1, message = "최소 1개 이상 담아주세요")
     private int quantity; //장바구니에 담을 제품갯수
 
     public static Cart createCart(Member member, Product product, int quantity) {
