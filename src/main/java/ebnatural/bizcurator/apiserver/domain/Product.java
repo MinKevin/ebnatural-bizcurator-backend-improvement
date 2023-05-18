@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,53 +40,54 @@ public class Product extends TimeEntity {
 
     @Setter
     @Column(name = "name", nullable = false)
-    @NotNull
+    @NotBlank(message = "상품명은 필수 입력값입니다.")
     @Size(max = 50, message = "상품명은 최대 50자까지 입력 가능합니다.")
     private String name;
 
     @Setter
     @Column(name = "regular_price")
-    @NotNull
+    @NotNull(message = "정상 가격은 필수 입력값입니다.")
     @Positive(message = "정상 가격은 양수여야 합니다.")
     private Integer regularPrice;
-
-
+    
     @Setter
     @Column(name = "min_quantity")
-    @NotNull
+    @NotNull(message = "최소 수량은 필수 입력값입니다.")
     @Positive(message = "최소 수량은 양수여야 합니다.")
     private Integer minQuantity;
 
     @Setter
     @Column(name = "max_quantity")
-    @NotNull
+    @NotNull(message = "최대 수량은 필수 입력값입니다.")
     @Positive(message = "최대 수량은 양수여야 합니다.")
     private Integer maxQuantity;
 
     @Setter
     @Column(name = "discount_rate")
-    @NotNull
+    @NotNull(message = "할인율은 필수 입력값입니다.")
     @Positive(message = "할인율은 양수여야 합니다.")
     private Integer discountRate;
 
     @Column(name = "weekly_clicks")
-    @NotNull
+    @NotNull(message = "주간 클릭수는 초기값이 0입니다.")
     private Integer weeklyClicks;
 
     @Column(name = "monthly_clicks")
-    @NotNull
+    @NotNull(message = "월간 클릭수는 초기값이 0입니다.")
     private Integer monthlyClicks;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    @NotNull
+    @NotNull(message = "카테고리 ID는 필수 입력값입니다.")
+    @Positive(message = "카테고리 ID는 양수여야 합니다.")
     private Category category;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
-    @NotNull
+    @NotBlank(message = "제조사 이름은 필수 입력값입니다.")
+    @Size(max = 50, message = "제조사 이름은 최대 50자까지 입력 가능합니다.")
     private Manufacturer manufacturer;
 
 
