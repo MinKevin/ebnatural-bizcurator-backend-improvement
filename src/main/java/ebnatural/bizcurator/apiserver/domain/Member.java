@@ -1,51 +1,56 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
-import ebnatural.bizcurator.apiserver.domain.constant.TimeEntity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class Member extends TimeEntity{
+public class Member extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 15)
-    @Size(min = 2, max = 15)
-    String username;
-    @Pattern(regexp="[a-zA-Z1-9!@#$%^&*()]{8,16}",
-    message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
+    @Email(message = "이메일 형식에 맞지 않습니다.")
+    @Length(max = 320, message = "이메일은 320자리를 넘을 수 없습니다.")
+    private String username;
     String password;
     @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
-    @Column(nullable = false)
+    @NotBlank
+    String representative;
+    @NotBlank
     String businessName;
-    @Column(nullable = false)
+    @NotBlank
     String businessNumber;
-    @Column(nullable = false)
+    @NotBlank
     String postalCode;
-    @Column(nullable = false)
+    @NotBlank
     String address;
-    @Column(nullable = false)
+    @NotBlank
     String businessRegistration;
+    @NotBlank
     String manager;
+    @NotBlank
     String managerEmail;
+    @NotBlank
     String managerPhoneNumber;
+    Boolean isEnable = true;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_id")
     private List<OrderDetail> orderDetail;
 
@@ -61,11 +66,13 @@ public class Member extends TimeEntity{
     @Setter
     @Column
     private String refreshToken;
-    private Member(String username, String password, MemberRole memberRole, String businessName, String businessNumber, String postalCode, String address,
-                  String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
+
+    private Member(String username, String password, MemberRole memberRole, String representative, String businessName, String businessNumber, String postalCode, String address,
+                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
         this.username = username;
         this.password = password;
         this.memberRole = memberRole;
+        this.representative = representative;
         this.businessName = businessName;
         this.businessNumber = businessNumber;
         this.postalCode = postalCode;
@@ -76,12 +83,10 @@ public class Member extends TimeEntity{
         this.managerPhoneNumber = managerPhoneNumber;
     }
 
-    public Member() {}
-
-
     public static Member of(String username,
                             String password,
                             MemberRole memberRole,
+                            String representative,
                             String businessName,
                             String businessNumber,
                             String postalCode,
@@ -89,10 +94,11 @@ public class Member extends TimeEntity{
                             String businessRegistration,
                             String manager,
                             String managerEmail,
-                            String managerPhoneNumber){
+                            String managerPhoneNumber) {
         return new Member(username,
                 password,
                 memberRole,
+                representative,
                 businessName,
                 businessNumber,
                 postalCode,
@@ -101,5 +107,24 @@ public class Member extends TimeEntity{
                 manager,
                 managerEmail,
                 managerPhoneNumber);
+    }
+
+    public Member expire() {
+        this.isEnable = false;
+        return this;
+    }
+
+    public Member update(MemberRequest memberDto){
+        this.password = memberDto.getPassword();
+        this.businessName = memberDto.getBusinessName();
+        this.businessNumber = memberDto.getBusinessNumber();
+        this.postalCode = memberDto.getPostalCode();
+        this.address = memberDto.getAddress();
+        if (!memberDto.getBusinessRegistration().equals(""))
+            this.businessRegistration = memberDto.getBusinessRegistration();
+        this.manager = memberDto.getManager();
+        this.managerEmail = memberDto.getManagerEmail();
+        this.managerPhoneNumber = memberDto.getManagerPhoneNumber();
+        return this;
     }
 }

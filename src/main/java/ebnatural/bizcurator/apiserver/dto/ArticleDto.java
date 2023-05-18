@@ -38,12 +38,23 @@ public class ArticleDto {
         this.createdAt = createdAt;
     }
 
+    private ArticleDto(String title, String content, BoardType boardType, Boolean isFixed) {
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+        this.isFixed = isFixed;
+    }
+
     private ArticleDto(MemberDto memberDto, String title, String content, BoardType boardType, Boolean isFixed) {
         this.memberDto = memberDto;
         this.title = title;
         this.content = content;
         this.boardType = boardType;
         this.isFixed = isFixed;
+    }
+
+    public static ArticleDto of(String title, String content, BoardType boardType, Boolean isFixed) {
+        return new ArticleDto(title, content, boardType, isFixed);
     }
 
     public static ArticleDto of(MemberDto memberDto, String title, String content, BoardType boardType, Boolean isFixed) {

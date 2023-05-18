@@ -26,7 +26,8 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
 
     @Override
     public Page<ArticleDto> findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(Long lastArticleId, BoardType boardType, PageRequest pageRequest) {
-        List<ArticleDto> fixed_content = queryFactory
+
+        List<ArticleDto> articles = queryFactory
                 .select(new QArticleDto(
                         article.id,
                         article.title,
@@ -34,29 +35,14 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
                         article.isFixed,
                         article.createdAt))
                 .from(article)
-                .where(boardTypeEq(boardType), article.isFixed.isTrue())
-                .orderBy(article.id.desc())
+                .where(idLessThan(lastArticleId), boardTypeEq(boardType))
+                .orderBy(article.isFixed.desc(), article.id.desc())
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
                 .fetch();
 
-        fixed_content.addAll(queryFactory
-                .select(new QArticleDto(
-                        article.id,
-                        article.title,
-                        article.content,
-                        article.isFixed,
-                        article.createdAt))
-                .from(article)
-                .where(idLessThan(lastArticleId), boardTypeEq(boardType), article.isFixed.isFalse())
-                .orderBy(article.id.desc())
-                .offset(pageRequest.getOffset())
-                .limit(pageRequest.getPageSize() - fixed_content.size())
-                .fetch());
-
-        int total = queryFactory.selectFrom(article)
-                .where(idLessThan(lastArticleId), boardTypeEq(boardType))
-                .fetch().size();
-
-        return new PageImpl<>(fixed_content, pageRequest, total);
+        int total = articles.size();
+        return new PageImpl<>(articles, pageRequest, total);
     }
 
     @Override

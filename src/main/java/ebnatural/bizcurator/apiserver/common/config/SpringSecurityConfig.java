@@ -1,16 +1,13 @@
 package ebnatural.bizcurator.apiserver.common.config;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import ebnatural.bizcurator.apiserver.common.exception.FilterExceptionHandler;
 import ebnatural.bizcurator.apiserver.common.config.filter.JwtFilter;
+import ebnatural.bizcurator.apiserver.common.exception.FilterExceptionHandler;
 import ebnatural.bizcurator.apiserver.common.jwt.JwtProvider;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -19,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -48,16 +44,19 @@ public class SpringSecurityConfig {
         http.rememberMe().disable();
         http.cors();
         http.formLogin().disable();
-
         http.authorizeRequests()
-                .antMatchers("/login", "/signup", "/api/users/login", "/api/users/signup").permitAll()
-                .antMatchers("/api/admins/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/products/").hasRole("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("*").permitAll()
+                .anyRequest().permitAll();
 
+//        http.authorizeRequests()
+//                .antMatchers("/login", "/signup", "/api/users/login", "/api/users/signup").permitAll()
+//                .antMatchers("/api/admins/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")
+//                .anyRequest().authenticated();
+//
         http.exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {
                     @Override
@@ -73,7 +72,7 @@ public class SpringSecurityConfig {
                         throw accessDeniedException;
                     }
                 });
-
+//
         http.addFilterBefore(jwtAuthorizationFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(new FilterExceptionHandler(), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
