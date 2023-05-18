@@ -2,7 +2,11 @@ package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class ProductListDto {
@@ -28,8 +32,11 @@ public class ProductListDto {
     @JsonProperty("sale_price")
     private int salePrice;
 
+    @JsonProperty("min_quantity")
+    private int minQuantity;
+
     @QueryProjection
-    public ProductListDto(Long id, Long categoryId, String name, Long mainImageId, String mainImageUrl, int regularPrice, int discountRate) {
+    public ProductListDto(Long id, Long categoryId, String name, Long mainImageId, String mainImageUrl, int regularPrice, int discountRate, int minQuantity) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -37,6 +44,7 @@ public class ProductListDto {
         this.mainImageUrl = mainImageUrl;
         this.regularPrice = regularPrice;
         this.discountRate = discountRate;
+        this.minQuantity = minQuantity;
         this.salePrice = regularPrice * (100 - discountRate) / 100;
     }
 
