@@ -39,7 +39,6 @@ public class MemberController {
      */
     @PostMapping("/login")
     public ResponseEntity<CommonResponse> login(@Valid @RequestBody LoginRequest loginDto) throws Exception {
-        System.out.println(loginDto.getUsername() + " " + loginDto.getPassword());
         MemberDto member = memberAuthService.login(loginDto);
         Map<String, Object> mp = new HashMap<>();
         mp.put("login", member);
