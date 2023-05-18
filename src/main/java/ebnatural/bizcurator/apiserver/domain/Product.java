@@ -1,18 +1,32 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "product")
 @Getter
+@Builder
 @ToString(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product extends TimeEntity {
 
     @Id
@@ -55,10 +69,13 @@ public class Product extends TimeEntity {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
-    @Setter
+
     //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복
+    @Setter
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages = new ArrayList<>();
+
+
 
     @Override
     public boolean equals(Object o) {
