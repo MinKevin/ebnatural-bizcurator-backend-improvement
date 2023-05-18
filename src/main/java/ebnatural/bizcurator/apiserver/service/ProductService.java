@@ -2,16 +2,21 @@ package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ProductNotFoundException;
+import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.ProductImage;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
+import ebnatural.bizcurator.apiserver.dto.ProductDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.repository.CategoryRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -20,7 +25,25 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;  // CategoryRepository 인스턴스 추가
     private final ProductImageRepository productImageRepository;
+    private final S3ImageUploadService s3ImageUploadService;
 
+    @Value("${cloud.aws.s3.product-dir}")
+    private String productDir;
+    @Transactional
+    public ProductDto registerProduct(ProductDto productDto, MultipartFile mainImage, MultipartFile detailImage){
+        Product product = productRepository.save(productDto.toEntity(productRepository));
+
+        String mainImageUrl = s3ImageUploadService.uploadImage(productDir, mainImage);
+        String detailImageUrl = s3ImageUploadService.uploadImage(productDir, detailImage);
+
+        ProductImage mainProductImage = ProductImage.createProductImage(product, mainImageUrl, "Y");
+        ProductImage detailProductImage = ProductImage.createProductImage(product, detailImageUrl, "N");
+
+        product.getProductImages().add(mainProductImage);
+        product.getProductImages().add(detailProductImage);
+
+        return new ProductDto(product);
+    }
     public List<ProductListDto> getProducts(Long categoryId, String sort) {
         if (categoryId != null && !categoryRepository.existsById(categoryId)) {  // 인스턴스를 사용하여 existsById 메소드 호출 및 categoryId가 존재할 때만
             throw new CategoryNotFoundException();

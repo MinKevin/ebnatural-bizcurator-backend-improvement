@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/testDB
+    url: jdbc:mysql://localhost:3306/Test
     username: root
-    password:
+    password: qijcoj-2naqky-gythUt
 
   jpa:
     open-in-view: false

@@ -45,13 +45,17 @@ public class Product extends TimeEntity {
     @Column(name = "monthly_clicks")
     private Integer monthlyClicks;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    @Setter
     //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages = new ArrayList<>();

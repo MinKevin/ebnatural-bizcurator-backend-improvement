@@ -1,23 +1,34 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPQLQueryFactory;
 import com.querydsl.jpa.impl.JPAQuery;
-import ebnatural.bizcurator.apiserver.domain.Product;
+import ebnatural.bizcurator.apiserver.domain.Category;
+import ebnatural.bizcurator.apiserver.domain.Manufacturer;
+import ebnatural.bizcurator.apiserver.domain.QCategory;
+import ebnatural.bizcurator.apiserver.domain.QManufacturer;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.dto.QProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.QProductListDto;
+import java.util.List;
+import java.util.Objects;
+import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-
 public class ProductRepositoryImpl extends QuerydslRepositorySupport implements ProductRepositoryCustom {
-    public ProductRepositoryImpl() {
-        super(Product.class);
+    private final QManufacturer manufacturerEntity = QManufacturer.manufacturer;
+    private final JPQLQueryFactory queryFactory;
+
+    public ProductRepositoryImpl(JPQLQueryFactory queryFactory) {
+        super(Manufacturer.class);
+        this.queryFactory = queryFactory;
     }
+
+
 
     private BooleanExpression productNameLike(String keyword) {
         return StringUtils.isEmpty(keyword) ? QProduct.product.name.like("%") : QProduct.product.name.like("%" + keyword + "%");
@@ -164,5 +175,29 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
         return query.fetch();
     }
+    @Transactional
+    @Override
+    public Manufacturer findOrCreateManufacturer(String name) {
+        Manufacturer manufacturer = queryFactory
+                .selectFrom(manufacturerEntity)
+                .where(manufacturerEntity.name.eq(name))
+                .fetchOne();
+
+        if (manufacturer == null) {
+            manufacturer = new Manufacturer();
+            manufacturer.setName(name);
+            Objects.requireNonNull(getEntityManager()).persist(manufacturer);
+        }
+
+        return manufacturer;
+    }
+    @Override
+    public Category findCategoryById(Long id) {
+        QCategory category = QCategory.category;
+        JPAQuery<Category> query = new JPAQuery<>(Objects.requireNonNull(getEntityManager()));
+        query.select(category).from(category).where(category.id.eq(id));
+        return query.fetchOne();
+    }
+
 
 }

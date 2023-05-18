@@ -1,4 +1,6 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
+import ebnatural.bizcurator.apiserver.domain.Category;
+import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import java.util.List;
@@ -9,5 +11,7 @@ public interface ProductRepositoryCustom {
     ProductDetailDto findDetailById(Long productId);
     List<ProductListDto> findTop3ByWeeklyClicks();
     List<ProductListDto> findTop3ByMonthlyClicks();
+    Manufacturer findOrCreateManufacturer(String name);
+    Category findCategoryById(Long id);
 
 }
