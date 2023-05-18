@@ -99,7 +99,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InvalidUsernamePasswordException.class)
     public ResponseEntity<Object> InvalidUsernamePasswordException(InvalidUsernamePasswordException e) {
         log.warn("handleAlreadyRegisteredUserException", e);
-        return handleExceptionInternal(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION, ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION.getMessage());
+        return handleExceptionInternal(ErrorCode.USERNAME_OR_PASSWORD_WRONG, ErrorCode.USERNAME_OR_PASSWORD_WRONG.getMessage());
     }
 
     @Override

@@ -4,7 +4,9 @@ import ebnatural.bizcurator.apiserver.common.config.aop.CleanAuth;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MemberUtil {
     private static Authentication authentication;
     @CleanAuth
