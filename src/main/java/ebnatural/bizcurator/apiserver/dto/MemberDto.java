@@ -21,11 +21,7 @@ import javax.validation.constraints.Pattern;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MemberDto {
     private Long id;
-    @Email(message = "이메일 형식에 맞지 않습니다.")
-    @Length(max = 320, message = "이메일은 320자리를 넘을 수 없습니다.")
     private String username;
-    @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
-            message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
     String password;
     MemberRole memberRole = MemberRole.ROLE_USER;
     String businessName;
@@ -64,7 +60,7 @@ public class MemberDto {
     }
 
     public Member toEntity () {
-        return Member.of(username, password, memberRole, businessName, businessNumber, postalCode, address,
+        return Member.of(username, password, memberRole, representative, businessName, businessNumber, postalCode, address,
                 businessRegistration, manager, managerEmail, managerPhoneNumber);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {

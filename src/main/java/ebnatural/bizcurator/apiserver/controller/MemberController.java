@@ -1,5 +1,7 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.common.config.aop.CleanAuth;
+import ebnatural.bizcurator.apiserver.common.config.aop.CleanFile;
 import ebnatural.bizcurator.apiserver.common.exception.custom.BadRequestException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +39,7 @@ public class MemberController {
      */
     @PostMapping("/login")
     public ResponseEntity<CommonResponse> login(@Valid @RequestBody LoginRequest loginDto) throws Exception {
+        System.out.println(loginDto.getUsername() + " " + loginDto.getPassword());
         MemberDto member = memberAuthService.login(loginDto);
         Map<String, Object> mp = new HashMap<>();
         mp.put("login", member);
@@ -79,7 +83,7 @@ public class MemberController {
      */
     @GetMapping()
     public ResponseEntity<CommonResponse> getAllMember() {
-        return CommonResponse.ok(HttpStatus.OK.value(), "logout success",
+        return CommonResponse.ok(HttpStatus.OK.value(), "get all member info success",
                 Map.of("result", (memberService.getAllMember())));
     }
 
@@ -92,18 +96,25 @@ public class MemberController {
     @GetMapping("/check")
     public ResponseEntity<CommonResponse> getMyInfo() {
         return CommonResponse.ok(HttpStatus.OK.value(), "getInfo success",
-                Map.of("result", (memberService.getMyInfo())));
+                Map.of("info", (memberService.getMyInfo())));
     }
 
+    @CleanFile
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
-                                                 @RequestPart(value = "image", required = true) MultipartFile image) throws Exception {
-        if (memberDto.checkPassword()) {
-            throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
-        }
+                                                 @RequestPart(value = "image", required = true) MultipartFile image) throws IOException {
 
-        return CommonResponse.ok(HttpStatus.OK.value(), "signup success",
-                Map.of("result", (memberService.signup(memberDto, image))));
+        memberService.signup(memberDto, image);
+        image.getInputStream().close();
+        return CommonResponse.ok(HttpStatus.CREATED.value(), "signup success");
+    }
+    @CleanFile
+    @PatchMapping
+    public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
+                                                       @RequestPart(value = "image") MultipartFile image) throws IOException {
+
+        memberService.updateMember(memberDto, image);
+        return CommonResponse.ok(HttpStatus.CREATED.value(), "update success");
     }
 
     @DeleteMapping

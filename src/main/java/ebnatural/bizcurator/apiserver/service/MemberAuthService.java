@@ -54,7 +54,7 @@ public class MemberAuthService {
 
     /**
      * 프론트 단에서는 Local Storage에 저장된 access, refresh token 폐기한다.
-     * user_account 테이블의 refresh token 컬럼값을 없애준다.
+     * member 테이블의 refresh token 컬럼값을 없애준다.
      * @param accessToken 회원정보를 꺼내올 access token
      */
     public boolean logout(String accessToken) {
@@ -81,7 +81,7 @@ public class MemberAuthService {
 
 
     /**
-     * refresh 토큰 생성 + userAccount에 저장 + member db 테이블에 저장
+     * refresh 토큰 생성 + member 에 저장 + member db 테이블에 저장
      * @param member
      * @return
      */
@@ -106,7 +106,7 @@ public class MemberAuthService {
      * @return
      * @throws Exception
      */
-    public TokenDto refreshToken(String accessToken) throws Exception {
+    public TokenDto refreshToken(String accessToken) {
         String userName = null;
 
         try{

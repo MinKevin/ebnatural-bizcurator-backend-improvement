@@ -39,4 +39,7 @@ cloud:
     s3:
       bucket: s3-ebnatural
       product-dir: product_images
-      document-dir: document_images
+      purchase-document-dir: purchase_document_images
+      make-document-dir: make_document_images
+      sell-document-dir: sell_document_images
+      business-registration-dir: business_registration_images

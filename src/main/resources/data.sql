@@ -1,18 +1,18 @@
 -- 회원 데이터
-INSERT INTO member (username, password, member_role, business_name, business_number, postal_code, address,
-                    business_registration, manager, manager_email, manager_phone_number, created_at, modified_at)
-VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user',
+INSERT INTO member (username, password, member_role, representative, business_name, business_number, postal_code, address,
+                    business_registration, manager, manager_email, manager_phone_number, created_at, modified_at, is_enable)
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep', 'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
-        '2022-11-02 10:18:32'),
-       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'user',
+        '2022-11-02 10:18:32', true),
+       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep', 'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
-        '2022-11-02 10:18:32'),
-       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'user',
+        '2022-11-02 10:18:32', true),
+       ('user@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', 'userRep', 'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
-        '2022-11-02 10:18:32');
+        '2022-11-02 10:18:32', true);
 
 -- 공지사항
 insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)

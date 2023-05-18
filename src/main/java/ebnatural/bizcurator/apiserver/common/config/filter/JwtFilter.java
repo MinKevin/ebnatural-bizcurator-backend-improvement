@@ -46,7 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 Member member = Optional.of(memberRepository.findByUsername(claims.getSubject())).orElseThrow(() ->
                         new BadCredentialsException("Access Token의 잘못된 계정정보입니다."));
 
-                if (member.getIsNonExpired() == false)
+                if (member.getIsEnable() == false)
                     new InvalidUsernamePasswordException(ErrorCode.USERNAME_OR_PASSWORD_WRONG);
 
                 Authentication auth = jwtProvider.getAuthentication(accessToken);
