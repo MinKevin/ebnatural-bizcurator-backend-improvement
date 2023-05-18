@@ -391,3 +391,4 @@ INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_numbe
                           buyer_id, product_id)
 VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
         'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
+

@@ -48,11 +48,11 @@ public class Product extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages = new ArrayList<>();
 
@@ -73,5 +73,13 @@ public class Product extends TimeEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+    /**
+     *
+     * @return 할인율을 포함한 물건 가격 반환
+     */
+    public int getCostWithDiscount() {
+        return this.regularPrice * (100 - this.discountRate)/100;
+    }
+
 
 }
