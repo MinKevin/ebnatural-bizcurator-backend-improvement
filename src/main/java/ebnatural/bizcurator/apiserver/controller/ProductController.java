@@ -1,19 +1,29 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
+import ebnatural.bizcurator.apiserver.dto.ProductDto;
+import ebnatural.bizcurator.apiserver.dto.request.ProductRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.service.ProductService;
+import ebnatural.bizcurator.apiserver.service.S3ImageUploadService;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +31,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
     private final ProductService productService;
 
+    @Value("${cloud.aws.s3.product-dir}")
+    private String productDir;
+
+    @PostMapping
+    public ResponseEntity<CommonResponse> createProduct(
+            @RequestPart("productRequest") @Valid ProductRequest productRequest,
+            @RequestPart(value = "mainImage") MultipartFile mainImage,
+            @RequestPart(value = "detailImage") MultipartFile detailImage
+    ) {
+        productService.registerProduct(productRequest, mainImage, detailImage);
+        return CommonResponse.ok(HttpStatus.CREATED.value(), "상품 생성이 완료되었습니다.");
+    }
     @GetMapping
     public ResponseEntity<CommonResponse> getProducts(
             @RequestParam(required = false) Long categoryId,
