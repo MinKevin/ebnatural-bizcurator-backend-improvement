@@ -31,7 +31,7 @@ public class MemberAuthService {
      * @throws Exception
      */
     @LoginLog
-    public MemberDto login(MemberDto memberDto) throws Exception {
+    public MemberDto login(MemberDto memberDto) {
 
         Member member = Optional.ofNullable(memberRepository.findByUsername(memberDto.getUsername()))
                 .orElseThrow(() ->
