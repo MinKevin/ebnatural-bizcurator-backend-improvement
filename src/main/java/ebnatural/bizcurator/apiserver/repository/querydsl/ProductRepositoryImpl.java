@@ -175,29 +175,4 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 
         return query.fetch();
     }
-    @Transactional
-    @Override
-    public Manufacturer findOrCreateManufacturer(String name) {
-        Manufacturer manufacturer = queryFactory
-                .selectFrom(manufacturerEntity)
-                .where(manufacturerEntity.name.eq(name))
-                .fetchOne();
-
-        if (manufacturer == null) {
-            manufacturer = new Manufacturer();
-            manufacturer.setName(name);
-            Objects.requireNonNull(getEntityManager()).persist(manufacturer);
-        }
-
-        return manufacturer;
-    }
-    @Override
-    public Category findCategoryById(Long id) {
-        QCategory category = QCategory.category;
-        JPAQuery<Category> query = new JPAQuery<>(Objects.requireNonNull(getEntityManager()));
-        query.select(category).from(category).where(category.id.eq(id));
-        return query.fetchOne();
-    }
-
-
 }

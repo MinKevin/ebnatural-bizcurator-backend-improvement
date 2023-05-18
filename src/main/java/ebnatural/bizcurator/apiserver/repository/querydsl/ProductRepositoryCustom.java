@@ -11,7 +11,5 @@ public interface ProductRepositoryCustom {
     ProductDetailDto findDetailById(Long productId);
     List<ProductListDto> findTop3ByWeeklyClicks();
     List<ProductListDto> findTop3ByMonthlyClicks();
-    Manufacturer findOrCreateManufacturer(String name);
-    Category findCategoryById(Long id);
 
 }

@@ -3,6 +3,7 @@ package ebnatural.bizcurator.apiserver.controller;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDto;
+import ebnatural.bizcurator.apiserver.dto.request.ProductRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
 import ebnatural.bizcurator.apiserver.service.ProductService;
@@ -29,22 +30,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
-    private final S3ImageUploadService s3ImageUploadService;
 
     @Value("${cloud.aws.s3.product-dir}")
     private String productDir;
 
     @PostMapping
     public ResponseEntity<CommonResponse> createProduct(
-            @RequestPart("productDto") @Valid ProductDto productDto,
-            @RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
-            @RequestPart(value = "detailImage", required = false) MultipartFile detailImage
+            @RequestPart("productRequest") @Valid ProductRequest productRequest,
+            @RequestPart(value = "mainImage") MultipartFile mainImage,
+            @RequestPart(value = "detailImage") MultipartFile detailImage
     ) {
-
-        ProductDto createdProduct = productService.registerProduct(productDto, mainImage, detailImage);
-        HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("product", createdProduct);
-        return CommonResponse.ok(HttpStatus.CREATED.value(), "상품 생성이 완료되었습니다.", productMap);
+        productService.registerProduct(productRequest, mainImage, detailImage);
+        return CommonResponse.ok(HttpStatus.CREATED.value(), "상품 생성이 완료되었습니다.");
     }
     @GetMapping
     public ResponseEntity<CommonResponse> getProducts(

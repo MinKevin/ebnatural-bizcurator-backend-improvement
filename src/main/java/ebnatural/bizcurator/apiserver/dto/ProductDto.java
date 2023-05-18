@@ -1,12 +1,7 @@
 package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ebnatural.bizcurator.apiserver.domain.Category;
-import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Product;
-import ebnatural.bizcurator.apiserver.domain.ProductImage;
-import ebnatural.bizcurator.apiserver.repository.querydsl.ProductRepositoryCustom;
-import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,26 +47,6 @@ public class ProductDto {
     }
 
 
-    public Product toEntity(ProductRepositoryCustom productRepositoryCustom) {
-        Product product = new Product();
-        product.setName(this.name);
-        product.setRegularPrice(this.regularPrice);
-        product.setMinQuantity(this.minQuantity);
-        product.setMaxQuantity(this.maxQuantity);
-        product.setDiscountRate(this.discountRate);
 
-        // Get or create manufacturer by its name
-        Manufacturer manufacturer = productRepositoryCustom.findOrCreateManufacturer(this.manufacturerName);
-
-        // Find category by its ID using ProductRepositoryCustom
-        Category category = productRepositoryCustom.findCategoryById(this.categoryId);
-
-
-        product.setCategory(category);
-        product.setManufacturer(manufacturer);
-        product.setProductImages(new ArrayList<>());
-
-        return product;
-    }
 
 }
