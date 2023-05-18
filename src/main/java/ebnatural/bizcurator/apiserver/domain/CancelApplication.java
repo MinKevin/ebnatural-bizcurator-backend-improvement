@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelState;
+import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,8 +44,9 @@ public class CancelApplication {
     @Enumerated(EnumType.STRING)
     private OrderCancelType opinionCategory = OrderCancelType.UNSELECTED; // 취소 사유 카테고리
 
+    @Setter
     @Enumerated(EnumType.STRING)
-    private OrderCancelState state = OrderCancelState.WAIT; // 상태값
+    private ApplicationState state = ApplicationState.WAIT; // 상태값
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 

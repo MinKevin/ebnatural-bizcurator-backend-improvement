@@ -49,8 +49,8 @@ public class CartController {
     }
 
     //장바구니 상품 삭제
-    @PostMapping("/api/carts/delete/{product_id}")
-    public ResponseEntity<CommonResponse> deleteCartsList(@PathVariable("product_id") Long productId) {
+    @PostMapping("/api/carts/delete")
+    public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody Long productId) {
         cartService.deleteProductsByCart(productId);
         List<CartProductDto> cartsList = cartService.getCartsList();
         HashMap<String, Object> cartMap = new HashMap<>();
