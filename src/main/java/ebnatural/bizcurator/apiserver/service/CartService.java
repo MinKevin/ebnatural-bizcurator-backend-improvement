@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.service;
 
 
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Cart;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.Product;
@@ -15,6 +16,7 @@ import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +37,8 @@ public class CartService {
 
     //장바구니 조회
     @Transactional(readOnly = true)
-    public List<CartProductDto> getCartsList() {//cart DB에 회원번호에 맞는 cart 를 찾아서 cart안에있는 product들을 리스트로 반환해줘야함
-        Long memberId = 1L;
+    public List<CartProductDto> getCartsList() {
+        Long memberId = getMember().getId();
 
         List<Cart> cartList = cartRepository.findByMemberId(memberId);
         List<CartProductDto> cartProductDtos = new ArrayList<>();
@@ -60,11 +62,11 @@ public class CartService {
     //장바구니에 제품 담기
     public void containingCartProducts(CartProductRequest cartProductRequest) {
         Member member = getMember();
-        //예외처리필요
-        Product product = productRepository.findById(cartProductRequest.getProductId()).orElseThrow(() -> new NoSuchElementException("No value present"));
-        Cart newCart = Cart.createCart(member, product, cartProductRequest.getQuantity());
-
-        cartRepository.save(newCart);
+        if (!(cartProductRequest.getQuantity()<=0)){
+            Product product = productRepository.findById(cartProductRequest.getProductId()).orElseThrow(() -> new NoSuchElementException("No value present"));
+            Cart newCart = Cart.createCart(member, product, cartProductRequest.getQuantity());
+            cartRepository.save(newCart);
+        }
     }
 
     //장바구니 상품 수량 수정
@@ -73,7 +75,7 @@ public class CartService {
         //예외처리필요
         Cart cart = cartRepository.findByProduct_Id(productRequest.getProductId());
         cart.updateCount(updateQuantity);
-
+        cartRepository.save(cart);
     }
 
     //장바구니 상품 삭제
@@ -84,8 +86,8 @@ public class CartService {
     }
 
     public Member getMember() { // 로그인한 유저의 로그인정보 반환
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (Member) authentication.getPrincipal();
+        Long memberId = MemberUtil.getMemberId();
+        return memberRepository.findById(memberId).orElseThrow(NoSuchElementException::new);
     }
 
     //Cart에 Request로 들어온 ProductId가 있는지 체크
