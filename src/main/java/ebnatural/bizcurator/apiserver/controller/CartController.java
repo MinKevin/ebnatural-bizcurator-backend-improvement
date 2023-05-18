@@ -55,7 +55,7 @@ public class CartController {
         List<CartProductDto> cartsList = cartService.getCartsList();
         HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("cartProducts", cartsList);
-        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 조회가 완료되었습니다. ", cartMap);
+        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 삭제가 완료되었습니다. ", cartMap);
     }
 
 }

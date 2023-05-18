@@ -72,7 +72,7 @@ public class Product {
     private Manufacturer manufacturer;
 
     //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복
-    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages = new ArrayList<>();
 
     @Override
@@ -99,4 +99,6 @@ public class Product {
     public int getCostWithDiscount() {
         return this.regularPrice * (100 - this.discountRate)/100;
     }
+
+
 }

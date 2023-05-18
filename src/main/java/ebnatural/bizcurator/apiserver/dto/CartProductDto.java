@@ -1,7 +1,5 @@
 package ebnatural.bizcurator.apiserver.dto;
 
-import ebnatural.bizcurator.apiserver.domain.ProductImage;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,9 +15,9 @@ public class CartProductDto {
     private double regularPrice;//정가
     private int quantity;//수량
 
-    private List<ProductImageDto> productImageDtos;
+    private String productImageDtos;
 
-    public CartProductDto(String name, double discountPrice, double regularPrice, int quantity, List<ProductImageDto> productImageDtos) {
+    public CartProductDto(String name, double discountPrice, double regularPrice, int quantity, String productImageDtos) {
         this.name = name;
         this.discountPrice = discountPrice;
         this.regularPrice = regularPrice;
