@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,31 +40,32 @@ public class Product extends TimeEntity {
     @Setter
     @Column(name = "name", nullable = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 50, message = "상품명은 최대 50자까지 입력 가능합니다.")
     private String name;
 
     @Setter
     @Column(name = "regular_price")
     @NotNull
-    @Min(1)
+    @Positive(message = "정상 가격은 양수여야 합니다.")
     private Integer regularPrice;
+
 
     @Setter
     @Column(name = "min_quantity")
     @NotNull
-    @Min(1)
+    @Positive(message = "최소 수량은 양수여야 합니다.")
     private Integer minQuantity;
 
     @Setter
     @Column(name = "max_quantity")
     @NotNull
-    @Min(1)
+    @Positive(message = "최대 수량은 양수여야 합니다.")
     private Integer maxQuantity;
 
     @Setter
     @Column(name = "discount_rate")
     @NotNull
-    @Min(0)
+    @Positive(message = "할인율은 양수여야 합니다.")
     private Integer discountRate;
 
     @Column(name = "weekly_clicks")
