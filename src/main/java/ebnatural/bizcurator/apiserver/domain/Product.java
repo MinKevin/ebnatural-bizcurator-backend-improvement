@@ -80,7 +80,6 @@ public class Product extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @NotNull(message = "카테고리 ID는 필수 입력값입니다.")
-    @Positive(message = "카테고리 ID는 양수여야 합니다.")
     private Category category;
 
     @Setter
