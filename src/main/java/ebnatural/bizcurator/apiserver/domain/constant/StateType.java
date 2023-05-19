@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum StateType {
+    WAIT("대기"),
     APPROVE("승인"),
-    REJECT("반려"),
-    WAIT("대기");
+    REJECT("반려");
 
     private final String status;
 
