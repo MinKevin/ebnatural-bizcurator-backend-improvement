@@ -13,6 +13,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -47,8 +48,18 @@ public class MyPageService {
     private final ProductRepository productRepository;
 
     private final ProductService productService;
-    // todo: 시큐리티 완성되면 수정
-    //private final JwtProvider jwtProvider;
+
+    /**
+     * 홈화면 조회
+     */
+    public MyPageHomeDto showHome(Long memberId) {
+        if(!memberRepository.existsById(memberId)){
+            throw new EntityNotFoundException();
+        }
+        MyPageHomeDto myPageHomeDto = new MyPageHomeDto();
+        myPageHomeDto.tupleToDto(orderDetailRepository.countByDeliveryState(memberId));
+        return myPageHomeDto;
+    }
 
     /**
      * 주문 내역 리스트 조회
@@ -106,15 +117,15 @@ public class MyPageService {
         List<OrderHistoryDto> orderHistoryDtoList = new ArrayList<>();
 
         for (OrderDetail orderDetail : orderDetails) {
-            Optional<Product> product = productRepository.findById(orderDetail.getProduct().getId());
+            Product product = productRepository.findById(orderDetail.getProduct().getId())
+                    .orElseThrow(() -> new EntityNotFoundException());
 
             OrderHistoryDto orderHistoryResponse = OrderHistoryDto.of(orderDetail.getId(),
-                    // todo: product와 productimage 연관관계
-                    "",
-                    product.map(Product::getRegularPrice).orElse(null),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    product.getRegularPrice(),
                     orderDetail.getDeliveryState().getMeaning(),
                     orderDetail.getOrderTime(),
-                    product.map(Product::getName).orElse(null),
+                    product.getName(),
                     orderDetail.getQuantity(),
                     orderDetail.getCost());
 
@@ -146,11 +157,12 @@ public class MyPageService {
         int totalCost = 0;
 
         for (OrderDetail orderDetail : orderDetailList) {
-            Optional<Product> product = productRepository.findById(orderDetail.getProduct().getId());
+            Product product = productRepository.findById(orderDetail.getProduct().getId())
+                    .orElseThrow(() -> new EntityNotFoundException());
 
             OrderDetailDto orderDetailDto = OrderDetailDto.of(orderDetail.getId(),
-                    product.map(Product::getName).orElse(""),
-                    "image",
+                    product.getName(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
                     orderDetail.getCost(),
                     orderDetail.getQuantity(),
                     orderDetail.getDeliveryState().getMeaning());

@@ -3,20 +3,27 @@ package ebnatural.bizcurator.apiserver.service;
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.Manufacturer;
+import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.RefundApplication;
+import ebnatural.bizcurator.apiserver.domain.SellDocument;
+import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
+import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
+import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
+import ebnatural.bizcurator.apiserver.repository.SellDocumentRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +41,7 @@ public class AdminOrderService {
 
     private final CancelApplicationRepository cancelApplicationRepository;
     private final RefundApplicationRepository refundApplicationRepository;
+    private final SellDocumentRepository sellDocumentRepository;
 
     /**
      * 관리자페이지 홈 화면 정보를 반환
@@ -173,4 +181,77 @@ public class AdminOrderService {
         return Pair.of((int) refundApplicationPage.getTotalElements() ,adminApplicationDtoList);
     }
 
+    /**
+     * 주문 취소 신청서 승인, 거절 처리를 한다.
+     */
+    public void changeStateCancelApplication(Long applicationId, boolean isApproved) {
+        CancelApplication cancelApplication = cancelApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        cancelApplication.setState((true == isApproved) ? ApplicationState.APPROVE : ApplicationState.REJECTED);
+
+        cancelApplicationRepository.save(cancelApplication);
+    }
+
+    /**
+     * 주문 환불 신청서 승인, 거절 처리를 한다.
+     */
+    public void changeStateRefundApplication(Long applicationId, boolean isApproved) {
+        RefundApplication refundApplication = refundApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        refundApplication.setState((true == isApproved) ? ApplicationState.APPROVE : ApplicationState.REJECTED);
+
+        refundApplicationRepository.save(refundApplication);
+    }
+
+    /**
+     * 회원 리스트 조회
+     */
+    public Pair<Integer, List<AdminUserInfoDto>> showUserListByPageIndexAndSearchKeyword(Integer page, String search)
+    {
+        page = (page == null) ? 0 : page - 1;
+
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        Page<Member> memberPage = null;
+        memberPage = memberRepository.findByMemberUserNameContainingOrderByCreatedAtDesc(
+                search, pageable);
+
+        List<AdminUserInfoDto> adminApplicationDtoList = new ArrayList<>();
+        for (Member member : memberPage) {
+            AdminUserInfoDto adminUserInfoDto = AdminUserInfoDto.of(
+                    member.getUsername(),
+                    member.getBusinessName(),
+                    member.getBusinessNumber(),
+                    member.getManagerPhoneNumber(),
+                    member.getManager(),
+                    member.getAddress()
+            );
+
+            adminApplicationDtoList.add(adminUserInfoDto);
+        }
+
+        return Pair.of((int) memberPage.getTotalElements() ,adminApplicationDtoList);
+    }
+
+    /**
+     *  입점판매사 조회
+     */
+    public Pair<Integer, List<SellDocumentDto>> showPartnerListByPageIndexAndSearchKeyword(Integer page, String search)
+    {
+        page = (page == null) ? 0 : page - 1;
+
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        Page<SellDocument> sellDocumentPage = null;
+        sellDocumentPage = sellDocumentRepository.findBySellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+                search, pageable);
+
+        List<SellDocumentDto> sellDocumentDtoList = new ArrayList<>();
+        for (SellDocument sellDocument : sellDocumentPage) {
+            SellDocumentDto sellDocumentDto = SellDocumentDto.from(sellDocument);
+            sellDocumentDtoList.add(sellDocumentDto);
+        }
+
+        return Pair.of((int) sellDocumentPage.getTotalElements() ,sellDocumentDtoList);
+    }
 }

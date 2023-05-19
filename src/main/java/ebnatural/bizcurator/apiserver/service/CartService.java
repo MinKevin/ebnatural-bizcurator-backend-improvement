@@ -1,16 +1,22 @@
 package ebnatural.bizcurator.apiserver.service;
 
 
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Cart;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.Product;
+import ebnatural.bizcurator.apiserver.domain.ProductImage;
 import ebnatural.bizcurator.apiserver.dto.CartProductDto;
+import ebnatural.bizcurator.apiserver.dto.ProductImageDto;
 import ebnatural.bizcurator.apiserver.dto.request.CartProductRequest;
 import ebnatural.bizcurator.apiserver.repository.CartRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,13 +41,13 @@ public class CartService {
 
         List<Cart> cartList = cartRepository.findByMemberId(memberId);
         List<CartProductDto> cartProductDtos = new ArrayList<>();
-        for (Cart carts : cartList) {
+        for (Cart carts: cartList) {
             Product product = carts.getProduct();
             //ProductImage productMainImage = productService.getProductMainImage(product.getId());
             String mainImageUrl = productService.getProductMainImage(product.getId()).getImgUrl();
 
             cartProductDtos.add(new CartProductDto(product.getName(), product.getCostWithDiscount(),
-                    product.getRegularPrice(), carts.getQuantity(), mainImageUrl));
+                    product.getRegularPrice(), carts.getQuantity(), mainImageUrl)) ;
         }
         /*cartList.orElseThrow(() -> new NoSuchElementException("No value present"))
                 .stream().map(cart -> {
