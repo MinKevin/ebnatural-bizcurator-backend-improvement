@@ -23,7 +23,7 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
     }
 
     @Override
-    public Page<SellDocument> findBySellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+    public Page<SellDocument> findByApprovedSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
             String search, Pageable pageable) {
         QSellDocument qSellDocument = QSellDocument.sellDocument;
 
@@ -38,6 +38,38 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
         }
 
         predicateBuilder.and(qSellDocument.stateType.eq(StateType.APPROVE));
+
+        Predicate predicate = predicateBuilder.getValue();
+        long total = queryFactory.selectFrom(qSellDocument)
+                .leftJoin(qSellDocument.category).fetchJoin() // Perform fetch join on category
+                .where(predicate)
+                .fetchCount();
+
+        List<SellDocument> sellDocumentList = queryFactory.selectFrom(qSellDocument)
+                .leftJoin(qSellDocument.category).fetchJoin() // Perform fetch join on category
+                .where(predicate)
+                .orderBy(qSellDocument.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return new PageImpl<>(sellDocumentList, pageable, total);
+    }
+
+    @Override
+    public Page<SellDocument> findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+            String search, Pageable pageable) {
+        QSellDocument qSellDocument = QSellDocument.sellDocument;
+
+        BooleanBuilder predicateBuilder = new BooleanBuilder();
+
+        if (search == null) {
+            // No search keyword provided, retrieve all sell documents
+            predicateBuilder.and(qSellDocument.isNotNull());
+        } else {
+            // Search sell documents by business name containing the provided search keyword
+            predicateBuilder.and(qSellDocument.businessName.containsIgnoreCase(search));
+        }
 
         Predicate predicate = predicateBuilder.getValue();
         long total = queryFactory.selectFrom(qSellDocument)

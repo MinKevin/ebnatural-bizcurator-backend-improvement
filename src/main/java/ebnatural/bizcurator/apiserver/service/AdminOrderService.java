@@ -9,10 +9,12 @@ import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
+import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
+import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
@@ -244,7 +246,7 @@ public class AdminOrderService {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<SellDocument> sellDocumentPage = null;
-        sellDocumentPage = sellDocumentRepository.findBySellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+        sellDocumentPage = sellDocumentRepository.findByApprovedSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
                 search, pageable);
 
         List<AdminPartnerDto> adminPartnerDtoList = new ArrayList<>();
@@ -254,5 +256,38 @@ public class AdminOrderService {
         }
 
         return Pair.of((int) sellDocumentPage.getTotalElements() ,adminPartnerDtoList);
+    }
+
+    /**
+     *  판매의뢰서 조회
+     */
+    public Pair<Integer, List<AdminSellDocumentDto>> showSellDocumentListByPageIndexAndSearchKeyword(Integer page, String search)
+    {
+        page = (page == null) ? 0 : page - 1;
+
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        Page<SellDocument> sellDocumentPage = null;
+        sellDocumentPage = sellDocumentRepository.findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+                search, pageable);
+
+        List<AdminSellDocumentDto> adminSellDocumentDtoList = new ArrayList<>();
+        for (SellDocument sellDocument : sellDocumentPage) {
+            AdminSellDocumentDto adminSellDocumentDto = AdminSellDocumentDto.from(sellDocument);
+            adminSellDocumentDtoList.add(adminSellDocumentDto);
+        }
+
+        return Pair.of((int) sellDocumentPage.getTotalElements() ,adminSellDocumentDtoList);
+    }
+
+    /**
+     * 판매자입점의뢰 신청서 승인, 거절 처리를 한다.
+     */
+    public void changeSellDocumentState(Long applicationId, boolean isApproved) {
+        SellDocument sellDocument = sellDocumentRepository.findById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        sellDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+
+        sellDocumentRepository.save(sellDocument);
     }
 }

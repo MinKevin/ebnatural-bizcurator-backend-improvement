@@ -5,6 +5,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -43,6 +44,7 @@ public class SellDocument extends TimeEntity{
     String introduction;
     @NotBlank
     String imageDirectory;
+    @Setter
     @NotNull
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;
