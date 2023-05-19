@@ -10,7 +10,7 @@ public class AdminSellDocumentDto {
     String category;
 
     String productDetail;
-    int companyAge;
+    int establishYear;
     String ceoName;
     String businessName;
 
@@ -21,13 +21,13 @@ public class AdminSellDocumentDto {
     String state;
 
 
-    public AdminSellDocumentDto(Long id, String category, String productDetail, int companyAge,
+    public AdminSellDocumentDto(Long id, String category, String productDetail, int establishYear,
             String ceoName, String businessName, String businessNumber, String phoneNumber,
             String state) {
         this.id = id;
         this.category = category;
         this.productDetail = productDetail;
-        this.companyAge = companyAge;
+        this.establishYear = establishYear;
         this.ceoName = ceoName;
         this.businessName = businessName;
         this.businessNumber = businessNumber;
@@ -40,7 +40,7 @@ public class AdminSellDocumentDto {
                 entity.getId(),
                 entity.getCategory().getName(),
                 entity.getProductDetail(),
-                entity.getCompanyAge(),
+                entity.getEstablishYear(),
                 entity.getCeoName(),
                 entity.getBusinessName(),
                 entity.getBusinessNumber(),

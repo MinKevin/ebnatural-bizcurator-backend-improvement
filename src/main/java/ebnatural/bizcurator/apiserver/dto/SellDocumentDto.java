@@ -7,8 +7,6 @@ import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -20,12 +18,12 @@ public class SellDocumentDto {
     String managerPhoneNumber;
     Long category;
     String productDetail;
-    int companyAge;
+    int establishYear;
     String introduction;
     String imageDirectory;
     StateType stateType = StateType.WAIT;
 
-    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, int companyAge, String introduction, String imageDirectory, StateType stateType) {
+    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, int establishYear, String introduction, String imageDirectory, StateType stateType) {
         this.id = id;
         this.businessName = businessName;
         this.ceoName = ceoName;
@@ -33,7 +31,7 @@ public class SellDocumentDto {
         this.managerPhoneNumber = managerPhoneNumber;
         this.category = category;
         this.productDetail = productDetail;
-        this.companyAge = companyAge;
+        this.establishYear = establishYear;
         this.introduction = introduction;
         this.imageDirectory = imageDirectory;
         this.stateType = stateType;
@@ -48,7 +46,7 @@ public class SellDocumentDto {
                 entity.getManagerPhoneNumber(),
                 entity.getCategory().getId(),
                 entity.getProductDetail(),
-                entity.getCompanyAge(),
+                entity.getEstablishYear(),
                 entity.getIntroduction(),
                 entity.getImageDirectory(),
                 entity.getStateType()
