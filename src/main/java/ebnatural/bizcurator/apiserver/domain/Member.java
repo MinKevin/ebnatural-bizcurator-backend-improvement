@@ -1,7 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
-import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
 import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -9,8 +8,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;

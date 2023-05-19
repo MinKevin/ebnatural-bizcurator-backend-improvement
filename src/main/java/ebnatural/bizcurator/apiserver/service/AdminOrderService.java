@@ -12,7 +12,7 @@ import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
@@ -20,7 +20,6 @@ import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
 import ebnatural.bizcurator.apiserver.dto.AdminPurchaseAndMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
-import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MakeDocumentRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
@@ -294,7 +293,7 @@ public class AdminOrderService {
         SellDocument sellDocument = sellDocumentRepository.findById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException());
 
-        sellDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+        sellDocument.setStateType((true == isApproved) ? RequestStateType.APPROVE : RequestStateType.REJECT);
 
         sellDocumentRepository.save(sellDocument);
     }
@@ -345,7 +344,7 @@ public class AdminOrderService {
                 PurchaseDocument purchaseDocument = purchaseDocumentRepository.findById(applicationId)
                         .orElseThrow(() -> new EntityNotFoundException());
 
-                purchaseDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+                purchaseDocument.setStateType((true == isApproved) ? RequestStateType.APPROVE : RequestStateType.REJECT);
                 purchaseDocumentRepository.save(purchaseDocument);
             }break;
 
@@ -353,7 +352,7 @@ public class AdminOrderService {
                 MakeDocument makeDocument = makeDocumentRepository.findById(applicationId)
                         .orElseThrow(() -> new EntityNotFoundException());
 
-                makeDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+                makeDocument.setStateType((true == isApproved) ? RequestStateType.APPROVE : RequestStateType.REJECT);
                 makeDocumentRepository.save(makeDocument);
             }break;
 

@@ -3,12 +3,9 @@ package ebnatural.bizcurator.apiserver.dto.request;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import ebnatural.bizcurator.apiserver.domain.Member;
-import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
-import ebnatural.bizcurator.apiserver.dto.TokenDto;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -26,5 +23,4 @@ public class LoginRequest {
     @Pattern(regexp = "[a-zA-Z1-9!@#$%^&*()]{8,16}",
             message = "비밀번호는 영어, 숫자, 특수문자(!@#$%^&*())를 포함한 8~16자리로 입력해주세요.")
     String password;
-    private TokenDto tokenDto;
 }

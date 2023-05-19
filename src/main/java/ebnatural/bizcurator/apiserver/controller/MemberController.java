@@ -49,7 +49,7 @@ public class MemberController {
     @PostMapping("/logout")
     public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
         return CommonResponse.ok(HttpStatus.OK.value(), "logout success",
-                Map.of("result", (Object) (memberAuthService.logout(accessToken.get("accessToken")))));
+                Map.of("result", memberAuthService.logout(accessToken.get("accessToken"))));
     }
 
     /**
@@ -60,7 +60,7 @@ public class MemberController {
      * @throws Exception
      */
     @PostMapping("/refresh")
-    public ResponseEntity<CommonResponse> refresh(@RequestBody Map<String, String> accessToken) throws Exception {
+    public ResponseEntity<CommonResponse> refresh(@RequestBody Map<String, String> accessToken) {
         Map<String, Object> mp = new HashMap<>();
         TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
         mp.put("result", tokenDto);
@@ -69,13 +69,10 @@ public class MemberController {
 
     /**
      * 전체 회원 정보 조회(관리자만 가능)
-     * todo
-     * 사업자 등록증 확인을 원할 시 따로 처리해야됨
-     * https://www.sunny-son.space/spring/Springboot%EB%A1%9C%20S3%20%ED%8C%8C%EC%9D%BC%20%EC%97%85%EB%A1%9C%EB%93%9C/
      *
      * @return
      */
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<CommonResponse> getAllMember() {
         return CommonResponse.ok(HttpStatus.OK.value(), "get all member info success",
                 Map.of("result", (memberService.getAllMember())));

@@ -3,7 +3,7 @@ package ebnatural.bizcurator.apiserver.domain.constant;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum StateType {
+public enum RequestStateType {
     WAIT("대기"),
     APPROVE("승인"),
     REJECT("반려");

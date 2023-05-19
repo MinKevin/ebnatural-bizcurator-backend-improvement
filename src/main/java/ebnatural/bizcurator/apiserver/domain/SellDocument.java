@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,10 +43,10 @@ public class SellDocument extends TimeEntity{
     @Setter
     @NotNull
     @Enumerated(EnumType.STRING)
-    StateType stateType = StateType.WAIT;
+    RequestStateType stateType = RequestStateType.WAIT;
 
     private SellDocument(Member member, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Category category,
-                         String productDetail, int establishYear, String introduction, String imageDirectory, StateType stateType) {
+                         String productDetail, int establishYear, String introduction, String imageDirectory, RequestStateType stateType) {
         this.member = member;
         this.businessName = businessName;
         this.ceoName = ceoName;
