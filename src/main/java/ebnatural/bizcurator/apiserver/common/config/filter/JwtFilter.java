@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -51,6 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 Authentication auth = jwtProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(auth);
+
 
             } catch (ExpiredJwtException e) {
                 throw e;

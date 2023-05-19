@@ -52,7 +52,7 @@ public class AdminOrderService {
      */
     public AdminHomeInfoDto showHomeInformation() {
         return AdminHomeInfoDto.of(
-                (int) memberRepository.count(),
+                memberRepository.countTotalMember(),
                 memberRepository.countByLastLoginTime(LocalDate.now())
         );
     }
