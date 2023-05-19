@@ -6,19 +6,19 @@ import lombok.Getter;
 @Getter
 public class AdminSellDocumentDto {
 
-    Long id;
-    String category;
+    private Long id;
+    private String category;
 
     String productDetail;
     int establishYear;
     String ceoName;
     String businessName;
 
-    String businessNumber;
+    private String businessNumber;
 
-    String phoneNumber;
+    private String phoneNumber;
 
-    String state;
+    private String state;
 
 
     public AdminSellDocumentDto(Long id, String category, String productDetail, int establishYear,

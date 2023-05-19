@@ -31,4 +31,14 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     @Query("SELECT m FROM Member m WHERE m.isEnable = true ORDER BY m.id ASC")
     List<Member> getAllMember();
 
+    @Query("DELETE FROM Member m where m.id = ?1")
+    void deleteById(Long id);
+
+    @Query("SELECT count(m) FROM Member m where m.isEnable = true")
+    int countTotalMember();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Member m SET m.lastLoginTime = ?2 WHERE m.id = ?1")
+    void updateLastLoginTimeToNowById(Long id, LocalDate now);
 }
