@@ -130,4 +130,18 @@ public class AdminOrderController {
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 회원 조회 완료했습니다.", historyMap);
     }
 
+    @Operation(summary = "입점판매사 관리", description = "입점판매사 리스트를 출력합니다.")
+    @PutMapping("/companies")
+    public ResponseEntity<CommonResponse> showCompanyList(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "search", required = false) String search) {
+        Pair<Integer, List<AdminUserInfoDto>> adminUserInfoPair =
+                adminOrderService.showUserListByPageIndexAndSearchKeyword(page, search);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminUserInfoPair.getFirst());
+        historyMap.put("histories", adminUserInfoPair.getSecond());
+        return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 회원 조회 완료했습니다.", historyMap);
+    }
+
 }
