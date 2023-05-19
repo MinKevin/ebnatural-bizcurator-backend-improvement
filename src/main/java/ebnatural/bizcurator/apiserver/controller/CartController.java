@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,28 +36,26 @@ public class CartController {
     }
 
     //장바구니 담기
-    @PostMapping("/api/carts/add")
-    public ResponseEntity<CommonResponse> containingProduct(@RequestBody CartProductRequest productRequest) {
+    @PostMapping("/api/carts")
+    public ResponseEntity<CommonResponse> containingProduct(@Valid @RequestBody CartProductRequest productRequest) {
         cartService.containingCartProducts(productRequest);
         return CommonResponse.ok(HttpStatus.OK.value(), "장바구니담기 성공");
     }
 
     //장바구니 상품 수량 수정
-    @PatchMapping("/api/carts/update")
-    public ResponseEntity<CommonResponse> updateProductQuantity(@RequestBody CartProductRequest productRequest) {
+    @PatchMapping("/api/carts")
+    public ResponseEntity<CommonResponse> updateProductQuantity(@Valid @RequestBody CartProductRequest productRequest) {
 
         cartService.updateProductQuantity(productRequest);
-        return CommonResponse.ok(HttpStatus.OK.value(), "상품 수정 성공");
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품수량 수정 성공");
     }
 
     //장바구니 상품 삭제
     @PostMapping("/api/carts/delete")
-    public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody Long productId) {
-        cartService.deleteProductsByCart(productId);
-        List<CartProductDto> cartsList = cartService.getCartsList();
-        HashMap<String, Object> cartMap = new HashMap<>();
-        cartMap.put("cartProducts", cartsList);
-        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 삭제가 완료되었습니다. ", cartMap);
+    public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody List<Long> productIds) {
+        cartService.deleteProductsByCart(productIds);
+        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 삭제가 완료되었습니다. ",
+                Map.of("cartProducts", cartService.getCartsList()));
     }
 
 }
