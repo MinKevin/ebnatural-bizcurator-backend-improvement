@@ -6,6 +6,7 @@ import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.ProductImage;
+import ebnatural.bizcurator.apiserver.dto.ProductAdminDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
@@ -58,6 +59,7 @@ public class ProductService {
         }
         return products;
     }
+
     public List<ProductListDto> getProducts(Long categoryId, String sort) {
         if (categoryId != null && !categoryRepository.existsById(categoryId)) {  // 인스턴스를 사용하여 existsById 메소드 호출 및 categoryId가 존재할 때만
             throw new CategoryNotFoundException();
@@ -71,6 +73,16 @@ public class ProductService {
         }
 
         return products;
+    }
+    public ProductAdminDetailDto getAdminProductDetail(Long productId){
+        if (!productRepository.existsById(productId)) {
+            throw new ProductNotFoundException();
+        }
+        ProductAdminDetailDto productDetail = productRepository.findAdminProductDetail(productId);
+        if (productDetail == null) {
+            throw new ProductNotFoundException();
+        }
+        return productDetail;
     }
     @Transactional
     public ProductDetailDto getProductDetail(Long productId) {

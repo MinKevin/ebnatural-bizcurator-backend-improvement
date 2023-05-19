@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.dto.ProductAdminDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
@@ -55,6 +56,13 @@ public class ProductController {
         return CommonResponse.ok(HttpStatus.OK.value(), "상품 조회가 완료되었습니다.", productMap);
     }
 
+    @GetMapping("/admins/products/{productId}")
+    public ResponseEntity<CommonResponse> getAdminProductDetail(@PathVariable Long productId) {
+        ProductAdminDetailDto productDetail = productService.getAdminProductDetail(productId);
+        HashMap<String, Object> productMap = new HashMap<>();
+        productMap.put("productDetail", productDetail);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 상세 정보 조회가 완료되었습니다.", productMap);
+    }
     @GetMapping("/products/search")
     public ResponseEntity<CommonResponse> searchProducts(
             @RequestParam(required = false) String keyword,//우선 따로 예외처리 하지 않고-keyword를 입력하지않았을 때, 전체 결과를 반환한다. 필요하다면 이 부분 수정.
