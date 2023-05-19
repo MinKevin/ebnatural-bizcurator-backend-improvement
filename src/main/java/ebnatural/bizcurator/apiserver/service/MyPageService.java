@@ -117,15 +117,15 @@ public class MyPageService {
         List<OrderHistoryDto> orderHistoryDtoList = new ArrayList<>();
 
         for (OrderDetail orderDetail : orderDetails) {
-            Optional<Product> product = productRepository.findById(orderDetail.getProduct().getId());
+            Product product = productRepository.findById(orderDetail.getProduct().getId())
+                    .orElseThrow(() -> new EntityNotFoundException());
 
             OrderHistoryDto orderHistoryResponse = OrderHistoryDto.of(orderDetail.getId(),
-                    // todo: product와 productimage 연관관계
-                    "",
-                    product.map(Product::getRegularPrice).orElse(null),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
+                    product.getRegularPrice(),
                     orderDetail.getDeliveryState().getMeaning(),
                     orderDetail.getOrderTime(),
-                    product.map(Product::getName).orElse(null),
+                    product.getName(),
                     orderDetail.getQuantity(),
                     orderDetail.getCost());
 
@@ -157,11 +157,12 @@ public class MyPageService {
         int totalCost = 0;
 
         for (OrderDetail orderDetail : orderDetailList) {
-            Optional<Product> product = productRepository.findById(orderDetail.getProduct().getId());
+            Product product = productRepository.findById(orderDetail.getProduct().getId())
+                    .orElseThrow(() -> new EntityNotFoundException());
 
             OrderDetailDto orderDetailDto = OrderDetailDto.of(orderDetail.getId(),
-                    product.map(Product::getName).orElse(""),
-                    "image",
+                    product.getName(),
+                    productService.getProductMainImage(product.getId()).getImgUrl(),
                     orderDetail.getCost(),
                     orderDetail.getQuantity(),
                     orderDetail.getDeliveryState().getMeaning());
