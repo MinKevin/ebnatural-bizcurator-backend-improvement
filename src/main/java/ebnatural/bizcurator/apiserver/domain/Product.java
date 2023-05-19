@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
+import ebnatural.bizcurator.apiserver.dto.request.ProductRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,13 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -80,15 +80,34 @@ public class Product extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @NotNull(message = "카테고리 ID는 필수 입력값입니다.")
-    @Positive(message = "카테고리 ID는 양수여야 합니다.")
     private Category category;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
-    @NotBlank(message = "제조사 이름은 필수 입력값입니다.")
-    @Size(max = 50, message = "제조사 이름은 최대 50자까지 입력 가능합니다.")
+    @NotNull(message = "제조사 ID는 필수 입력값입니다.")
     private Manufacturer manufacturer;
+
+    public void updateImages(String mainImageUrl, String detailImageUrl) {
+        for (ProductImage productImage : this.getProductImages()) {
+            if ("Y".equals(productImage.getRepimgYn()) && mainImageUrl != null) {
+                productImage.updateImageUrl(mainImageUrl);
+            } else if ("N".equals(productImage.getRepimgYn()) && detailImageUrl != null) {
+                productImage.updateImageUrl(detailImageUrl);
+            }
+        }
+    }
+
+    public void update(ProductRequest productRequest, Category category, Manufacturer manufacturer) {
+        this.category = category;
+        this.manufacturer = manufacturer;
+        this.name = productRequest.getName();
+        this.regularPrice = productRequest.getRegularPrice();
+        this.minQuantity = productRequest.getMinQuantity();
+        this.maxQuantity = productRequest.getMaxQuantity();
+        this.discountRate = productRequest.getDiscountRate();
+    }
+
 
 
     //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복

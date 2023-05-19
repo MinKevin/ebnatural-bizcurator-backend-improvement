@@ -1,18 +1,15 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.querydsl.core.Tuple;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
-import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
 import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
+import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MemberService;
 import ebnatural.bizcurator.apiserver.service.MyPageService;
@@ -22,7 +19,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,7 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class MyPageController {
 
     private final MyPageService myPageService;
-    private final ObjectMapper objectMapper;
 
     private final MemberService memberService;
 
@@ -132,7 +127,7 @@ public class MyPageController {
      */
     @PutMapping("/info")
     public ResponseEntity<CommonResponse> changeMemberInfo(
-            @Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
+            @Valid @RequestPart(value = "post", required = true) UpdateMemberRequest memberDto,
             @RequestPart(value = "image") MultipartFile image) {
 
         memberService.updateMember(memberDto, image);

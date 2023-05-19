@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.dto.ProductAdminDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -36,6 +38,16 @@ public class ProductController {
         productService.registerProduct(productRequest, mainImage, detailImage);
         return CommonResponse.ok(HttpStatus.CREATED.value(), "상품 생성이 완료되었습니다.");
     }
+    @PutMapping("/admins/products/{productId}")
+    public ResponseEntity<CommonResponse> updateProduct(
+            @PathVariable Long productId,
+            @RequestPart("productRequest") @Valid ProductRequest productRequest,
+            @RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
+            @RequestPart(value = "detailImage", required = false) MultipartFile detailImage
+    ) {
+        productService.updateProduct(productId, productRequest, mainImage, detailImage);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 수정이 완료되었습니다.");
+    }
     @GetMapping("/products")
     public ResponseEntity<CommonResponse> getProducts(
             @RequestParam(required = false) Long categoryId,
@@ -45,7 +57,6 @@ public class ProductController {
         productMap.put("products", products);
         return CommonResponse.ok(HttpStatus.OK.value(), "상품 조회가 완료되었습니다.", productMap);
     }
-
     @GetMapping("/admins/products")
     public ResponseEntity<CommonResponse> getAdminProducts(
             @RequestParam(required = false) String keyword) {
@@ -53,6 +64,13 @@ public class ProductController {
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("products", products);
         return CommonResponse.ok(HttpStatus.OK.value(), "상품 조회가 완료되었습니다.", productMap);
+    }
+    @GetMapping("/admins/products/{productId}")
+    public ResponseEntity<CommonResponse> getAdminProductDetail(@PathVariable Long productId) {
+        ProductAdminDetailDto productDetail = productService.getAdminProductDetail(productId);
+        HashMap<String, Object> productMap = new HashMap<>();
+        productMap.put("productDetail", productDetail);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품 상세 정보 조회가 완료되었습니다.", productMap);
     }
 
     @GetMapping("/products/search")

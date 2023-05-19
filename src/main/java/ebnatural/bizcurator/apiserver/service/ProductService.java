@@ -6,6 +6,7 @@ import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Product;
 import ebnatural.bizcurator.apiserver.domain.ProductImage;
+import ebnatural.bizcurator.apiserver.dto.ProductAdminDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
@@ -50,6 +51,43 @@ public class ProductService {
         product.getProductImages().add(detailProductImage);
 
     }
+    @Transactional
+    public void updateProduct(Long productId, ProductRequest productRequest, MultipartFile mainImage, MultipartFile detailImage) {
+        Category category = categoryRepository.findById(productRequest.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category id"));
+        Manufacturer manufacturer = manufacturerRepository.findOrCreateManufacturer(productRequest.getManufacturerName());
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product id"));
+
+        // Update Product entity with new values from productRequest
+        product.update(productRequest, category, manufacturer);
+
+        String mainImageUrl = null;
+        String detailImageUrl = null;
+
+        // Get current main image and detail image URL
+        for (ProductImage productImage : product.getProductImages()) {
+            if ("Y".equals(productImage.getRepimgYn())) {
+                mainImageUrl = productImage.getImgUrl();
+            } else if ("N".equals(productImage.getRepimgYn())) {
+                detailImageUrl = productImage.getImgUrl();
+            }
+        }
+
+        // If new images are provided, delete the old ones and upload the new ones
+        if (mainImage != null && !mainImage.isEmpty()) {
+            s3ImageUploadService.deleteFile(mainImageUrl); // 기존 이미지 삭제
+            mainImageUrl = s3ImageUploadService.uploadImage(productDir, mainImage);
+        }
+        if (detailImage != null && !detailImage.isEmpty()) {
+            s3ImageUploadService.deleteFile(detailImageUrl); // 기존 이미지 삭제
+            detailImageUrl = s3ImageUploadService.uploadImage(productDir, detailImage);
+        }
+
+        // Update ProductImages with new URLs
+        product.updateImages(mainImageUrl, detailImageUrl);
+    }
+
 
     public List<ProductAdminListDto> getAdminProducts(String keyword){
         List<ProductAdminListDto> products = productRepository.findAdminProducts(keyword);
@@ -58,6 +96,7 @@ public class ProductService {
         }
         return products;
     }
+
     public List<ProductListDto> getProducts(Long categoryId, String sort) {
         if (categoryId != null && !categoryRepository.existsById(categoryId)) {  // 인스턴스를 사용하여 existsById 메소드 호출 및 categoryId가 존재할 때만
             throw new CategoryNotFoundException();
@@ -71,6 +110,16 @@ public class ProductService {
         }
 
         return products;
+    }
+    public ProductAdminDetailDto getAdminProductDetail(Long productId){
+        if (!productRepository.existsById(productId)) {
+            throw new ProductNotFoundException();
+        }
+        ProductAdminDetailDto productDetail = productRepository.findAdminProductDetail(productId);
+        if (productDetail == null) {
+            throw new ProductNotFoundException();
+        }
+        return productDetail;
     }
     @Transactional
     public ProductDetailDto getProductDetail(Long productId) {
