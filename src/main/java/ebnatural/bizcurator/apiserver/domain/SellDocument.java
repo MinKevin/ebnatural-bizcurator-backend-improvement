@@ -1,16 +1,13 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import com.amazonaws.services.ec2.model.StatusType;
 import ebnatural.bizcurator.apiserver.domain.constant.StateType;
-import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -37,19 +34,19 @@ public class SellDocument extends TimeEntity{
     private Category category;
     @NotBlank
     String productDetail;
-    @NotBlank
-    String companyAge;
+    @NotNull
+    int establishYear;
     @NotBlank
     String introduction;
     @NotBlank
     String imageDirectory;
+    @Setter
     @NotNull
-    @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECT')")
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;
 
     private SellDocument(Member member, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Category category,
-                        String productDetail, String companyAge, String introduction, String imageDirectory, StateType stateType) {
+                         String productDetail, int establishYear, String introduction, String imageDirectory, StateType stateType) {
         this.member = member;
         this.businessName = businessName;
         this.ceoName = ceoName;
@@ -57,7 +54,7 @@ public class SellDocument extends TimeEntity{
         this.managerPhoneNumber = managerPhoneNumber;
         this.category = category;
         this.productDetail = productDetail;
-        this.companyAge = companyAge;
+        this.establishYear = establishYear;
         this.introduction = introduction;
         this.imageDirectory = imageDirectory;
         this.stateType = stateType;
@@ -67,7 +64,7 @@ public class SellDocument extends TimeEntity{
 
     public static SellDocument of(Member member, SellDocumentRequest docDto, Category category, String storedPath){
         return new SellDocument(member, docDto.getBusinessName(), docDto.getCeoName(), docDto.getBusinessNumber(), docDto.getManagerPhoneNumber(),
-                category, docDto.getProductDetail(), docDto.getCompanyAge(), docDto.getIntroduction(), storedPath, docDto.getStateType());
+                category, docDto.getProductDetail(), docDto.getEstablishYear(), docDto.getIntroduction(), storedPath, docDto.getStateType());
     }
 
     public void update(Member member, Category category, SellDocumentRequest docDto) {
@@ -78,7 +75,7 @@ public class SellDocument extends TimeEntity{
         this.managerPhoneNumber = docDto.getManagerPhoneNumber();
         this.category = category;
         this.productDetail = docDto.getProductDetail();
-        this.companyAge = docDto.getCompanyAge();
+        this.establishYear = docDto.getEstablishYear();
         this.introduction = docDto.getIntroduction();
         this.imageDirectory = docDto.getImageDirectory();
         this.stateType = docDto.getStateType();

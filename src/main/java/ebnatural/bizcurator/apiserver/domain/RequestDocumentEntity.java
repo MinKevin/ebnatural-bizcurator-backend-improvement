@@ -40,7 +40,6 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     @NotBlank
     String imageDirectory;
     @NotNull
-    @Column(name = "state_type", columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECT')")
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;
 
