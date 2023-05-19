@@ -4,11 +4,14 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQueryFactory;
 import com.querydsl.jpa.impl.JPAQuery;
 import ebnatural.bizcurator.apiserver.domain.Manufacturer;
+import ebnatural.bizcurator.apiserver.domain.QCategory;
 import ebnatural.bizcurator.apiserver.domain.QManufacturer;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import ebnatural.bizcurator.apiserver.domain.QProductImage;
+import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductListDto;
+import ebnatural.bizcurator.apiserver.dto.QProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.QProductDetailDto;
 import ebnatural.bizcurator.apiserver.dto.QProductListDto;
 import java.util.List;
@@ -29,7 +32,27 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
     private BooleanExpression productNameLike(String keyword) {
         return StringUtils.isEmpty(keyword) ? QProduct.product.name.like("%") : QProduct.product.name.like("%" + keyword + "%");
     }
+    @Override
+    public List<ProductAdminListDto> findAdminProducts(String keyword){
+        QProduct product = QProduct.product;
+        QManufacturer manufacturer = QManufacturer.manufacturer;
+        QCategory category = QCategory.category;
 
+        JPAQuery<ProductAdminListDto> query = (JPAQuery<ProductAdminListDto>) from(product)
+                .leftJoin(manufacturer).on(product.manufacturer.id.eq(manufacturer.id))
+                .leftJoin(category).on(product.category.id.eq(category.id))
+                .select(new QProductAdminListDto(
+                        product.id,
+                        category.name,
+                        manufacturer.name,
+                        product.name,
+                        product.regularPrice,
+                        product.discountRate
+                ))
+                .where(productNameLike(keyword));
+
+        return query.fetch();
+    }
 
     @Override
     public List<ProductListDto> searchByKeyword(String keyword, String sort) {
