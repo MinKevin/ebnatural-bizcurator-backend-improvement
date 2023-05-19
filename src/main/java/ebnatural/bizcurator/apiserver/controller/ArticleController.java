@@ -25,7 +25,7 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/api/notices")
-    public ResponseEntity<CommonResponse> getNoticesLowerThanId(@RequestParam("lastArticleId") Long lastArticleId, @RequestParam("size") Integer size, @RequestParam("firstPage") Boolean firstPage) {
+    public ResponseEntity<CommonResponse> getNoticesLowerThanId(@RequestParam(value = "lastArticleId", required = false) Long lastArticleId, @RequestParam("size") Integer size, @RequestParam("firstPage") Boolean firstPage) {
         List<ArticleDto> notices = articleService.fetchNoticePagesBy(lastArticleId, BoardType.NOTICE, size, firstPage);
         HashMap<String, Object> noticeMap = new HashMap<>();
         noticeMap.put("notices", notices);
