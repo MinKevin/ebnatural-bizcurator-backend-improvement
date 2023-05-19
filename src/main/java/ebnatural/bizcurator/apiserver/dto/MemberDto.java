@@ -67,7 +67,6 @@ public class MemberDto {
         this.password = passwordEncoder.encode(password);
     }
 
-    //아래는 by 슬찬
     private MemberDto(Long id) {
         this.id = id;
     }
