@@ -2,11 +2,7 @@ package ebnatural.bizcurator.apiserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class ProductListDto {

@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
-import ebnatural.bizcurator.apiserver.domain.Category;
-import ebnatural.bizcurator.apiserver.domain.Manufacturer;
+
 import ebnatural.bizcurator.apiserver.dto.ProductAdminDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ProductAdminListDto;
 import ebnatural.bizcurator.apiserver.dto.ProductDetailDto;
