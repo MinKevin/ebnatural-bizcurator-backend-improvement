@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -55,8 +56,10 @@ public class SpringSecurityConfig {
 //                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.PUT, "/api/notices/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/api/notices/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/requests/partners").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/requests/orders").hasRole("ADMIN")
 //                .anyRequest().authenticated();
-//
+
         http.exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {
                     @Override

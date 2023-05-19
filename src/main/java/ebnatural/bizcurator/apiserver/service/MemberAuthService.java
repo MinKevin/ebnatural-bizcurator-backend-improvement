@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,9 @@ public class MemberAuthService {
                 .accessToken(jwtProvider.createAccessToken(member.getId(), member.getUsername(), member.getMemberRole()))
                 .refreshToken(newRefreshToken)
                 .build();
+
+        Long id = member.getId();
+        memberRepository.updateLastLoginTimeToNowById(id, LocalDate.now());
 
         return MemberDto.from(member, tokenDto);
     }
