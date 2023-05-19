@@ -46,7 +46,10 @@ public class DocumentService {
     private String sellDir;
 
     public void postPurchaseMakeDocument(PurchaseMakeDocumentRequest docDto, MultipartFile image) {
-        Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        // todo: 시큐리티 설정 후 주석해제
+        // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        Member member = memberRepository.findByUserId(1L);
+
         if (docDto.getDocumentType().equals(String.valueOf(DocumentType.make))) {
             PurposeCategory purposeCategory = purposeCategoryRepository.findById(docDto.getCategory())
                     .orElseThrow(() -> new CategoryNotFoundException());
@@ -62,7 +65,9 @@ public class DocumentService {
     }
 
     public void postSellDocument(SellDocumentRequest docDto, MultipartFile image) {
-        Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        // todo: 시큐리티 설정 후 주석해제
+        // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        Member member = memberRepository.findByUserId(1L);
         Category category = categoryRepository.findById(docDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException());
         String storedPath = s3ImageUploadService.uploadImage(sellDir, image);
@@ -122,7 +127,9 @@ public class DocumentService {
     }
 
     public void updatePurchaseMakeDocument(Long documentId, PurchaseMakeDocumentRequest docDto, MultipartFile image) {
-        Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        // todo: 시큐리티 설정 후 주석해제
+        // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        Member member = memberRepository.findByUserId(1L);
         if (docDto.getDocumentType().equals(String.valueOf(DocumentType.make))) {
             PurposeCategory purposeCategory = purposeCategoryRepository.findById(docDto.getCategory())
                     .orElseThrow(() -> new CategoryNotFoundException());
@@ -153,7 +160,9 @@ public class DocumentService {
     }
 
     public void updateSellDocument(Long documentId, SellDocumentRequest docDto, MultipartFile image) {
-        Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        // todo: 시큐리티 설정 후 주석해제
+        // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        Member member = memberRepository.findByUserId(1L);
         Category category = categoryRepository.findById(docDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException());
         SellDocument sellDocument = sellDocumentRepository.findById(documentId)
