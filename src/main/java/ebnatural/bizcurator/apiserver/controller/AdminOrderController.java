@@ -10,15 +10,19 @@ import ebnatural.bizcurator.apiserver.dto.AdminPurchaseAndMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationChangeStateDto;
+import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
+import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.AdminOrderService;
+import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -29,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admins")
 public class AdminOrderController {
 
+    private final MemberAuthService memberAuthService;
     private final AdminOrderService adminOrderService;
 
     @Operation(summary = "홈화면 메서드", description = "홈화면 메서드입니다.")
@@ -56,6 +62,21 @@ public class AdminOrderController {
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("histories", adminHomeInfoDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 홈화면 로드 완료했습니다.", historyMap);
+    }
+
+    /**
+     * 로그인 시 access 토큰, refresh 토큰 모두 새로 만들어준다.
+     *
+     * @param loginDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody LoginRequest loginDto) {
+        MemberDto memberDto = memberAuthService.login(loginDto);
+        Map<String, Object> loginDataMap = new HashMap<>();
+        loginDataMap.put("login", memberDto);
+        return CommonResponse.ok(HttpStatus.OK.value(), "로그인 성공했습니다.", loginDataMap);
     }
 
     @Operation(summary = "주문내역 조회 메서드", description = "주문내역 조회 메서드입니다.")

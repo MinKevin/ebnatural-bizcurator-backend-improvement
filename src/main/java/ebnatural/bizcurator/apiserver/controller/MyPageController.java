@@ -1,5 +1,8 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.querydsl.core.Tuple;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
@@ -8,21 +11,27 @@ import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
 import ebnatural.bizcurator.apiserver.dto.request.CancelOrderRequest;
+import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
 import ebnatural.bizcurator.apiserver.dto.request.RefundOrderRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
+import ebnatural.bizcurator.apiserver.service.MemberService;
 import ebnatural.bizcurator.apiserver.service.MyPageService;
 import java.util.HashMap;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/mypages")
@@ -30,6 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageController {
 
     private final MyPageService myPageService;
+    private final ObjectMapper objectMapper;
+
+    private final MemberService memberService;
 
     @GetMapping
     // todo: 시큐리티 설정하면 주석 해제
@@ -110,6 +122,21 @@ public class MyPageController {
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("details", applicationDetailDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "주문 환불 상세 조회가 완료되었습니다.", historyMap);
+    }
+
+    /**
+     * 회원정보 수정
+     * @param memberDto
+     * @param image
+     * @return
+     */
+    @PutMapping("/info")
+    public ResponseEntity<CommonResponse> changeMemberInfo(
+            @Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
+            @RequestPart(value = "image") MultipartFile image) {
+
+        memberService.updateMember(memberDto, image);
+        return CommonResponse.ok(HttpStatus.CREATED.value(), "update success");
     }
 
 }
