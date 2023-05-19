@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -16,6 +17,7 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     Member member;
@@ -27,16 +29,17 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     String productName;
     @NotBlank
     String productDetail;
-    @NotBlank
+    @NotNull
     int quantity;
-    @NotBlank
+    @NotNull
     Date desiredEstimateDate;
-    @NotBlank
+    @NotNull
     Date desiredDeliveryDate;
     @NotBlank
     String requestMessage;
     @NotBlank
     String imageDirectory;
+    @NotNull
     @Column(name = "state_type", columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECT')")
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;

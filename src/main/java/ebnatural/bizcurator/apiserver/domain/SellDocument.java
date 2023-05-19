@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -18,6 +19,7 @@ public class SellDocument extends TimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -29,6 +31,7 @@ public class SellDocument extends TimeEntity{
     String businessNumber;
     @NotBlank
     String managerPhoneNumber;
+    @NotNull
     @JoinColumn(name = "category_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
@@ -40,6 +43,7 @@ public class SellDocument extends TimeEntity{
     String introduction;
     @NotBlank
     String imageDirectory;
+    @NotNull
     @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECT')")
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;
