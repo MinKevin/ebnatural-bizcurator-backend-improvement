@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -59,8 +60,10 @@ public class Member extends TimeEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
 
-
-
+    @JoinColumn(name = "cart_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    @NotNull(message = "cart_id는 필수값입니다")
+    private List<Cart> carts;
     // todo: 로그인 기능 머지되면 삭제 예정
     @Column
     LocalDate lastLoginTime = LocalDate.now();

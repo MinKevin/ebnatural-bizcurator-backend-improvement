@@ -2,10 +2,11 @@ package ebnatural.bizcurator.apiserver.repository;
 
 import ebnatural.bizcurator.apiserver.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
 @Transactional
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
@@ -14,4 +15,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     Cart findByProduct_Id(Long productId);
 
     void deleteByProduct_Id(Long productId);
+
+    @Query("SELECT c from Cart c WHERE c.member.id = ?1 and c.product.id = ?2")
+    Cart findByMemberIdAndProductId(Long memberId, Long productId);
 }
