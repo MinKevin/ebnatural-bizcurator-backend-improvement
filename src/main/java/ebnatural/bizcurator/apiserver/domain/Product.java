@@ -86,8 +86,7 @@ public class Product extends TimeEntity {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
-    @NotBlank(message = "제조사 이름은 필수 입력값입니다.")
-    @Size(max = 50, message = "제조사 이름은 최대 50자까지 입력 가능합니다.")
+    @NotNull(message = "제조사 ID는 필수 입력값입니다.")
     private Manufacturer manufacturer;
 
     public void updateImages(String mainImageUrl, String detailImageUrl) {
