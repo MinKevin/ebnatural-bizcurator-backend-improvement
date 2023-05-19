@@ -1,11 +1,15 @@
 -- 회원 데이터
-INSERT INTO member (username, password, member_role, representative, business_name, business_number, postal_code, address,
-                    business_registration, manager, manager_email, manager_phone_number, created_at, modified_at, is_enable)
-VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep', 'user',
+INSERT INTO member (username, password, member_role, representative, business_name, business_number, postal_code,
+                    address,
+                    business_registration, manager, manager_email, manager_phone_number, created_at, modified_at,
+                    is_enable)
+VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep',
+        'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
         '2022-11-02 10:18:32', true),
-       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep', 'user',
+       ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep',
+        'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
         '2022-11-02 10:18:32', true),
@@ -169,6 +173,11 @@ values (1, '객실용품'),
        (8, '사무용품'),
        (9, '음료/식품'),
        (10, '기타');
+
+insert into purpose_category (id, name)
+values (1, '창업(제품판매)'),
+       (2, '작품 제작'),
+       (3, '개인적인 목적');
 
 
 insert into manufacturer (id, name)
@@ -387,3 +396,37 @@ INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_numbe
 VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
         'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
 
+INSERT INTO purchase_document (id, member_id, category_id, product_name, product_detail, quantity, desired_estimate_date,
+                               desired_delivery_date, manager_name, manager_call, request_message, image_directory,
+                               state_type, created_at, modified_at)
+Values (1, 1, 1, "productName", "productDetail", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (2, 1, 2, "productName", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (3, 2, 3, "productName", "productDetail", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (4, 3, 4, "productName", "productDetail", 10, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now());
+
+INSERT INTO make_document (id, member_id, purpose_category_id, product_name, product_detail, quantity, desired_estimate_date,
+                           desired_delivery_date, manager_name, manager_call, request_message, image_directory,
+                           state_type, created_at, modified_at)
+Values (1, 3, 3, "productName", "productDetail", 10, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (2, 2, 3, "productName", "productDetail", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (3, 2, 2, "productName", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now()),
+       (4, 1, 1, "productName", "productDetail", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", now(), now());
+
+INSERT INTO sell_document (id, member_id, category_id, business_name, ceo_name, manager_phone_number, business_number,
+                           product_detail, company_age, introduction, image_directory, state_type, created_at, modified_at)
+VALUES (1, 1, 1, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+        "introduction", "imageDirectory", "WAIT", now(), now()),
+       (2, 2, 2, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+        "introduction", "imageDirectory", "WAIT", now(), now()),
+       (3, 3, 3, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+        "introduction", "imageDirectory", "WAIT", now(), now()),
+       (4, 3, 4, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+        "introduction", "imageDirectory", "WAIT", now(), now());

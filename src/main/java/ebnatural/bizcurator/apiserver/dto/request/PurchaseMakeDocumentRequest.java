@@ -8,22 +8,34 @@ import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PurchaseMakeDocumentRequest {
-    DocumentType documentType;
+    @Enum(enumClass = DocumentType.class, ignoreCase = true)
+    String documentType;
+    @NotBlank
     String managerName;
+    @NotBlank
     String managerCall;
+    @NotNull
     long category;
+    @NotBlank
     String productName;
+    @NotBlank
     String productDetail;
+    @NotNull
     int quantity;
+    @NotBlank
     Date desiredEstimateDate;
+    @NotBlank
     Date DesiredDeliveryDate;
-
+    @NotBlank
     String requestMessage;
+    String imageDirectory;
     StateType stateType = StateType.WAIT;
 }

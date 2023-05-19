@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Getter
@@ -17,15 +18,24 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
-    String productName;
-    String productDetail;
-    int quantity;
-    Date desiredEstimateDate;
-    Date desiredDeliveryDate;
+    Member member;
+    @NotBlank
     String managerName;
+    @NotBlank
     String managerCall;
+    @NotBlank
+    String productName;
+    @NotBlank
+    String productDetail;
+    @NotBlank
+    int quantity;
+    @NotBlank
+    Date desiredEstimateDate;
+    @NotBlank
+    Date desiredDeliveryDate;
+    @NotBlank
     String requestMessage;
+    @NotBlank
     String imageDirectory;
     @Column(name = "state_type", columnDefinition = "ENUM('APPROVE', 'REJECT', 'WAIT')")
     @Enumerated(EnumType.STRING)

@@ -2,19 +2,33 @@ package ebnatural.bizcurator.apiserver.dto.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class SellDocumentRequest {
+    @NotBlank
     String businessName;
+    @NotBlank
     String ceoName;
+    @NotBlank
     String businessNumber;
+    @NotBlank
     String managerPhoneNumber;
-    String category;
+    @NotNull
+    Long category;
+    @NotBlank
     String productDetail;
-    int companyAge;
-    int introduction;
+    @NotBlank
+    String companyAge;
+    @NotBlank
+    String introduction;
+    String imageDirectory;
+    StateType stateType = StateType.WAIT;
 }
