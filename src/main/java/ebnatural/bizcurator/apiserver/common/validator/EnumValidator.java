@@ -1,4 +1,4 @@
-package ebnatural.bizcurator.apiserver.domain.constant;
+package ebnatural.bizcurator.apiserver.common.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

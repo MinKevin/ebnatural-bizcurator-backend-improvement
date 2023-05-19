@@ -2,7 +2,7 @@ package ebnatural.bizcurator.apiserver.dto.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
+import ebnatural.bizcurator.apiserver.common.validator.Enum;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
 import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PurchaseMakeDocumentRequest {
-    //@Enum(enumClass = DocumentType.class, ignoreCase = true)
+    @Enum(enumClass = DocumentType.class, ignoreCase = true)
     String documentType;
     @NotBlank
     String managerName;
@@ -30,9 +30,9 @@ public class PurchaseMakeDocumentRequest {
     String productDetail;
     @NotNull
     int quantity;
-    @NotBlank
+    @NotNull
     Date desiredEstimateDate;
-    @NotBlank
+    @NotNull
     Date DesiredDeliveryDate;
     @NotBlank
     String requestMessage;
