@@ -10,6 +10,7 @@ import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import ebnatural.bizcurator.apiserver.repository.MemberLoginLogRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,12 +64,12 @@ public class MemberService implements UserDetailsService {
         memberRepository.save(member);
     }
 
-    public void updateMember(MemberRequest memberDto, MultipartFile image) {
+    public void updateMember(UpdateMemberRequest memberDto, MultipartFile image) {
         if (memberDto.checkPassword())
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
 
-        String username = memberDto.getUsername();
-        Optional.ofNullable(memberRepository.findByUsername(username))
+        Long memberId = MemberUtil.getMemberId();
+        memberRepository.findById(memberId)
                 .map(foundedMember -> {
                     if (!image.isEmpty()) {
                         s3ImageUploadService.deleteFile(foundedMember.getBusinessRegistration());
@@ -98,8 +99,9 @@ public class MemberService implements UserDetailsService {
 
     public void delete() {
         Long userId = MemberUtil.getMemberId();
-        Member member = memberRepository.findByUserId(userId).expire();
-        memberRepository.save(member);
+        Member member = memberRepository.findByUserId(userId);
+        s3ImageUploadService.deleteFile(member.getBusinessRegistration());
+        member.expire();
     }
 
     /**

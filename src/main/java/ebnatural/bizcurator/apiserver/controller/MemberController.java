@@ -4,6 +4,7 @@ import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import ebnatural.bizcurator.apiserver.service.MemberService;
@@ -100,7 +101,7 @@ public class MemberController {
     }
 
     @PatchMapping
-    public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
+    public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) UpdateMemberRequest memberDto,
                                                        @RequestPart(value = "image") MultipartFile image) {
         memberService.updateMember(memberDto, image);
         return CommonResponse.ok(HttpStatus.CREATED.value(), "update success");
