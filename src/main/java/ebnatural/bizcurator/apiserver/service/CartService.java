@@ -49,12 +49,6 @@ public class CartService {
             cartProductDtos.add(new CartProductDto(product.getName(), product.getCostWithDiscount(),
                     product.getRegularPrice(), carts.getQuantity(), mainImageUrl)) ;
         }
-        /*cartList.orElseThrow(() -> new NoSuchElementException("No value present"))
-                .stream().map(cart -> {
-                    Product product = cart.getProduct();
-                    return new CartProductDto(product.getName(), product.getCostWithDiscount(),
-                            product.getRegularPrice(), cart.getQuantity(), product.getProductImages());
-                }).collect(Collectors.toList());*/
         return cartProductDtos;
     }
 
@@ -78,11 +72,13 @@ public class CartService {
 
     //장바구니 상품 수량 수정
     public void updateProductQuantity(CartProductRequest productRequest) {
-        int updateQuantity = productRequest.getQuantity();//수정될 수량
-        //예외처리필요
-        Cart cart = cartRepository.findByProduct_Id(productRequest.getProductId());
-        cart.updateCount(updateQuantity);
-        cartRepository.save(cart);
+        Member member = getMember();
+        Long memberId = member.getId();
+        Long productId = productRequest.getProductId();
+        int updateQuantity = productRequest.getQuantity();
+        Optional.of(cartRepository.findByMemberIdAndProductId(memberId, productId))
+                .map(cart -> cart.updateQuantity(updateQuantity))
+                .orElseThrow(() -> new NoSuchElementException("장바구니에 담을 productId가 잘못됐습니다."));
     }
 
     //장바구니 상품 삭제

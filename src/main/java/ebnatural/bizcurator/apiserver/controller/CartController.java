@@ -35,22 +35,22 @@ public class CartController {
     }
 
     //장바구니 담기
-    @PostMapping("/api/carts/add")
+    @PostMapping("/api/carts")
     public ResponseEntity<CommonResponse> containingProduct(@Valid @RequestBody CartProductRequest productRequest) {
         cartService.containingCartProducts(productRequest);
         return CommonResponse.ok(HttpStatus.OK.value(), "장바구니담기 성공");
     }
 
     //장바구니 상품 수량 수정
-//    @PatchMapping("/api/carts/{D}")
-//    public ResponseEntity<CommonResponse> updateProductQuantity(@PathVariable("cartId")Long cartId,@RequestParam int quantity) {
-//
-//        cartService.updateProductQuantity(cartId,quantity);
-//        return CommonResponse.ok(HttpStatus.OK.value(), "상품수량 수정 성공");
-//    }
+    @PatchMapping("/api/carts")
+    public ResponseEntity<CommonResponse> updateProductQuantity(@Valid @RequestBody CartProductRequest productRequest) {
+
+        cartService.updateProductQuantity(productRequest);
+        return CommonResponse.ok(HttpStatus.OK.value(), "상품수량 수정 성공");
+    }
 
     //장바구니 상품 삭제
-    @PostMapping("/api/carts/delete")
+    @DeleteMapping("/api/carts")
     public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody Long productId) {
         cartService.deleteProductsByCart(productId);
         List<CartProductDto> cartsList = cartService.getCartsList();

@@ -54,8 +54,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Cart addQuantity(int addQuantity){
+    public void addQuantity(int addQuantity){
         this.quantity += addQuantity;
+    }
+
+    public Cart updateQuantity(int updateQuantity) {
+        this.quantity = updateQuantity;
         return this;
     }
 }
