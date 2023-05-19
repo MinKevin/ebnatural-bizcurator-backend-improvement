@@ -1,8 +1,11 @@
 package ebnatural.bizcurator.apiserver.controller;
 
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.AdminDocumentChangeStateDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
+import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
+import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationChangeStateDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -22,6 +25,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -118,7 +122,7 @@ public class AdminOrderController {
     }
 
     @Operation(summary = "회원관리", description = "회원 리스트를 출력합니다.")
-    @PutMapping("/users")
+    @GetMapping("/users")
     public ResponseEntity<CommonResponse> showUserList(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
@@ -136,14 +140,36 @@ public class AdminOrderController {
     public ResponseEntity<CommonResponse> showCompanyList(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
-        Pair<Integer, List<SellDocumentDto>> sellDocumentDtoPair =
+        Pair<Integer, List<AdminPartnerDto>> adminPartnerDtoPair =
                 adminOrderService.showPartnerListByPageIndexAndSearchKeyword(page, search);
 
         // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
         LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
-        historyMap.put("dataTotalCount", sellDocumentDtoPair.getFirst());
-        historyMap.put("histories", sellDocumentDtoPair.getSecond());
+        historyMap.put("dataTotalCount", adminPartnerDtoPair.getFirst());
+        historyMap.put("histories", adminPartnerDtoPair.getSecond());
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 입점판매사 조회 완료했습니다.", historyMap);
     }
 
+    @Operation(summary = "판매자입점의뢰 신청서 관리", description = "판매자입점의뢰 신청서 조회")
+    @GetMapping("/sell")
+    public ResponseEntity<CommonResponse> showSellDocumentList(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "search", required = false) String search) {
+        Pair<Integer, List<AdminSellDocumentDto>> adminSellDocumentDtoPair =
+                adminOrderService.showSellDocumentListByPageIndexAndSearchKeyword(page, search);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminSellDocumentDtoPair.getFirst());
+        historyMap.put("histories", adminSellDocumentDtoPair.getSecond());
+        return CommonResponse.ok(HttpStatus.OK.value(), "판매자입점의뢰 신청서 조회 완료했습니다.", historyMap);
+    }
+
+    @Operation(summary = "판매자입점의뢰 승인, 거절 처리", description = "approve or reject로 보내주세요.")
+    @PatchMapping("/sell/{id}")
+    public ResponseEntity<CommonResponse> changeSellDocumentState(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
+        adminOrderService.changeSellDocumentState(id, adminDocumentChangeStateDto.getType().equals("approve"));
+        return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 주문 환불신청서 처리 완료했습니다.");
+    }
 }

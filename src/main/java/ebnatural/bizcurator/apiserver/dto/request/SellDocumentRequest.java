@@ -25,8 +25,8 @@ public class SellDocumentRequest {
     Long category;
     @NotBlank
     String productDetail;
-    @NotBlank
-    String companyAge;
+    @NotNull
+    int establishYear;
     @NotBlank
     String introduction;
     String imageDirectory;

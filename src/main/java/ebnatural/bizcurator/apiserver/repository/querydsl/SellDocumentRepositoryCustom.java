@@ -7,5 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface SellDocumentRepositoryCustom {
 
-    Page<SellDocument> findBySellDocumentBusinessNameContainingOrderByCreatedAtDesc(String search, Pageable pageable);
+    Page<SellDocument> findByApprovedSellDocumentBusinessNameContainingOrderByCreatedAtDesc(String search, Pageable pageable);
+
+    Page<SellDocument> findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(String search, Pageable pageable);
 }

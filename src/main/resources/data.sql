@@ -421,12 +421,12 @@ Values (1, 3, 3, "productName", "productDetail", 10, "23-05-20", "23-05-30", "ma
         "requestMessage", "imageDirectory", "WAIT", now(), now());
 
 INSERT INTO sell_document (id, member_id, category_id, business_name, ceo_name, manager_phone_number, business_number,
-                           product_detail, company_age, introduction, image_directory, state_type, created_at, modified_at)
-VALUES (1, 1, 1, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+                           product_detail, establish_year, introduction, image_directory, state_type, created_at, modified_at)
+VALUES (1, 1, 1, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
         "introduction", "imageDirectory", "WAIT", now(), now()),
-       (2, 2, 2, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+       (2, 2, 2, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
         "introduction", "imageDirectory", "WAIT", now(), now()),
-       (3, 3, 3, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+       (3, 3, 3, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
         "introduction", "imageDirectory", "WAIT", now(), now()),
-       (4, 3, 4, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", "companyAge",
+       (4, 3, 4, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
         "introduction", "imageDirectory", "WAIT", now(), now());
