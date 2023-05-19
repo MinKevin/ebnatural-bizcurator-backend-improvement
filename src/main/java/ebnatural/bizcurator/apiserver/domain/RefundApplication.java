@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.OrderCancelState;
+import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.domain.constant.OrderRefundType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,15 +42,21 @@ public class RefundApplication {
     @JoinColumn(name = "order_id")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private OrderDetail orderDetail;    // 주문정보
+
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private OrderRefundType opinionCategory = OrderRefundType.UNSELECTED; // 환불 사유 카테고리
+
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private ReceiveWayType receiveWayType = ReceiveWayType.PICK_UP_BY_COMPANY;  // 제품 발송 방법
     @Enumerated(EnumType.STRING)
     private ReceiveAddressType receiveAddressType = ReceiveAddressType.UNSELECTED; // 수거지 선택
 
+    @Setter
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    private OrderCancelState state = OrderCancelState.WAIT; // 상태값
+    private ApplicationState state = ApplicationState.WAIT; // 상태값
     private String address; // 수거지 주소
 
     @Column(length = 20)
@@ -57,9 +64,9 @@ public class RefundApplication {
 
     private LocalDateTime approveTime; // 처리 완료(FINISHED)된 시간
 
+    @Column(nullable = false, updatable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
-    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;    // 신청 시간
     public RefundApplication() {
 

@@ -13,6 +13,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -47,8 +48,18 @@ public class MyPageService {
     private final ProductRepository productRepository;
 
     private final ProductService productService;
-    // todo: 시큐리티 완성되면 수정
-    //private final JwtProvider jwtProvider;
+
+    /**
+     * 홈화면 조회
+     */
+    public MyPageHomeDto showHome(Long memberId) {
+        if(!memberRepository.existsById(memberId)){
+            throw new EntityNotFoundException();
+        }
+        MyPageHomeDto myPageHomeDto = new MyPageHomeDto();
+        myPageHomeDto.tupleToDto(orderDetailRepository.countByDeliveryState(memberId));
+        return myPageHomeDto;
+    }
 
     /**
      * 주문 내역 리스트 조회
