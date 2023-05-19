@@ -1,8 +1,6 @@
 package ebnatural.bizcurator.apiserver.dto;
 
-import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import lombok.Getter;
 
 @Getter
@@ -12,15 +10,15 @@ public class AdminPartnerDto {
     String businessNumber;
     String ceoName;
     String managerPhoneNumber;
-    int companyAge;
+    int establishYear;
 
-    private AdminPartnerDto(String businessName, String category, String businessNumber, String ceoName, String managerPhoneNumber, int companyAge) {
+    private AdminPartnerDto(String businessName, String category, String businessNumber, String ceoName, String managerPhoneNumber, int establishYear) {
         this.businessName = businessName;
         this.category = category;
         this.businessNumber = businessNumber;
         this.ceoName = ceoName;
         this.managerPhoneNumber = managerPhoneNumber;
-        this.companyAge = companyAge;
+        this.establishYear = establishYear;
     }
 
     public static AdminPartnerDto from(SellDocument entity) {
@@ -30,7 +28,7 @@ public class AdminPartnerDto {
                 entity.getBusinessNumber(),
                 entity.getCeoName(),
                 entity.getManagerPhoneNumber(),
-                entity.getCompanyAge()
+                entity.getEstablishYear()
         );
     }
 }

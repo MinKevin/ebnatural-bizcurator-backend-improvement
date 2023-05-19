@@ -15,6 +15,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByMemberId(Long memberId);//memberId로 유저에 해당하는 장바구니 리스트 조회
     Cart findByProduct_Id(Long productId);
 
+
     @Modifying
     @Query("DELETE FROM Cart c where c.member.id = ?1 and c.product.id = ?2 ")
     void deleteInQuery(Long memberId, Long productId);
