@@ -34,4 +34,8 @@ public class ProductImage {
         return productImage;
     }
 
+    public void updateImageUrl(String newImageUrl) {
+        this.imgUrl = newImageUrl;
+    }
+
 }
