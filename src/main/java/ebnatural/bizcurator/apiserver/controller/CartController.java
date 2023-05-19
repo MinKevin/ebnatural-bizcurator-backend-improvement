@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,13 +51,11 @@ public class CartController {
     }
 
     //장바구니 상품 삭제
-    @DeleteMapping("/api/carts")
-    public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody Long productId) {
-        cartService.deleteProductsByCart(productId);
-        List<CartProductDto> cartsList = cartService.getCartsList();
-        HashMap<String, Object> cartMap = new HashMap<>();
-        cartMap.put("cartProducts", cartsList);
-        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 삭제가 완료되었습니다. ", cartMap);
+    @PostMapping("/api/carts/delete")
+    public ResponseEntity<CommonResponse> deleteCartsList(@RequestBody List<Long> productIds) {
+        cartService.deleteProductsByCart(productIds);
+        return CommonResponse.ok(HttpStatus.OK.value(), "장바구니 삭제가 완료되었습니다. ",
+                Map.of("cartProducts", cartService.getCartsList()));
     }
 
 }
