@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PurchaseMakeDocumentRequest {
-    @Enum(enumClass = DocumentType.class, ignoreCase = true)
+    //@Enum(enumClass = DocumentType.class, ignoreCase = true)
     String documentType;
     @NotBlank
     String managerName;
