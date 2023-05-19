@@ -76,15 +76,11 @@ public class ProductService {
 
         // If new images are provided, delete the old ones and upload the new ones
         if (mainImage != null && !mainImage.isEmpty()) {
-            if (mainImageUrl != null) {
-                s3ImageUploadService.deleteFile(mainImageUrl); // 기존 이미지 삭제
-            }
+            s3ImageUploadService.deleteFile(mainImageUrl); // 기존 이미지 삭제
             mainImageUrl = s3ImageUploadService.uploadImage(productDir, mainImage);
         }
         if (detailImage != null && !detailImage.isEmpty()) {
-            if (detailImageUrl != null) {
-                s3ImageUploadService.deleteFile(detailImageUrl); // 기존 이미지 삭제
-            }
+            s3ImageUploadService.deleteFile(detailImageUrl); // 기존 이미지 삭제
             detailImageUrl = s3ImageUploadService.uploadImage(productDir, detailImage);
         }
 
