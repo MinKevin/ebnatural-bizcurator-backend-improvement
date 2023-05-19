@@ -59,6 +59,8 @@ public class Member extends TimeEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
 
+
+
     // todo: 로그인 기능 머지되면 삭제 예정
     @Column
     LocalDate lastLoginTime = LocalDate.now();
