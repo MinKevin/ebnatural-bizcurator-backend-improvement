@@ -59,6 +59,9 @@ public class Member extends TimeEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
 
+    @JoinColumn(name = "cart_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Cart> carts;
     // todo: 로그인 기능 머지되면 삭제 예정
     @Column
     LocalDate lastLoginTime = LocalDate.now();

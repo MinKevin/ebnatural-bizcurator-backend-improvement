@@ -16,29 +16,35 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Setter
-    @ManyToOne (fetch = FetchType.LAZY)
+
+    @ManyToOne (targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Setter
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+//    @Column(name = "member_id")
+//    Long member_id;
+
+    @OneToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Setter
+//    @Column(name = "product_id")
+//    Long product_id;
+
     @Min(value = 1, message = "최소 1개 이상 담아주세요")
     private int quantity; //장바구니에 담을 제품갯수
 
-    public static Cart createCart(Member member, Product product, int quantity) {
-        Cart cart = new Cart();
-        cart.setMember(member);
-        cart.setProduct(product);
-        cart.setQuantity(quantity);
-        return cart;
+
+    public Cart(Member member, Product product, int quantity) {
+        this.member = member;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public static Cart of(Member member, Product product, int quantity) {
+        return new Cart(member, product, quantity);
     }
     public void addCount(int quantity){
         this.quantity += quantity;
@@ -46,5 +52,10 @@ public class Cart {
 
     public void updateCount(int quantity){
         this.quantity = quantity;
+    }
+
+    public Cart addQuantity(int addQuantity){
+        this.quantity += addQuantity;
+        return this;
     }
 }

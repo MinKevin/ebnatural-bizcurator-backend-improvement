@@ -3,8 +3,6 @@ package ebnatural.bizcurator.apiserver.dto;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-
 
 @Builder
 @Getter
@@ -24,4 +22,6 @@ public class CartProductDto {
         this.quantity = quantity;
         this.productImageDtos = productImageDtos;
     }
+
+
 }
