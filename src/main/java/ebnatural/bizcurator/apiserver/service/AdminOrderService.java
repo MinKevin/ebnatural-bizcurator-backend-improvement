@@ -2,25 +2,31 @@ package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Category;
+import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
+import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
 import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
+import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
 import ebnatural.bizcurator.apiserver.domain.constant.StateType;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
 import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
+import ebnatural.bizcurator.apiserver.dto.AdminPurchaseAndMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
+import ebnatural.bizcurator.apiserver.repository.MakeDocumentRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
+import ebnatural.bizcurator.apiserver.repository.PurchaseDocumentRepository;
 import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.SellDocumentRepository;
 import java.time.LocalDate;
@@ -45,6 +51,8 @@ public class AdminOrderService {
     private final CancelApplicationRepository cancelApplicationRepository;
     private final RefundApplicationRepository refundApplicationRepository;
     private final SellDocumentRepository sellDocumentRepository;
+    private final PurchaseDocumentRepository purchaseDocumentRepository;
+    private final MakeDocumentRepository makeDocumentRepository;
 
     /**
      * 관리자페이지 홈 화면 정보를 반환
@@ -290,4 +298,68 @@ public class AdminOrderService {
 
         sellDocumentRepository.save(sellDocument);
     }
+
+    /**
+     *  제작의뢰서 or 구매의뢰서 조회
+     */
+    public Pair<Integer, List<AdminPurchaseAndMakeDocumentDto>> showPurchaseAndMakeDocumentListByPageIndexAndSearchKeyword(
+            DocumentType documentType, Integer page, String search)
+    {
+        page = (page == null) ? 0 : page - 1;
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        int totalSize = 0;
+        List<AdminPurchaseAndMakeDocumentDto> adminPurchaseAndMakeDocumentDtoList = new ArrayList<>();
+
+        switch (documentType) {
+            case purchase:{
+                Page<PurchaseDocument> purchaseDocumentPage = purchaseDocumentRepository.findByAllDocumentCategoryContainingOrderByCreatedAtDesc(search, pageable);
+                totalSize = (int) purchaseDocumentPage.getTotalElements();
+                for (PurchaseDocument purchaseDocument : purchaseDocumentPage) {
+                    AdminPurchaseAndMakeDocumentDto dto = AdminPurchaseAndMakeDocumentDto.from(purchaseDocument);
+                    adminPurchaseAndMakeDocumentDtoList.add(dto);
+                }
+            }break;
+
+            case make:{
+                Page<MakeDocument> makeDocumentPage = makeDocumentRepository.findByAllDocumentCategoryContainingOrderByCreatedAtDesc(search, pageable);
+                totalSize = (int) makeDocumentPage.getTotalElements();
+                for (MakeDocument makeDocument : makeDocumentPage) {
+                    AdminPurchaseAndMakeDocumentDto dto = AdminPurchaseAndMakeDocumentDto.from(makeDocument);
+                    adminPurchaseAndMakeDocumentDtoList.add(dto);
+                }
+            }break;
+
+            default :
+                throw new IllegalArgumentException();
+        }
+
+        return Pair.of(totalSize ,adminPurchaseAndMakeDocumentDtoList);
+    }
+
+    /**
+     * 구메의뢰, 제작의뢰 신청서 승인, 거절 처리를 한다.
+     */
+    public void changeSellDocumentState(DocumentType documentType, Long applicationId, boolean isApproved) {
+        switch (documentType) {
+            case purchase:{
+                PurchaseDocument purchaseDocument = purchaseDocumentRepository.findById(applicationId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+
+                purchaseDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+                purchaseDocumentRepository.save(purchaseDocument);
+            }break;
+
+            case make:{
+                MakeDocument makeDocument = makeDocumentRepository.findById(applicationId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+
+                makeDocument.setStateType((true == isApproved) ? StateType.APPROVE : StateType.REJECT);
+                makeDocumentRepository.save(makeDocument);
+            }break;
+
+            default :
+                throw new IllegalArgumentException();
+        }
+    }
+
 }
