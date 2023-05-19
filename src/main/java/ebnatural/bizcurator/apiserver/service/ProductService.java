@@ -51,6 +51,41 @@ public class ProductService {
         product.getProductImages().add(detailProductImage);
 
     }
+    @Transactional
+    public void updateProduct(Long productId, ProductRequest productRequest, MultipartFile mainImage, MultipartFile detailImage) {
+        Category category = categoryRepository.findById(productRequest.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category id"));
+        Manufacturer manufacturer = manufacturerRepository.findOrCreateManufacturer(productRequest.getManufacturerName());
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product id"));
+
+        // Update Product entity with new values from productRequest
+        product.update(productRequest, category, manufacturer);
+
+        String mainImageUrl = null;
+        String detailImageUrl = null;
+
+        // Get current main image and detail image URL
+        for (ProductImage productImage : product.getProductImages()) {
+            if ("Y".equals(productImage.getRepimgYn())) {
+                mainImageUrl = productImage.getImgUrl();
+            } else if ("N".equals(productImage.getRepimgYn())) {
+                detailImageUrl = productImage.getImgUrl();
+            }
+        }
+
+        // If new images are provided, upload them and update the URLs
+        if (mainImage != null && !mainImage.isEmpty()) {
+            mainImageUrl = s3ImageUploadService.uploadImage(productDir, mainImage);
+        }
+        if (detailImage != null && !detailImage.isEmpty()) {
+            detailImageUrl = s3ImageUploadService.uploadImage(productDir, detailImage);
+        }
+
+        // Update ProductImages with new URLs
+        product.updateImages(mainImageUrl, detailImageUrl);
+    }
+
 
     public List<ProductAdminListDto> getAdminProducts(String keyword){
         List<ProductAdminListDto> products = productRepository.findAdminProducts(keyword);

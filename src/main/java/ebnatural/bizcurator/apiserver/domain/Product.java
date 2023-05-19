@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
+import ebnatural.bizcurator.apiserver.dto.request.ProductRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,6 +90,27 @@ public class Product extends TimeEntity {
     @NotBlank(message = "제조사 이름은 필수 입력값입니다.")
     @Size(max = 50, message = "제조사 이름은 최대 50자까지 입력 가능합니다.")
     private Manufacturer manufacturer;
+
+    public void updateImages(String mainImageUrl, String detailImageUrl) {
+        for (ProductImage productImage : this.getProductImages()) {
+            if ("Y".equals(productImage.getRepimgYn()) && mainImageUrl != null) {
+                productImage.updateImageUrl(mainImageUrl);
+            } else if ("N".equals(productImage.getRepimgYn()) && detailImageUrl != null) {
+                productImage.updateImageUrl(detailImageUrl);
+            }
+        }
+    }
+
+    public void update(ProductRequest productRequest, Category category, Manufacturer manufacturer) {
+        this.category = category;
+        this.manufacturer = manufacturer;
+        this.name = productRequest.getName();
+        this.regularPrice = productRequest.getRegularPrice();
+        this.minQuantity = productRequest.getMinQuantity();
+        this.maxQuantity = productRequest.getMaxQuantity();
+        this.discountRate = productRequest.getDiscountRate();
+    }
+
 
 
     //fetchType이 LAZY이면 proxy를 읽지 못하는 문제가 있음, 근대 EAGER을 쓰면 무한반복
