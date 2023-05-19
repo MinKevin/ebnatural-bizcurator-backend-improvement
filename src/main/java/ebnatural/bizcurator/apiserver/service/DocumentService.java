@@ -65,7 +65,9 @@ public class DocumentService {
     }
 
     public void postSellDocument(SellDocumentRequest docDto, MultipartFile image) {
-        Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        // todo: 시큐리티 설정 후 주석해제
+        // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
+        Member member = memberRepository.findByUserId(1L);
         Category category = categoryRepository.findById(docDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException());
         String storedPath = s3ImageUploadService.uploadImage(sellDir, image);
