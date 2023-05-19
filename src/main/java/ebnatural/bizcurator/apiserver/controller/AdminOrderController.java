@@ -3,6 +3,7 @@ package ebnatural.bizcurator.apiserver.controller;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
+import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationChangeStateDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
@@ -136,13 +137,13 @@ public class AdminOrderController {
     public ResponseEntity<CommonResponse> showCompanyList(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
-        Pair<Integer, List<SellDocumentDto>> sellDocumentDtoPair =
+        Pair<Integer, List<AdminPartnerDto>> adminPartnerDtoPair =
                 adminOrderService.showPartnerListByPageIndexAndSearchKeyword(page, search);
 
         // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
         LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
-        historyMap.put("dataTotalCount", sellDocumentDtoPair.getFirst());
-        historyMap.put("histories", sellDocumentDtoPair.getSecond());
+        historyMap.put("dataTotalCount", adminPartnerDtoPair.getFirst());
+        historyMap.put("histories", adminPartnerDtoPair.getSecond());
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 입점판매사 조회 완료했습니다.", historyMap);
     }
 

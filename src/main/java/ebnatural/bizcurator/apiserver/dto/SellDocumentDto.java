@@ -20,12 +20,12 @@ public class SellDocumentDto {
     String managerPhoneNumber;
     Long category;
     String productDetail;
-    String companyAge;
+    int companyAge;
     String introduction;
     String imageDirectory;
     StateType stateType = StateType.WAIT;
 
-    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, String companyAge, String introduction, String imageDirectory, StateType stateType) {
+    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, int companyAge, String introduction, String imageDirectory, StateType stateType) {
         this.id = id;
         this.businessName = businessName;
         this.ceoName = ceoName;

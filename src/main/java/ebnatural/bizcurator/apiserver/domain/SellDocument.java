@@ -37,19 +37,18 @@ public class SellDocument extends TimeEntity{
     private Category category;
     @NotBlank
     String productDetail;
-    @NotBlank
-    String companyAge;
+    @NotNull
+    int companyAge;
     @NotBlank
     String introduction;
     @NotBlank
     String imageDirectory;
     @NotNull
-    @Column(columnDefinition = "ENUM('WAIT', 'APPROVE', 'REJECT')")
     @Enumerated(EnumType.STRING)
     StateType stateType = StateType.WAIT;
 
     private SellDocument(Member member, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Category category,
-                        String productDetail, String companyAge, String introduction, String imageDirectory, StateType stateType) {
+                        String productDetail, int companyAge, String introduction, String imageDirectory, StateType stateType) {
         this.member = member;
         this.businessName = businessName;
         this.ceoName = ceoName;

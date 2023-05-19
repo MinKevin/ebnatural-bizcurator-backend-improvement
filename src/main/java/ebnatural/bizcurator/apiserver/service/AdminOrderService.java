@@ -12,6 +12,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.ApplicationState;
 import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
 import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
 import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
+import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
 import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
@@ -237,7 +238,7 @@ public class AdminOrderService {
     /**
      *  입점판매사 조회
      */
-    public Pair<Integer, List<SellDocumentDto>> showPartnerListByPageIndexAndSearchKeyword(Integer page, String search)
+    public Pair<Integer, List<AdminPartnerDto>> showPartnerListByPageIndexAndSearchKeyword(Integer page, String search)
     {
         page = (page == null) ? 0 : page - 1;
 
@@ -246,12 +247,12 @@ public class AdminOrderService {
         sellDocumentPage = sellDocumentRepository.findBySellDocumentBusinessNameContainingOrderByCreatedAtDesc(
                 search, pageable);
 
-        List<SellDocumentDto> sellDocumentDtoList = new ArrayList<>();
+        List<AdminPartnerDto> adminPartnerDtoList = new ArrayList<>();
         for (SellDocument sellDocument : sellDocumentPage) {
-            SellDocumentDto sellDocumentDto = SellDocumentDto.from(sellDocument);
-            sellDocumentDtoList.add(sellDocumentDto);
+            AdminPartnerDto adminPartnerDto = AdminPartnerDto.from(sellDocument);
+            adminPartnerDtoList.add(adminPartnerDto);
         }
 
-        return Pair.of((int) sellDocumentPage.getTotalElements() ,sellDocumentDtoList);
+        return Pair.of((int) sellDocumentPage.getTotalElements() ,adminPartnerDtoList);
     }
 }

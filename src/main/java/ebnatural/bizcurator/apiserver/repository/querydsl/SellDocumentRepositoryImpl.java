@@ -3,6 +3,7 @@ package ebnatural.bizcurator.apiserver.repository.querydsl;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import ebnatural.bizcurator.apiserver.domain.QCategory;
 import ebnatural.bizcurator.apiserver.domain.QRefundApplication;
 import ebnatural.bizcurator.apiserver.domain.QSellDocument;
 import ebnatural.bizcurator.apiserver.domain.RefundApplication;
@@ -29,22 +30,23 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
         BooleanBuilder predicateBuilder = new BooleanBuilder();
 
         if (search == null) {
-            // No search keyword provided, retrieve all refund applications
+            // No search keyword provided, retrieve all sell documents
             predicateBuilder.and(qSellDocument.isNotNull());
         } else {
-            // Search refund applications by business name containing the provided search keyword
+            // Search sell documents by business name containing the provided search keyword
             predicateBuilder.and(qSellDocument.businessName.containsIgnoreCase(search));
         }
 
-        // Add condition for stateType being APPROVE
         predicateBuilder.and(qSellDocument.stateType.eq(StateType.APPROVE));
 
         Predicate predicate = predicateBuilder.getValue();
         long total = queryFactory.selectFrom(qSellDocument)
+                .leftJoin(qSellDocument.category).fetchJoin() // Perform fetch join on category
                 .where(predicate)
                 .fetchCount();
 
         List<SellDocument> sellDocumentList = queryFactory.selectFrom(qSellDocument)
+                .leftJoin(qSellDocument.category).fetchJoin() // Perform fetch join on category
                 .where(predicate)
                 .orderBy(qSellDocument.createdAt.desc())
                 .offset(pageable.getOffset())
