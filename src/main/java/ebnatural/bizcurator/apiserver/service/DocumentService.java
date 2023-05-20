@@ -1,19 +1,33 @@
 package ebnatural.bizcurator.apiserver.service;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidDocumentTypeException;
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.*;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.PurchaseMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import ebnatural.bizcurator.apiserver.repository.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +51,8 @@ public class DocumentService {
     private final SellDocumentRepository sellDocumentRepository;
     private final PurposeCategoryRepository purposeCategoryRepository;
     private final S3ImageUploadService s3ImageUploadService;
+
+    private final EntityManager entityManager;
 
     @Value("${cloud.aws.s3.purchase-document-dir}")
     private String purchaseDir;
@@ -175,5 +191,47 @@ public class DocumentService {
         }
         sellDocument.update(member, category, docDto);
     }
+
+    public List<MyPageDocumentDto> showMyDocumentList(Integer filterDays) {
+        if (filterDays == null) {
+            // 기본이 3개월로 되어있음
+            filterDays = 90;
+        }
+
+        Long memberId = 1L;
+        // todo: 시큐리티 설정 on되면 주석 해제
+        //Long memberId = MemberUtil.getMemberId();
+
+        List<MyPageDocumentDto> myPageDocumentDtoList = new ArrayList<>();
+        List<Object[]> docTypeAndDocumentList = new ArrayList<>();
+        docTypeAndDocumentList.addAll(sellDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
+        docTypeAndDocumentList.addAll(makeDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
+        docTypeAndDocumentList.addAll(purchaseDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
+
+        for (Object[] docTypeAndDocument : docTypeAndDocumentList) {
+            String documentType = (String) docTypeAndDocument[0];
+            switch (documentType) {
+                case "Sell":
+                {
+
+                }break;
+
+                case "Make":
+                {
+
+                }break;
+
+                case "Purchase":
+                {
+
+                }break;
+
+                default :
+                    throw new IllegalArgumentException();
+            }
+        }
+        return null;
+    }
+
 }
 
