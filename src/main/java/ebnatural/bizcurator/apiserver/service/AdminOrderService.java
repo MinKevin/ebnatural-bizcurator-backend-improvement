@@ -69,9 +69,7 @@ public class AdminOrderService {
      * @return
      */
     public Pair<Integer, List<AdminOrderDetailDto>> showOrderDetailListByPageIndexAndSearchKeyword(Integer page, String search) {
-        if (null == page) {
-            page = 0;
-        }
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<OrderDetail> orderDetailPage = null;
@@ -114,7 +112,7 @@ public class AdminOrderService {
      */
     public Pair<Integer, List<AdminApplicationDto>> showOrderCancelListByPageIndexAndSearchKeyword(Integer page, String search) 
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<CancelApplication> cancelApplicationPage = null;
@@ -157,7 +155,7 @@ public class AdminOrderService {
      */
     public Pair<Integer, List<AdminApplicationDto>> showOrderRefundListByPageIndexAndSearchKeyword(Integer page, String search)
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<RefundApplication> refundApplicationPage = null;
@@ -220,7 +218,7 @@ public class AdminOrderService {
      */
     public Pair<Integer, List<AdminUserInfoDto>> showUserListByPageIndexAndSearchKeyword(Integer page, String search)
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Member> memberPage = null;
@@ -249,7 +247,7 @@ public class AdminOrderService {
      */
     public Pair<Integer, List<AdminPartnerDto>> showPartnerListByPageIndexAndSearchKeyword(Integer page, String search)
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<SellDocument> sellDocumentPage = null;
@@ -270,7 +268,7 @@ public class AdminOrderService {
      */
     public Pair<Integer, List<AdminSellDocumentDto>> showSellDocumentListByPageIndexAndSearchKeyword(Integer page, String search)
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<SellDocument> sellDocumentPage = null;
@@ -304,7 +302,7 @@ public class AdminOrderService {
     public Pair<Integer, List<AdminPurchaseAndMakeDocumentDto>> showPurchaseAndMakeDocumentListByPageIndexAndSearchKeyword(
             DocumentType documentType, Integer page, String search)
     {
-        page = (page == null) ? 0 : page - 1;
+        page = (page == null) ? 0 : Math.max(0, page-1);
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         int totalSize = 0;
         List<AdminPurchaseAndMakeDocumentDto> adminPurchaseAndMakeDocumentDtoList = new ArrayList<>();
