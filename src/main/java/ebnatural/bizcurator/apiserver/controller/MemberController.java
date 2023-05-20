@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
@@ -75,7 +74,7 @@ public class MemberController {
      *
      * @return
      */
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<CommonResponse> getAllMember() {
         return CommonResponse.ok(HttpStatus.OK.value(), "get all member info success",
                 Map.of("result", (memberService.getAllMember())));
@@ -101,7 +100,7 @@ public class MemberController {
     }
 
     @PatchMapping
-    public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) MemberRequest memberDto,
+    public ResponseEntity<CommonResponse> updateMember(@Valid @RequestPart(value = "post", required = true) UpdateMemberRequest memberDto,
                                                        @RequestPart(value = "image") MultipartFile image) {
         memberService.updateMember(memberDto, image);
         return CommonResponse.ok(HttpStatus.CREATED.value(), "update success");

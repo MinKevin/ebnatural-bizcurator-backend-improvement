@@ -3,12 +3,10 @@ package ebnatural.bizcurator.apiserver.repository.querydsl;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import ebnatural.bizcurator.apiserver.domain.QCategory;
-import ebnatural.bizcurator.apiserver.domain.QRefundApplication;
 import ebnatural.bizcurator.apiserver.domain.QSellDocument;
-import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -37,7 +35,7 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
             predicateBuilder.and(qSellDocument.businessName.containsIgnoreCase(search));
         }
 
-        predicateBuilder.and(qSellDocument.stateType.eq(StateType.APPROVE));
+        predicateBuilder.and(qSellDocument.stateType.eq(RequestStateType.APPROVE));
 
         Predicate predicate = predicateBuilder.getValue();
         long total = queryFactory.selectFrom(qSellDocument)

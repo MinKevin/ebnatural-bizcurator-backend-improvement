@@ -1,15 +1,13 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
-import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -27,7 +25,6 @@ public class Member extends TimeEntity {
     @Length(max = 320, message = "이메일은 320자리를 넘을 수 없습니다.")
     private String username;
     String password;
-    @Column(name = "member_role", columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
     @NotBlank
@@ -63,7 +60,7 @@ public class Member extends TimeEntity {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 
     private List<Cart> carts;
-    // todo: 로그인 기능 머지되면 삭제 예정
+
     @Column
     LocalDate lastLoginTime = LocalDate.now();
 
@@ -114,11 +111,23 @@ public class Member extends TimeEntity {
     }
 
     public Member expire() {
+        this.username = "xxxxxx@xxxxxx";
+        this.password = "x";
+        this.representative = "x";
+        this.businessName = "x";
+        this.businessNumber = "x";
+        this.postalCode = "x";
+        this.address = "x";
+        this.businessRegistration = "x";
+        this.manager = "x";
+        this.managerEmail = "x";
+        this.managerPhoneNumber = "x";
         this.isEnable = false;
+        this.refreshToken = "";
         return this;
     }
 
-    public Member update(MemberRequest memberDto){
+    public Member update(UpdateMemberRequest memberDto){
         this.password = memberDto.getPassword();
         this.businessName = memberDto.getBusinessName();
         this.businessNumber = memberDto.getBusinessNumber();
@@ -129,6 +138,7 @@ public class Member extends TimeEntity {
         this.manager = memberDto.getManager();
         this.managerEmail = memberDto.getManagerEmail();
         this.managerPhoneNumber = memberDto.getManagerPhoneNumber();
+        this.lastLoginTime = null;
         return this;
     }
 }

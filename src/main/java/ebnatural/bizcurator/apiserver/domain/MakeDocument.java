@@ -1,7 +1,6 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
-import ebnatural.bizcurator.apiserver.dto.PurchaseMakeDocumentDto;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import lombok.Getter;
 
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -23,7 +21,7 @@ public class MakeDocument extends RequestDocumentEntity{
 
     public MakeDocument(){}
     private MakeDocument(Member member, String managerName, String managerCall, PurposeCategory category, String productName, String productDetail,
-                         int quantity, String requestMessage, Date desiredEstimateDate, Date desiredDeliveryDate, String storedPath, StateType stateType){
+                         int quantity, String requestMessage, Date desiredEstimateDate, Date desiredDeliveryDate, String storedPath, RequestStateType stateType){
         this.member = member;
         this.managerName = managerName;
         this.managerCall = managerCall;

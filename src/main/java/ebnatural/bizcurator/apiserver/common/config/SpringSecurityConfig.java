@@ -84,11 +84,9 @@ public class SpringSecurityConfig {
 
         return http.build();
     }
-
     JwtFilter jwtAuthorizationFilter() {
         return new JwtFilter(jwtProvider, memberRepository);
     }
-
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

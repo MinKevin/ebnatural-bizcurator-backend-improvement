@@ -1,5 +1,8 @@
 package ebnatural.bizcurator.apiserver.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import ebnatural.bizcurator.apiserver.domain.OrderDetail;
+import java.time.LocalDateTime;
 import lombok.Getter;
 
 @Getter
@@ -9,14 +12,15 @@ public class AdminOrderDetailDto {
     private String productName;
     private String manufacturerName;
     private String productCategory;
-    private String deliveryTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime deliveryTime;
     private String deliveryState;
     private int quantity;
     private int cost;
     private String invoiceNumber;
 
     private AdminOrderDetailDto(Long orderId, String productName, String manufacturerName,
-            String productCategory, String deliveryTime, String deliveryState, int quantity,
+            String productCategory, LocalDateTime deliveryTime, String deliveryState, int quantity,
             int cost,
             String invoiceNumber) {
         this.orderId = orderId;
@@ -31,8 +35,22 @@ public class AdminOrderDetailDto {
     }
 
     public static AdminOrderDetailDto of(Long orderId, String productName, String manufacturerName,
-            String productCategory, String deliveryTime, String deliveryState, int quantity, int cost, String invoiceNumber) {
+            String productCategory, LocalDateTime deliveryTime, String deliveryState, int quantity, int cost, String invoiceNumber) {
 
         return new AdminOrderDetailDto(orderId, productName, manufacturerName, productCategory, deliveryTime, deliveryState, quantity, cost, invoiceNumber);
+    }
+
+    public static AdminOrderDetailDto fromEntity(OrderDetail orderDetail) {
+        return new AdminOrderDetailDto(
+                orderDetail.getId(),
+                orderDetail.getProduct().getName(),
+                orderDetail.getProduct().getManufacturer().getName(),
+                orderDetail.getProduct().getCategory().getName(),
+                orderDetail.getOrderTime(),
+                orderDetail.getDeliveryState().getMeaning(),
+                orderDetail.getQuantity(),
+                orderDetail.getCost(),
+                orderDetail.getInvoiceNumber()
+        );
     }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import ebnatural.bizcurator.apiserver.common.validator.Enum;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,5 +37,5 @@ public class PurchaseMakeDocumentRequest {
     @NotBlank
     String requestMessage;
     String imageDirectory;
-    StateType stateType = StateType.WAIT;
+    RequestStateType stateType = RequestStateType.WAIT;
 }

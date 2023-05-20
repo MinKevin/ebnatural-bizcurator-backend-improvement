@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,9 +27,9 @@ public class PurchaseMakeDocumentDto {
     Date DesiredDeliveryDate;
     String requestMessage;
     String imageDirectory;
-    StateType stateType = StateType.WAIT;
+    RequestStateType stateType = RequestStateType.WAIT;
 
-    public PurchaseMakeDocumentDto(Long id, DocumentType documentType, String managerName, String managerCall, long category, String productName, String productDetail, int quantity, Date desiredEstimateDate, Date desiredDeliveryDate, String requestMessage, String imageDirectory, StateType stateType) {
+    public PurchaseMakeDocumentDto(Long id, DocumentType documentType, String managerName, String managerCall, long category, String productName, String productDetail, int quantity, Date desiredEstimateDate, Date desiredDeliveryDate, String requestMessage, String imageDirectory, RequestStateType stateType) {
         this.id = id;
         this.documentType = documentType;
         this.managerName = managerName;

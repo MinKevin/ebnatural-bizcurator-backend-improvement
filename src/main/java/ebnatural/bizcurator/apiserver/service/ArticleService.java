@@ -30,6 +30,7 @@ public class ArticleService {
         PageRequest pageRequest = PageRequest.of(0, size);
 
         if (firstPage) {
+            lastArticleId = Long.MAX_VALUE;
             Page<ArticleDto> articlePage = articleRepository.findByIdLessThanAndBoardTypeOrderByIdDescForFirstPage(lastArticleId, boardType, pageRequest);
             return articlePage.getContent();
         }

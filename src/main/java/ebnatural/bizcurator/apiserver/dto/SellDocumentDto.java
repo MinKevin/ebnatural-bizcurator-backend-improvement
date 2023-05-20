@@ -3,7 +3,7 @@ package ebnatural.bizcurator.apiserver.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +21,9 @@ public class SellDocumentDto {
     int establishYear;
     String introduction;
     String imageDirectory;
-    StateType stateType = StateType.WAIT;
+    RequestStateType stateType = RequestStateType.WAIT;
 
-    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, int establishYear, String introduction, String imageDirectory, StateType stateType) {
+    public SellDocumentDto(Long id, String businessName, String ceoName, String businessNumber, String managerPhoneNumber, Long category, String productDetail, int establishYear, String introduction, String imageDirectory, RequestStateType stateType) {
         this.id = id;
         this.businessName = businessName;
         this.ceoName = ceoName;

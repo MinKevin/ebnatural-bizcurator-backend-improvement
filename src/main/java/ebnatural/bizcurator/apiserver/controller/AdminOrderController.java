@@ -1,37 +1,24 @@
 package ebnatural.bizcurator.apiserver.controller;
 
-import ebnatural.bizcurator.apiserver.dto.AdminApplicationDto;
-import ebnatural.bizcurator.apiserver.dto.AdminDocumentChangeStateDto;
-import ebnatural.bizcurator.apiserver.dto.AdminHomeInfoDto;
-import ebnatural.bizcurator.apiserver.dto.AdminOrderDetailDto;
-import ebnatural.bizcurator.apiserver.dto.AdminPartnerDto;
-import ebnatural.bizcurator.apiserver.dto.AdminSellDocumentDto;
-import ebnatural.bizcurator.apiserver.dto.AdminUserInfoDto;
-import ebnatural.bizcurator.apiserver.dto.ApplicationChangeStateDto;
-import ebnatural.bizcurator.apiserver.dto.PaymentHistoryDto;
-import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
+import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
+import ebnatural.bizcurator.apiserver.dto.*;
+import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.AdminOrderService;
+import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자페이지 
@@ -45,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admins")
 public class AdminOrderController {
 
+    private final MemberAuthService memberAuthService;
     private final AdminOrderService adminOrderService;
 
     @Operation(summary = "홈화면 메서드", description = "홈화면 메서드입니다.")
@@ -56,14 +44,33 @@ public class AdminOrderController {
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자 페이지 홈화면 로드 완료했습니다.", historyMap);
     }
 
+    /**
+     * 로그인 시 access 토큰, refresh 토큰 모두 새로 만들어준다.
+     *
+     * @param loginDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody LoginRequest loginDto) {
+        MemberDto memberDto = memberAuthService.login(loginDto);
+        Map<String, Object> loginDataMap = new HashMap<>();
+        loginDataMap.put("login", memberDto);
+        return CommonResponse.ok(HttpStatus.OK.value(), "로그인 성공했습니다.", loginDataMap);
+    }
+
     @Operation(summary = "주문내역 조회 메서드", description = "주문내역 조회 메서드입니다.")
     @GetMapping("/orders")
     public ResponseEntity<CommonResponse> showOrderDetailList(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
 
+        // 시간 관계상 프론트에서 페이지네이션을 처리할 시간이 없다고 하여 프론트팀 요청으로 페이지네이션 기능을 주석처리 함
+//        Pair<Integer, List<AdminOrderDetailDto>> adminOrderDetailsPair =
+//                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(page, search);
+
         Pair<Integer, List<AdminOrderDetailDto>> adminOrderDetailsPair =
-                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(page, search);
+                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(search);
         // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
         LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
         historyMap.put("dataTotalCount", adminOrderDetailsPair.getFirst());
@@ -150,7 +157,7 @@ public class AdminOrderController {
         return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 입점판매사 조회 완료했습니다.", historyMap);
     }
 
-    @Operation(summary = "판매자입점의뢰 신청서 관리", description = "판매자입점의뢰 신청서 조회")
+    @Operation(summary = "판매의뢰 신청서 조회", description = "판매의뢰 신청서 조회")
     @GetMapping("/sell")
     public ResponseEntity<CommonResponse> showSellDocumentList(
             @RequestParam(value = "page", required = false) Integer page,
@@ -161,15 +168,61 @@ public class AdminOrderController {
         LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
         historyMap.put("dataTotalCount", adminSellDocumentDtoPair.getFirst());
         historyMap.put("histories", adminSellDocumentDtoPair.getSecond());
-        return CommonResponse.ok(HttpStatus.OK.value(), "판매자입점의뢰 신청서 조회 완료했습니다.", historyMap);
+        return CommonResponse.ok(HttpStatus.OK.value(), "판매의뢰 신청서 조회 완료했습니다.", historyMap);
     }
 
-    @Operation(summary = "판매자입점의뢰 승인, 거절 처리", description = "approve or reject로 보내주세요.")
+    @Operation(summary = "판매의뢰 승인, 거절 처리", description = "approve or reject로 보내주세요.")
     @PatchMapping("/sell/{id}")
     public ResponseEntity<CommonResponse> changeSellDocumentState(
             @PathVariable("id") Long id,
             @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
         adminOrderService.changeSellDocumentState(id, adminDocumentChangeStateDto.getType().equals("approve"));
-        return CommonResponse.ok(HttpStatus.OK.value(), "관리자페이지 주문 환불신청서 처리 완료했습니다.");
+        return CommonResponse.ok(HttpStatus.OK.value(), "판매의뢰 처리 완료했습니다.");
+    }
+
+    @Operation(summary = "구매의뢰 신청서 조회", description = "구매의뢰 신청서 조회")
+    @GetMapping("/purchases")
+    public ResponseEntity<CommonResponse> showPurchaseDocumentList(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "search", required = false) String search) {
+        Pair<Integer, List<AdminPurchaseAndMakeDocumentDto>> adminPurchaseAndMakeDocumentDto =
+                adminOrderService.showPurchaseAndMakeDocumentListByPageIndexAndSearchKeyword(DocumentType.purchase, page, search);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminPurchaseAndMakeDocumentDto.getFirst());
+        historyMap.put("histories", adminPurchaseAndMakeDocumentDto.getSecond());
+        return CommonResponse.ok(HttpStatus.OK.value(), "구매의뢰 신청서 조회 완료했습니다.", historyMap);
+    }
+
+    @Operation(summary = "구매의뢰 승인, 거절 처리", description = "approve or reject로 보내주세요.")
+    @PatchMapping("/purchases/{id}")
+    public ResponseEntity<CommonResponse> changePurchaseDocumentState(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
+        adminOrderService.changeSellDocumentState(DocumentType.purchase, id, adminDocumentChangeStateDto.getType().equals("approve"));
+        return CommonResponse.ok(HttpStatus.OK.value(), "구매의뢰 수정 처리 완료했습니다.");
+    }
+
+    @Operation(summary = "제작의뢰 신청서 조회", description = "제작의뢰 신청서 조회")
+    @GetMapping("/make")
+    public ResponseEntity<CommonResponse> showMakeDocumentList(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "search", required = false) String search) {
+        Pair<Integer, List<AdminPurchaseAndMakeDocumentDto>> adminPurchaseAndMakeDocumentDto =
+                adminOrderService.showPurchaseAndMakeDocumentListByPageIndexAndSearchKeyword(DocumentType.make, page, search);
+        // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
+        LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
+        historyMap.put("dataTotalCount", adminPurchaseAndMakeDocumentDto.getFirst());
+        historyMap.put("histories", adminPurchaseAndMakeDocumentDto.getSecond());
+        return CommonResponse.ok(HttpStatus.OK.value(), "제작의뢰 신청서 조회 완료했습니다.", historyMap);
+    }
+
+    @Operation(summary = "제작의뢰 승인, 거절 처리", description = "approve or reject로 보내주세요.")
+    @PatchMapping("/make/{id}")
+    public ResponseEntity<CommonResponse> changeMakeDocumentState(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
+        adminOrderService.changeSellDocumentState(DocumentType.make, id, adminDocumentChangeStateDto.getType().equals("approve"));
+        return CommonResponse.ok(HttpStatus.OK.value(), "제작의뢰 수정 처리 완료했습니다.");
     }
 }

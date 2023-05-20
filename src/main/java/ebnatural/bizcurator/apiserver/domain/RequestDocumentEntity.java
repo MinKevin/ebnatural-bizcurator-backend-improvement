@@ -1,8 +1,8 @@
 package ebnatural.bizcurator.apiserver.domain;
 
-import ebnatural.bizcurator.apiserver.domain.constant.StateType;
+import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -39,8 +39,10 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     String requestMessage;
     @NotBlank
     String imageDirectory;
+
+    @Setter
     @NotNull
     @Enumerated(EnumType.STRING)
-    StateType stateType = StateType.WAIT;
+    RequestStateType stateType = RequestStateType.WAIT;
 
 }
