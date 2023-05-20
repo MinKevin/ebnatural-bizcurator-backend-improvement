@@ -54,6 +54,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
 
+
+                //request 시 마다 마지막 로그인 날짜 갱신
+                Long id = member.getId();
+                memberRepository.updateLastLoginTimeToNowById(id, LocalDate.now());
+
+
             } catch (ExpiredJwtException e) {
                 throw e;
             } catch (Exception e){

@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
@@ -42,26 +43,26 @@ public class MemberController {
     /**
      * accessToken에 담긴 유저정보를 꺼내서 refresh token을 지워준다.
      *
-     * @param accessToken 엑세스 토큰
+     *
      * @return
      */
-    @PostMapping("/logout")
-    public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
+    @GetMapping("/logout")
+    public ResponseEntity<CommonResponse> logout() {
         return CommonResponse.ok(HttpStatus.OK.value(), "logout success",
-                Map.of("result", (Object) (memberAuthService.logout(accessToken.get("accessToken")))));
+                Map.of("result", (Object) (memberAuthService.logout())));
     }
 
     /**
      * access토큰 내부의 유저 정보를 확인한 후 access 토큰 새로 만들어준다.
      *
-     * @param accessToken 엑세스 토큰
+     * @param
      * @return
      * @throws Exception
      */
-    @PostMapping("/refresh")
-    public ResponseEntity<CommonResponse> refresh(@RequestBody Map<String, String> accessToken) throws Exception {
+    @GetMapping("/refresh")
+    public ResponseEntity<CommonResponse> refresh() throws Exception {
         Map<String, Object> mp = new HashMap<>();
-        TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
+        TokenDto tokenDto = memberAuthService.refreshToken();
         mp.put("result", tokenDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "refresh success", mp);
     }

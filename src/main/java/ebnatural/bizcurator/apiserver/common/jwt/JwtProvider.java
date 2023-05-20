@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.common.jwt;
 
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import io.jsonwebtoken.*;
@@ -110,6 +111,7 @@ public class JwtProvider {
     public static String resolveToken(HttpServletRequest request) {
         String bearerToken =  request.getHeader("Authorization");
         if(bearerToken != null && bearerToken.startsWith("Bearer ")){
+            MemberUtil.setAccessToken(bearerToken.substring(7));
             return bearerToken.substring(7);
         }
         return null;
