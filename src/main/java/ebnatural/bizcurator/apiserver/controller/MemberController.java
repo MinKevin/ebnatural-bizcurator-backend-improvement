@@ -4,6 +4,7 @@ import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import ebnatural.bizcurator.apiserver.service.MemberService;
