@@ -65,8 +65,12 @@ public class AdminOrderController {
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "search", required = false) String search) {
 
+        // 시간 관계상 프론트에서 페이지네이션을 처리할 시간이 없다고 하여 프론트팀 요청으로 페이지네이션 기능을 주석처리 함
+//        Pair<Integer, List<AdminOrderDetailDto>> adminOrderDetailsPair =
+//                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(page, search);
+
         Pair<Integer, List<AdminOrderDetailDto>> adminOrderDetailsPair =
-                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(page, search);
+                adminOrderService.showOrderDetailListByPageIndexAndSearchKeyword(search);
         // dataTotalCount가 histories 보다 앞에 출력됐으면 해서 순서가 보장되는 LinkedHashMap으로 수정함.
         LinkedHashMap<String, Object> historyMap = new LinkedHashMap<>();
         historyMap.put("dataTotalCount", adminOrderDetailsPair.getFirst());
