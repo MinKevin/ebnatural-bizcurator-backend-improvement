@@ -1,10 +1,19 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import ebnatural.bizcurator.apiserver.domain.MakeDocument;
+import ebnatural.bizcurator.apiserver.domain.OrderDetail;
+import ebnatural.bizcurator.apiserver.domain.QCategory;
+import ebnatural.bizcurator.apiserver.domain.QMakeDocument;
+import ebnatural.bizcurator.apiserver.domain.QManufacturer;
 import ebnatural.bizcurator.apiserver.domain.QOrderDetail;
+import ebnatural.bizcurator.apiserver.domain.QProduct;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.springframework.data.domain.PageImpl;
 
 public class OrderDetailRepositoryImpl implements OrderDetailRepositoryCustom{
 
@@ -26,4 +35,30 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepositoryCustom{
                 .fetch();
     }
 
+    @Override
+    public List<OrderDetail> findByAllOrderDetailProductNameContainingOrderByCreatedAtDesc(String search) {
+        QOrderDetail qOrderDetail = QOrderDetail.orderDetail;
+        QProduct qProduct = QProduct.product;
+        QManufacturer qManufacturer = QManufacturer.manufacturer;
+        QCategory qCategory = QCategory.category;
+        BooleanBuilder predicateBuilder = new BooleanBuilder();
+
+        if (search == null) {
+            // No search keyword provided, retrieve all sell documents
+            predicateBuilder.and(qOrderDetail.isNotNull());
+        } else {
+            // Search sell documents by product name containing the provided search keyword
+            predicateBuilder.and(qOrderDetail.product.name.containsIgnoreCase(search));
+        }
+
+        Predicate predicate = predicateBuilder.getValue();
+
+        return queryFactory.selectFrom(qOrderDetail)
+                .leftJoin(qOrderDetail.product, qProduct).fetchJoin()
+                .leftJoin(qProduct.manufacturer, qManufacturer).fetchJoin()
+                .leftJoin(qProduct.category, qCategory).fetchJoin()
+                .where(predicate)
+                .orderBy(qOrderDetail.orderTime.desc())
+                .fetch();
+    }
 }
