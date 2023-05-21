@@ -59,7 +59,7 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
     }
 
     @Override
-    public Page<SellDocument> findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+    public Page<SellDocument> findByAllSellDocumentCategoryContainingOrderByCreatedAtDesc(
             String search, Pageable pageable) {
         QSellDocument qSellDocument = QSellDocument.sellDocument;
 
@@ -70,7 +70,7 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
             predicateBuilder.and(qSellDocument.isNotNull());
         } else {
             // Search sell documents by business name containing the provided search keyword
-            predicateBuilder.and(qSellDocument.businessName.containsIgnoreCase(search));
+            predicateBuilder.and(qSellDocument.category.name.containsIgnoreCase(search));
         }
 
         Predicate predicate = predicateBuilder.getValue();
