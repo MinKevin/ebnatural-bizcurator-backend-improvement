@@ -155,4 +155,16 @@ public class MyPageController {
         historyMap.put("details", detailDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "내 의뢰 내역 상세조회가 완료되었습니다.", historyMap);
     }
+
+    @Operation(summary = "의뢰 내역 수정")
+    @PutMapping("/requests/histories/{request-id}/edit")
+    public ResponseEntity<CommonResponse> changeDocument(
+            @Valid @RequestPart(value = "post", required = true) DocumentChangeDto documentChangeDto,
+            @RequestPart(value = "image") MultipartFile image,
+            @PathVariable("request-id") Long requestId,
+            @RequestParam(value = "type") String documentType)  {
+
+        documentService.changeDocument(requestId, documentType, documentChangeDto, image);
+        return CommonResponse.ok(HttpStatus.OK.value(), "의뢰서 수정 완료했습니다.");
+    }
 }

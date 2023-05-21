@@ -11,6 +11,7 @@ import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.*;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.DocumentChangeDto;
 import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.PurchaseMakeDocumentDto;
@@ -298,5 +299,66 @@ public class DocumentService {
 
         }
     }
+
+    /**
+     * 의뢰서 수정
+     * @param requestId
+     * @param documentType
+     * @return
+     */
+    public void changeDocument(Long requestId, String documentType, DocumentChangeDto documentChangeDto, MultipartFile image){
+        // todo: 시큐리티 설정 후 주석해제
+        // Long memberId = MemberUtil.getMemberId();
+        Long memberId = 1L;
+
+        switch (documentType) {
+            case "Sell":
+            case "sell":
+            {
+                SellDocument sellDocument = sellDocumentRepository.findByMemberIdAndId(memberId, requestId).orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = sellDocument.getImageDirectory();
+                    sellDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                sellDocument.update(categoryRepository.findByName(documentChangeDto.getCategory()), documentChangeDto);
+            }
+            break;
+
+            case "Make":
+            case "make":
+            {
+                MakeDocument makeDocument = makeDocumentRepository.findByMemberIdAndId(memberId, requestId).orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = makeDocument.getImageDirectory();
+                    makeDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                PurposeCategory purposeCategory = purposeCategoryRepository.findByName(documentChangeDto.getCategory());
+                makeDocument.update(purposeCategory, documentChangeDto);
+            }
+            break;
+
+            case "Purchase":
+            case "purchase":
+            {
+                PurchaseDocument purchaseDocument = purchaseDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = purchaseDocument.getImageDirectory();
+                    purchaseDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                Category productCategory = categoryRepository.findByName(documentChangeDto.getCategory());
+                purchaseDocument.update(productCategory, documentChangeDto);
+            }
+            break;
+
+            default :
+                throw new IllegalArgumentException();
+
+        }
+    }
+
 }
 

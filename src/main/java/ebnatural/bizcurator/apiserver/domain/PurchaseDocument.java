@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
+import ebnatural.bizcurator.apiserver.dto.DocumentChangeDto;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import lombok.Getter;
 
@@ -54,5 +55,14 @@ public class PurchaseDocument extends RequestDocumentEntity{
         this.imageDirectory = docDto.getImageDirectory();
         this.stateType = docDto.getStateType();
         return this;
+    }
+
+    public void update(Category category, DocumentChangeDto documentChangeDto) {
+        this.category = category;
+        this.productDetail = documentChangeDto.getProductDetail();
+        this.quantity = documentChangeDto.getQuantity();
+        this.desiredEstimateDate = documentChangeDto.getDesiredEstimateDate();
+        this.desiredDeliveryDate = documentChangeDto.getDesiredDeliveryDate();
+        this.requestMessage = documentChangeDto.getRequestContext();
     }
 }
