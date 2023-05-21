@@ -1,9 +1,12 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
+import ebnatural.bizcurator.apiserver.dto.request.PasswordFindRequest;
 import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -139,6 +142,13 @@ public class Member extends TimeEntity {
         this.managerEmail = memberDto.getManagerEmail();
         this.managerPhoneNumber = memberDto.getManagerPhoneNumber();
         this.lastLoginTime = null;
+        return this;
+    }
+
+    public Member setNewPassword(PasswordFindRequest memberDto, BCryptPasswordEncoder passwordEncoder){
+        memberDto.encodePrivacy(passwordEncoder);
+        this.password = memberDto.getPassword();
+
         return this;
     }
 }

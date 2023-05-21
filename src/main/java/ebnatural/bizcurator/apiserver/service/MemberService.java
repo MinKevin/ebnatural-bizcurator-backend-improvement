@@ -10,11 +10,14 @@ import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.PasswordFindRequest;
 import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
+import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.repository.MemberLoginLogRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -123,4 +126,25 @@ public class MemberService implements UserDetailsService {
     }
 
 
+    public CommonResponse certificationNumberConfirm(String certificationNumber) {
+        if (certificationNumber.equals(EmailServiceImpl.ePw))
+            return CommonResponse.of(HttpStatus.OK.value(), "인증번호가 일치합니다.");
+        else
+            return CommonResponse.of(HttpStatus.NOT_ACCEPTABLE.value(), "인증번호가 일치하지 않습니다.");
+    }
+
+    public CommonResponse findEmail(String email) {
+        Member member = memberRepository.findByUsername(email);
+        if (member == null)
+            return CommonResponse.of(410, "해당 이메일은 존재하지 않습니다.");
+        else
+            return CommonResponse.of(409, "해당 이메일은 사용중입니다.");
+    }
+
+    public void setNewPassword(PasswordFindRequest passwordFindRequest) {
+        if (!passwordFindRequest.getPassword().equals(passwordFindRequest.getPasswordConfirm()))
+            throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
+        memberRepository.findByUsername(passwordFindRequest.getUsername())
+                .setNewPassword(passwordFindRequest, passwordEncoder);
+    }
 }
