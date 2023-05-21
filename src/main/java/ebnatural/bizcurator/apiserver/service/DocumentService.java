@@ -1,19 +1,36 @@
 package ebnatural.bizcurator.apiserver.service;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.common.exception.custom.CategoryNotFoundException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidDocumentTypeException;
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.*;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
+import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.DocumentChangeDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDetailDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.PurchaseMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import ebnatural.bizcurator.apiserver.repository.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +54,8 @@ public class DocumentService {
     private final SellDocumentRepository sellDocumentRepository;
     private final PurposeCategoryRepository purposeCategoryRepository;
     private final S3ImageUploadService s3ImageUploadService;
+
+    private final EntityManager entityManager;
 
     @Value("${cloud.aws.s3.purchase-document-dir}")
     private String purchaseDir;
@@ -175,5 +194,171 @@ public class DocumentService {
         }
         sellDocument.update(member, category, docDto);
     }
+
+    /**
+     * 내 의뢰 내역 조회
+     *  - 정해진 날짜로 부터 의뢰서 작성 내림차순으로 정렬함
+     * @param filterDays
+     * @return
+     */
+    public List<MyPageDocumentDto> showMyDocumentList(Integer filterDays) {
+        if (filterDays == null) {
+            // 기본이 3개월로 되어있음
+            filterDays = 90;
+        }
+        Long memberId = 1L;
+        // todo: 시큐리티 설정 on되면 주석 해제
+        //Long memberId = MemberUtil.getMemberId();
+
+        List<Object> documentList = new ArrayList<>();
+        documentList.addAll(sellDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+        documentList.addAll(makeDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+        documentList.addAll(purchaseDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+
+        // Comparator를 사용하여 documentList를 createdAt 값의 내림차순으로 정렬
+        Collections.sort(documentList, (obj1, obj2) -> {
+            LocalDateTime createdAt1 = getCreatedAtFromDocumentObject(obj1);
+            LocalDateTime createdAt2 = getCreatedAtFromDocumentObject(obj2);
+            return createdAt2.compareTo(createdAt1);
+        });
+
+        List<MyPageDocumentDto> myPageDocumentDtoList = new ArrayList<>();
+        for (Object document : documentList) {
+            MyPageDocumentDto myPageDocumentDto = null;
+
+           if(document instanceof SellDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((SellDocument) document);
+           }
+           else if(document instanceof MakeDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((MakeDocument) document);
+           }
+           else if(document instanceof PurchaseDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((PurchaseDocument) document);
+           }
+           else {
+               continue;
+           }
+            myPageDocumentDtoList.add(myPageDocumentDto);
+        }
+
+        return myPageDocumentDtoList;
+    }
+
+    // createdAt 값을 가져오는 유틸리티 메서드
+    private LocalDateTime getCreatedAtFromDocumentObject(Object document) {
+        if (document instanceof SellDocument) {
+            return ((SellDocument) document).getCreatedAt();
+        } else if (document instanceof MakeDocument) {
+            return ((MakeDocument) document).getCreatedAt();
+        } else if (document instanceof PurchaseDocument) {
+            return ((PurchaseDocument) document).getCreatedAt();
+        } else {
+            // 예외 처리 또는 기본값 반환
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * 의뢰 내역 상세조회
+     * @param requestId
+     * @param documentType Sell, Purchase, Make 중 하나
+     * @return
+     */
+    public MyPageDocumentDetailDto showMyDocumentDetail(Long requestId, String documentType) {
+        Long memberId = 1L;
+        // todo: 시큐리티 설정 on되면 주석 해제
+        //Long memberId = MemberUtil.getMemberId();
+
+        switch (documentType) {
+            case "Sell":
+            case "sell":
+            {
+                SellDocument sellDocument = sellDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(sellDocument);
+            }
+
+            case "Make":
+            case "make":
+            {
+                MakeDocument makeDocument = makeDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(makeDocument);
+            }
+
+            case "Purchase":
+            case "purchase":
+            {
+                PurchaseDocument purchaseDocument = purchaseDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(purchaseDocument);
+            }
+
+            default :
+                throw new IllegalArgumentException();
+
+        }
+    }
+
+    /**
+     * 의뢰서 수정
+     * @param requestId
+     * @param documentType
+     * @return
+     */
+    public void changeDocument(Long requestId, String documentType, DocumentChangeDto documentChangeDto, MultipartFile image){
+        // todo: 시큐리티 설정 후 주석해제
+        // Long memberId = MemberUtil.getMemberId();
+        Long memberId = 1L;
+
+        switch (documentType) {
+            case "Sell":
+            case "sell":
+            {
+                SellDocument sellDocument = sellDocumentRepository.findByMemberIdAndId(memberId, requestId).orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = sellDocument.getImageDirectory();
+                    sellDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                sellDocument.update(categoryRepository.findByName(documentChangeDto.getCategory()), documentChangeDto);
+            }
+            break;
+
+            case "Make":
+            case "make":
+            {
+                MakeDocument makeDocument = makeDocumentRepository.findByMemberIdAndId(memberId, requestId).orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = makeDocument.getImageDirectory();
+                    makeDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                PurposeCategory purposeCategory = purposeCategoryRepository.findByName(documentChangeDto.getCategory());
+                makeDocument.update(purposeCategory, documentChangeDto);
+            }
+            break;
+
+            case "Purchase":
+            case "purchase":
+            {
+                PurchaseDocument purchaseDocument = purchaseDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                if (!image.isEmpty()) {
+                    String recentPath = purchaseDocument.getImageDirectory();
+                    purchaseDocument.setImageDirectory(s3ImageUploadService.uploadImage(makeDir, image));
+                    s3ImageUploadService.deleteFile(recentPath);
+                }
+                Category productCategory = categoryRepository.findByName(documentChangeDto.getCategory());
+                purchaseDocument.update(productCategory, documentChangeDto);
+            }
+            break;
+
+            default :
+                throw new IllegalArgumentException();
+
+        }
+    }
+
 }
 

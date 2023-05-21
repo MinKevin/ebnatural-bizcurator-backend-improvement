@@ -1,6 +1,7 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
+import ebnatural.bizcurator.apiserver.dto.DocumentChangeDto;
 import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,8 @@ public class SellDocument extends TimeEntity{
     String businessNumber;
     @NotBlank
     String managerPhoneNumber;
+
+    @Setter
     @NotNull
     @JoinColumn(name = "category_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +41,7 @@ public class SellDocument extends TimeEntity{
     int establishYear;
     @NotBlank
     String introduction;
+    @Setter
     @NotBlank
     String imageDirectory;
     @Setter
@@ -79,5 +83,12 @@ public class SellDocument extends TimeEntity{
         this.introduction = docDto.getIntroduction();
         this.imageDirectory = docDto.getImageDirectory();
         this.stateType = docDto.getStateType();
+    }
+
+    public void update(Category category, DocumentChangeDto documentChangeDto) {
+        this.category = category;
+        this.productDetail = documentChangeDto.getProductDetail();
+        this.establishYear = documentChangeDto.getEstablishYear();
+        this.introduction = documentChangeDto.getCompanyIntroduction();
     }
 }

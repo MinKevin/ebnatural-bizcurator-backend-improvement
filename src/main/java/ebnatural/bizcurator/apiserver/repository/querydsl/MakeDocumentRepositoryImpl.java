@@ -1,11 +1,15 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.QMakeDocument;
 
+import ebnatural.bizcurator.apiserver.domain.QSellDocument;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -49,6 +53,18 @@ public class MakeDocumentRepositoryImpl implements MakeDocumentRepositoryCustom{
                 .fetch();
 
         return new PageImpl<>(makeDocumentList, pageable, total);
+    }
+
+    @Override
+    public List<MakeDocument> findAllByAfterFilteredDate(Long memberId, LocalDateTime filteredDate) {
+        QMakeDocument qMakeDocument = QMakeDocument.makeDocument;
+
+        return queryFactory
+                .select(qMakeDocument)
+                .from(qMakeDocument)
+                .leftJoin(qMakeDocument.purposeCategory).fetchJoin() // Perform fetch join on category
+                .where(qMakeDocument.member.id.eq(memberId).and(qMakeDocument.createdAt.goe(filteredDate)))
+                .fetch();
     }
 
 }

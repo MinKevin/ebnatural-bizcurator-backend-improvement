@@ -1,11 +1,15 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
+import ebnatural.bizcurator.apiserver.domain.QMakeDocument;
 import ebnatural.bizcurator.apiserver.domain.QPurchaseDocument;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -49,6 +53,18 @@ public class PurchaseDocumentRepositoryImpl implements PurchaseDocumentRepositor
                 .fetch();
 
         return new PageImpl<>(purchaseDocumentList, pageable, total);
+    }
+
+    @Override
+    public List<PurchaseDocument> findAllByAfterFilteredDate(Long memberId, LocalDateTime filteredDate) {
+        QPurchaseDocument qPurchaseDocument = QPurchaseDocument.purchaseDocument;
+
+        return queryFactory
+                .select(qPurchaseDocument)
+                .from(qPurchaseDocument)
+                .leftJoin(qPurchaseDocument.category).fetchJoin() // Perform fetch join on category
+                .where(qPurchaseDocument.member.id.eq(memberId).and(qPurchaseDocument.createdAt.goe(filteredDate)))
+                .fetch();
     }
 
 }

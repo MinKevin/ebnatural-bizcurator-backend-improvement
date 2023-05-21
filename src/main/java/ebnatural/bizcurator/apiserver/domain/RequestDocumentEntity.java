@@ -37,6 +37,8 @@ public abstract class RequestDocumentEntity extends TimeEntity {
     Date desiredDeliveryDate;
     @NotBlank
     String requestMessage;
+
+    @Setter
     @NotBlank
     String imageDirectory;
 

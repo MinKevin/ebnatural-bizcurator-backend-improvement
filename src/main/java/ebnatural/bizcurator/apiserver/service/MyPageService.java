@@ -1,6 +1,6 @@
 package ebnatural.bizcurator.apiserver.service;
 
-import com.querydsl.core.Tuple;
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
@@ -13,6 +13,7 @@ import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;
@@ -377,8 +378,10 @@ public class MyPageService {
      * @return
      */
     public List<ApplicationDto> showRefundApplicationList(Integer filterMonth) {
+        Long memberId = 1L;
+
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        //Long memberId = MemberUtil.getMemberId();
 
         List<RefundApplication> refundHistories = null;
         if (null != filterMonth) {
@@ -421,8 +424,12 @@ public class MyPageService {
      * @return
      */
     public ApplicationDetailDto showCancelApplicationDetail(Long cancelId) {
-        // todo: 시큐리티 완성되면 수정
-        Member member = null;
+        Member member = memberRepository.findById(1L)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        // todo: 시큐리티 설정 on시 주석 해제
+//        Member member = memberRepository.findById(MemberUtil.getMemberId())
+//                .orElseThrow(() -> new EntityNotFoundException());
         Optional<CancelApplication> cancelApplicationOptional= cancelApplicationRepository.findById(cancelId);
         if(!cancelApplicationOptional.isPresent()){
             throw new EntityNotFoundException();
@@ -440,8 +447,7 @@ public class MyPageService {
                 orderDetail.getShippingFee(),
                 cancelApplication.getApproveTime() != null ? cancelApplication.getApproveTime().toString() : "",
                 orderDetail.getCost(),
-                // todo: 시큐리티 적용 후 수정
-                "username", //member.getUsername(),
+                member.getUsername(),
                 orderDetail.getPostalCode(),
                 orderDetail.getAddress(),
                 cancelApplication.getOpinionCategory().getMeaning()
@@ -454,8 +460,12 @@ public class MyPageService {
      * @return
      */
     public ApplicationDetailDto showRefundApplicationDetail(Long refundId) {
-        // todo: 시큐리티 완성되면 수정
-        Member member = null;
+        Member member = memberRepository.findById(1L)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        // todo: 시큐리티 설정 on시 주석 해제
+//        Member member = memberRepository.findById(MemberUtil.getMemberId())
+//                .orElseThrow(() -> new EntityNotFoundException());
         Optional<RefundApplication> refundApplicationOptional = refundApplicationRepository.findById(refundId);
         if(!refundApplicationOptional.isPresent()){
             throw new EntityNotFoundException();
@@ -473,11 +483,11 @@ public class MyPageService {
                 orderDetail.getShippingFee(),
                 refundApplication.getApproveTime() != null ? refundApplication.getApproveTime().toString() : "",
                 orderDetail.getCost(),
-               // todo: 시큐리티 적용 후 수정
-               "username", //member.getUsername(),
+                member.getUsername(),
                 refundApplication.getPostalCode(),
                 refundApplication.getAddress(),
                 refundApplication.getOpinionCategory().getMeaning()
         );
     }
+
 }
