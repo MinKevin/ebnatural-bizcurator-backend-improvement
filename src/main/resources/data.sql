@@ -241,149 +241,32 @@ values (1, 'https://picsum.photos/200/300?random=0', 'Y', 1),
        (90, 'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/product_images/detail.png?response-content-dis[…]6d2222f04aa2be4456b3bccf418d74e45ce024d9ceec04', 'N', 50);
 
 --  주문 내역
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (961, 823, 'Michael Johnson', '5166392274', 'Address777', 'Request433', 'PostalCode803', 'PayPal', 776, 977,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 1, 1);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (670, 619, 'John Smith', '5138545969', 'Address309', 'Request31', 'PostalCode612', 'Card', 699, 773,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 2, 2);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (529, 584, 'John Smith', '5251333195', 'Address492', 'Request648', 'PostalCode335', 'PayPal', 801, 37, 'FINISH',
-        'IMMEDIATE', '2023-03-17 12:00:00', 1, 3, 3);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (501, 628, 'Jane Doe', '5274567819', 'Address867', 'Request373', 'PostalCode882', 'Cash', 496, 420,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 4, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (827, 167, 'John Smith', '5159384926', 'Address491', 'Request303', 'PostalCode337', 'PayPal', 221, 547,
-        'DELIVERING', 'IMMEDIATE', '2023-05-17 12:00:00', 1, 5, 5);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (206, 724, 'Michael Johnson', '5282879563', 'Address869', 'Request813', 'PostalCode742', 'Card', 791, 226,
-        'DELIVER_DONE', 'IMMEDIATE', '2022-12-17 12:00:00', 1, 6, 6);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (32, 542, 'John Smith', '5137860168', 'Address563', 'Request319', 'PostalCode722', 'PayPal', 835, 836,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-01-17 12:00:00', 1, 7, 7);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (190, 784, 'Michael Johnson', '5130653182', 'Address688', 'Request604', 'PostalCode622', 'Card', 257, 724,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 8, 8);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (478, 690, 'Jane Doe', '5245672103', 'Address144', 'Request820', 'PostalCode112', 'Cash', 145, 372,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-02-17 12:00:00', 1, 9, 9);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (948, 751, 'Jane Doe', '5217390516', 'Address737', 'Request756', 'PostalCode734', 'PayPal', 562, 111,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-04-17 12:00:00', 1, 10, 10);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (614, 54, 'Jane Doe', '5228754101', 'Address891', 'Request598', 'PostalCode640', 'PayPal', 419, 992,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-03-17 12:00:00', 2, 1, 11);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (195, 331, 'Jane Doe', '5278241713', 'Address124', 'Request34', 'PostalCode527', 'Card', 665, 732, 'FINISH',
-        'IMMEDIATE', '2023-03-17 12:00:00', 2, 2, 12);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (547, 51, 'John Smith', '5243207671', 'Address444', 'Request57', 'PostalCode119', 'Card', 278, 769,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-13 12:00:00', 2, 3, 13);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-14 12:00:00', 2, 4, 14);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (459, 831, 'Michael Johnson', '5260220314', 'Address634', 'Request199', 'PostalCode974', 'Card', 166, 257,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-15 12:00:00', 2, 5, 15);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (530, 690, 'Michael Johnson', '5135564978', 'Address899', 'Request108', 'PostalCode822', 'PayPal', 356, 853,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-16 12:00:00', 2, 6, 16);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (286, 79, 'Jane Doe', '5258309082', 'Address44', 'Request681', 'PostalCode646', 'PayPal', 271, 543,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:04', 2, 7, 17);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (784, 464, 'Jane Doe', '5257004374', 'Address671', 'Request160', 'PostalCode188', 'Cash', 39, 405,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:00:30', 2, 8, 18);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (888, 391, 'Michael Johnson', '5215040637', 'Address463', 'Request590', 'PostalCode430', 'Card', 892, 727,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:02:00', 2, 9, 19);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id, id)
-VALUES (665, 252, 'Michael Johnson', '5161607520', 'Address403', 'Request84', 'PostalCode686', 'Card', 930, 297,
-        'DELIVER_DONE', 'IMMEDIATE', '2023-05-17 12:10:00', 2, 10, 20);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
+INSERT INTO order_detail (payment_id, quantity, buyer_id, product_id, order_time, receiver_name, buyer_phone_number, address, request_content, postal_code, payment_method, cost, delivery_state, order_type, shipping_fee, invoice_number)
+VALUES
+    (1, 5, 1, 1, '2021-05-22 10:00:00', '홍길동', '010-1234-5678', '서울시 강남구 역삼동', '특별 요청 사항 없음', '12345', '신용카드', 247860, 'PAID', 'IMMEDIATE', 10, 'INV001'),
+    (1, 3, 1, 2, '2021-05-22 10:00:00', '홍길동', '010-1234-5678', '서울시 강남구 역삼동', '특별 요청 사항 없음', '12345', '신용카드', 247860, 'DELIVERING', 'IMMEDIATE', 10, 'INV001'),
+    (1, 2, 1, 3, '2021-05-22 10:00:00', '홍길동', '010-1234-5678', '서울시 강남구 역삼동', '특별 요청 사항 없음', '12345', '신용카드', 311200, 'FINISH', 'IMMEDIATE', 10, 'INV001'),
+    (2, 1, 2, 4, '2021-05-25 11:30:00', '박지영', '010-1111-2222', '인천시 남구 만수동', '조심히 배달해주세요', '98765', '신용카드', 67250, 'PAID', 'IMMEDIATE', 7, 'INV004'),
+    (2, 4, 2, 5, '2021-05-25 11:30:00', '박지영', '010-1111-2222', '인천시 남구 만수동', '조심히 배달해주세요', '98765', '신용카드', 191340, 'DELIVER_DONE', 'IMMEDIATE', 7, 'INV004'),
+    (3, 2, 1, 6, '2022-05-27 13:20:00', '김지원', '010-7777-8888', '광주시 서구 쌍촌동', '비닐 포장해주세요', '24680', '신용카드', 958680, 'PAID', 'IMMEDIATE', 9, 'INV006'),
+    (3, 3, 1, 7, '2022-05-27 13:20:00', '김지원', '010-7777-8888', '광주시 서구 쌍촌동', '비닐 포장해주세요', '24680', '신용카드', 63830, 'DELIVER_DONE', 'IMMEDIATE', 9, 'INV006'),
+    (3, 2, 1, 8, '2022-05-27 13:20:00', '김지원', '010-7777-8888', '광주시 서구 쌍촌동', '비닐 포장해주세요', '24680', '신용카드', 372450, 'PAID', 'IMMEDIATE', 9, 'INV006'),
+    (3, 1, 1, 9, '2022-05-27 13:20:00', '김지원', '010-7777-8888', '광주시 서구 쌍촌동', '비닐 포장해주세요', '24680', '신용카드', 306800, 'DELIVERING', 'IMMEDIATE', 9, 'INV006'),
+    (4, 4, 3, 10, '2023-01-31 16:55:00', '정민우', '010-6666-7777', '대구시 수성구 만촌동', '조심히 다뤄주세요', '35791', '신용카드', 124880, 'FINISH', 'IMMEDIATE', 11, 'INV010'),
+    (4, 3, 3, 11, '2023-01-31 16:55:00', '정민우', '010-6666-7777', '대구시 수성구 만촌동', '조심히 다뤄주세요', '35791', '신용카드', 109570, 'DELIVER_DONE', 'IMMEDIATE', 11, 'INV010'),
+    (5, 2, 1, 12, '2023-02-02 09:40:00', '김민서', '010-9876-5432', '광주시 북구 산정동', '상품에 표시된 번호로 연락주세요', '26748', '신용카드', 60, 'DELIVER_DONE', 'IMMEDIATE', 6, 'INV012'),
+    (5, 1, 1, 12, '2023-02-02 09:40:00', '김민서', '010-9876-5432', '광주시 북구 산정동', '상품에 표시된 번호로 연락주세요', '26748', '신용카드', 74850, 'DELIVERING', 'IMMEDIATE', 6, 'INV012'),
+    (6, 4, 1, 14, '2023-02-03 13:05:00', '박민서',  '010-5555-5555', '울산시 중구 성안동', '부드럽게 다뤄주세요', '59374', '무통장 입금', 47580, 'PAID', 'IMMEDIATE', 5, 'INV013'),
+    (6, 4, 1, 14, '2023-02-03 13:05:00', '박민서', '010-5555-5555', '울산시 중구 성안동', '부드럽게 다뤄주세요', '59374', '무통장 입금', 36760, 'DELIVER_DONE', 'IMMEDIATE', 5, 'INV013'),
+    (7, 2, 2, 15, '2023-02-05 12:50:00', '김민준', '010-3333-4444', '대전시 중구 대흥동', '옷을 접혀서 배달해주세요', '73984', '신용카드', 91450, 'DELIVER_DONE', 'IMMEDIATE', 9, 'INV015'),
+    (7, 3, 2, 16, '2023-02-05 12:50:00', '김민준', '010-3333-4444', '대전시 중구 대흥동', '옷을 접혀서 배달해주세요', '73984', '신용카드', 93500, 'DELIVER_DONE', 'IMMEDIATE', 9, 'INV015'),
+    (7, 3, 2, 16, '2023-02-05 12:50:00', '김민준', '010-3333-4444', '대전시 중구 대흥동', '옷을 접혀서 배달해주세요', '73984', '신용카드', 217455, 'FINISH', 'IMMEDIATE', 9, 'INV015'),
+    (8, 1, 3, 17, '2023-02-10 16:30:00', '임수경', '010-9999-8888', '부산시 북구 덕천동', '부품은 한 묶음으로', '62835', '신용카드', 159850, 'PAID', 'IMMEDIATE', 13, 'INV017'),
+    (8, 3, 3, 18, '2023-02-10 16:30:00', '임수경', '010-9999-8888', '부산시 북구 덕천동', '부품은 한 묶음으로', '62835', '신용카드', 57800, 'DELIVERING', 'IMMEDIATE', 13, 'INV017'),
+    (9, 2, 1, 19, '2023-02-15 10:30:00', '김우진', '010-4444-3333', '제주시 한림읍 월령리', '건물 앞에서 연락주세요', '69016', '무통장 입금', 137910, 'DELIVER_DONE', 'IMMEDIATE', 15, 'INV019'),
+    (10, 5, 2, 20, '2023-02-20 14:54:00', '이하늘', '010-7777-6666', '대구시 달서구 진천동', '오후 2시 이후 전화 부탁', '57139', '신용카드', 249073, 'FINISH', 'IMMEDIATE', 8, 'INV020');
 
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
-
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 2, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-INSERT INTO order_detail (payment_id, quantity, receiver_name, buyer_phone_number, address, request_content,
-                          postal_code, payment_method, cost, shipping_fee, delivery_state, order_type, order_time,
-                          buyer_id, product_id)
-VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'PostalCode482', 'PayPal', 122, 665, 'PAID',
-        'IMMEDIATE', '2023-05-14 12:00:00', 1, 4);
-
+-- 구매 의뢰서
 INSERT INTO purchase_document (id, member_id, category_id, product_name, product_detail, quantity, desired_estimate_date,
                                desired_delivery_date, manager_name, manager_call, request_message, image_directory,
                                state_type, created_at, modified_at)
@@ -396,18 +279,20 @@ Values (1, 1, 1, "편백나무침대", "흰색을 사고싶다.", 40, "23-05-20"
        (4, 1, 4, "머리빗", "휴대용", 10, "23-05-20", "23-05-30", "이연희", "managerCall",
         "휴대용으로 작은것 구해주세요.", "imageDirectory", "WAIT", '2023-01-20 12:00:00', now());
 
+-- 제작 의뢰서
 INSERT INTO make_document (id, member_id, purpose_category_id, product_name, product_detail, quantity, desired_estimate_date,
                            desired_delivery_date, manager_name, manager_call, request_message, image_directory,
                            state_type, created_at, modified_at)
 Values (1, 1, 3, "운동복", "등에 '한사랑 산악회'라고 새겨주세요.", 10, "23-05-20", "23-05-30", "조갑수", "managerCall",
         "requestMessage", "imageDirectory", "WAIT", '2022-12-20 12:00:00', now()),
-       (2, 1, 3, "수건", "이길동 축 돌 이라고 새겨주세요.", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
+       (2, 1, 3, "수건", "[이길동 축 돌] 이라고 새겨주세요.", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
         "돌잔치 선물용", "imageDirectory", "WAIT", '2022-11-20 12:00:00', now()),
        (3, 1, 2, "마우스패드", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
         "requestMessage", "imageDirectory", "WAIT", '2023-04-20 12:00:00', now()),
        (4, 1, 1, "마우스", "사무용으로 쓸 것", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
         "requestMessage", "imageDirectory", "WAIT", '2022-03-10 12:00:00', now());
 
+-- 판매 의뢰서
 INSERT INTO sell_document (id, member_id, category_id, business_name, ceo_name, manager_phone_number, business_number,
                            product_detail, establish_year, introduction, image_directory, state_type, created_at, modified_at)
 VALUES (1, 1, 1, "다이써", "선우연희", "1234-1234", "5421534", "문구류", 2000,
