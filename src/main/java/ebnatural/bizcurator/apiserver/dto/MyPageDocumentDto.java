@@ -1,5 +1,8 @@
 package ebnatural.bizcurator.apiserver.dto;
 
+import ebnatural.bizcurator.apiserver.domain.MakeDocument;
+import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
+import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -21,8 +24,30 @@ public class MyPageDocumentDto {
         this.category = category;
     }
 
-    public static MyPageDocumentDto of(Long requestId, LocalDateTime createdAt, String requestType, String state,
-            String category) {
-        return new MyPageDocumentDto(requestId, createdAt, requestType, state, category);
+    public static MyPageDocumentDto fromEntity(SellDocument document) {
+        return new MyPageDocumentDto(
+                document.getId(),
+                document.getCreatedAt(),
+                "제품입점 의뢰",
+                document.getStateType().getStatus(),
+                document.getCategory().getName());
+    }
+
+    public static MyPageDocumentDto fromEntity(MakeDocument document) {
+        return new MyPageDocumentDto(
+                document.getId(),
+                document.getCreatedAt(),
+                "제품제작 의뢰",
+                document.getStateType().getStatus(),
+                document.getPurposeCategory().getName());
+    }
+
+    public static MyPageDocumentDto fromEntity(PurchaseDocument document) {
+        return new MyPageDocumentDto(
+                document.getId(),
+                document.getCreatedAt(),
+                "제품구매 의뢰",
+                document.getStateType().getStatus(),
+                document.getCategory().getName());
     }
 }

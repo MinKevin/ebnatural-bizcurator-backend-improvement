@@ -1,12 +1,16 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import ebnatural.bizcurator.apiserver.domain.QCategory;
 import ebnatural.bizcurator.apiserver.domain.QSellDocument;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -84,5 +88,17 @@ public class SellDocumentRepositoryImpl implements SellDocumentRepositoryCustom{
                 .fetch();
 
         return new PageImpl<>(sellDocumentList, pageable, total);
+    }
+
+    @Override
+    public List<SellDocument> findAllByAfterFilteredDate(Long memberId, LocalDateTime filteredDate) {
+        QSellDocument qSellDocument = QSellDocument.sellDocument;
+
+        return queryFactory
+                .select(qSellDocument)
+                .from(qSellDocument)
+                .leftJoin(qSellDocument.category).fetchJoin() // Perform fetch join on category
+                .where(qSellDocument.member.id.eq(memberId).and(qSellDocument.createdAt.goe(filteredDate)))
+                .fetch();
     }
 }

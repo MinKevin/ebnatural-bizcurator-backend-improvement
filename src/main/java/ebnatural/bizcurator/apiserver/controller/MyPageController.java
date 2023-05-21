@@ -138,10 +138,10 @@ public class MyPageController {
     public ResponseEntity<CommonResponse> showDocumentList(
             @RequestParam(value = "filter-month", required = false) Integer filterMonth) {
 
-        List<MyPageDocumentDto> applicationDtoList = documentService.showMyDocumentList(filterMonth);
+        List<MyPageDocumentDto> documentList = documentService.showMyDocumentList(filterMonth);
         HashMap<String, Object> historyMap = new HashMap<>();
-        historyMap.put("details", applicationDtoList);
-        return CommonResponse.ok(HttpStatus.OK.value(), "주문 환불 리스트 조회가 완료되었습니다.", historyMap);
+        historyMap.put("details", documentList);
+        return CommonResponse.ok(HttpStatus.OK.value(), "내 의뢰 내역 조회가 완료되었습니다.", historyMap);
     }
 
 }

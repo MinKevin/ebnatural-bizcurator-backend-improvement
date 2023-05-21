@@ -19,6 +19,7 @@ import ebnatural.bizcurator.apiserver.dto.request.SellDocumentRequest;
 import ebnatural.bizcurator.apiserver.repository.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
@@ -192,46 +193,67 @@ public class DocumentService {
         sellDocument.update(member, category, docDto);
     }
 
+    /**
+     * 내 의뢰 내역 조회
+     *  - 정해진 날짜로 부터 의뢰서 작성 내림차순으로 정렬함
+     * @param filterDays
+     * @return
+     */
     public List<MyPageDocumentDto> showMyDocumentList(Integer filterDays) {
         if (filterDays == null) {
             // 기본이 3개월로 되어있음
             filterDays = 90;
         }
-
         Long memberId = 1L;
         // todo: 시큐리티 설정 on되면 주석 해제
         //Long memberId = MemberUtil.getMemberId();
 
+        List<Object> documentList = new ArrayList<>();
+        documentList.addAll(sellDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+        documentList.addAll(makeDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+        documentList.addAll(purchaseDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDateTime.now().minusDays(filterDays)));
+
+        // Comparator를 사용하여 documentList를 createdAt 값의 내림차순으로 정렬
+        Collections.sort(documentList, (obj1, obj2) -> {
+            LocalDateTime createdAt1 = getCreatedAtFromDocumentObject(obj1);
+            LocalDateTime createdAt2 = getCreatedAtFromDocumentObject(obj2);
+            return createdAt2.compareTo(createdAt1);
+        });
+
         List<MyPageDocumentDto> myPageDocumentDtoList = new ArrayList<>();
-        List<Object[]> docTypeAndDocumentList = new ArrayList<>();
-        docTypeAndDocumentList.addAll(sellDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
-        docTypeAndDocumentList.addAll(makeDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
-        docTypeAndDocumentList.addAll(purchaseDocumentRepository.findAllByAfterFilteredDate(memberId, LocalDate.now().minusDays(filterDays)));
+        for (Object document : documentList) {
+            MyPageDocumentDto myPageDocumentDto = null;
 
-        for (Object[] docTypeAndDocument : docTypeAndDocumentList) {
-            String documentType = (String) docTypeAndDocument[0];
-            switch (documentType) {
-                case "Sell":
-                {
-
-                }break;
-
-                case "Make":
-                {
-
-                }break;
-
-                case "Purchase":
-                {
-
-                }break;
-
-                default :
-                    throw new IllegalArgumentException();
-            }
+           if(document instanceof SellDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((SellDocument) document);
+           }
+           else if(document instanceof MakeDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((MakeDocument) document);
+           }
+           else if(document instanceof PurchaseDocument){
+               myPageDocumentDto = MyPageDocumentDto.fromEntity((PurchaseDocument) document);
+           }
+           else {
+               continue;
+           }
+            myPageDocumentDtoList.add(myPageDocumentDto);
         }
-        return null;
+
+        return myPageDocumentDtoList;
     }
 
+    // createdAt 값을 가져오는 유틸리티 메서드
+    private LocalDateTime getCreatedAtFromDocumentObject(Object document) {
+        if (document instanceof SellDocument) {
+            return ((SellDocument) document).getCreatedAt();
+        } else if (document instanceof MakeDocument) {
+            return ((MakeDocument) document).getCreatedAt();
+        } else if (document instanceof PurchaseDocument) {
+            return ((PurchaseDocument) document).getCreatedAt();
+        } else {
+            // 예외 처리 또는 기본값 반환
+            throw new IllegalArgumentException();
+        }
+    }
 }
 
