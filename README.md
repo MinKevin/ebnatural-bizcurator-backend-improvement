@@ -1,12 +1,10 @@
 # 🛒 ebnatural-bizcurator - 🛠️ 백엔드
 
-ebnatural-bizcurator - 백엔드 부분을 구현 했습니다🎉 🎉 🎉
-
 
 
 ## 🧑🏻‍💻 멤버
 
-| 담당 | 총괄 & 고객센터 API| 로그인,회원가입, 의뢰 관련 API | 관리자 페이지 API| 바로구매 관련 API| 장바구니 API |
+| 담당 | 총괄 & 고객센터 API| 인증증, 의뢰 관련 API | 관리자 페이지 API| 바로구매 관련 API| 장바구니 API |
 | --- | --- | ----------- | ------ | ------ | ------ |
 | 이름 | 황슬찬 |민장규 |이연희| 김인후 | 이진혁 |
 |github| [@seulchan](https://github.com/seulchan)|[@MinKevin](https://github.com/MinKevin)|[@lyh951212](https://github.com/lyh951212)|[@itstimi-XD](https://github.com/itstimi-XD)| [@HARIBO033](https://github.com/HARIBO033)|
