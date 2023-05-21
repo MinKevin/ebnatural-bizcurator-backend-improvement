@@ -12,7 +12,7 @@ public interface SellDocumentRepositoryCustom {
 
     Page<SellDocument> findByApprovedSellDocumentBusinessNameContainingOrderByCreatedAtDesc(String search, Pageable pageable);
 
-    Page<SellDocument> findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(String search, Pageable pageable);
+    Page<SellDocument> findByAllSellDocumentCategoryContainingOrderByCreatedAtDesc(String search, Pageable pageable);
 
     List<SellDocument> findAllByAfterFilteredDate(Long memberId, LocalDateTime filteredDate);
 }

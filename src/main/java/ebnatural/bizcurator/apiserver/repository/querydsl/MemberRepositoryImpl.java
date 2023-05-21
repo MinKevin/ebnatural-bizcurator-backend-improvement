@@ -21,7 +21,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     }
 
     @Override
-    public Page<Member> findByMemberUserNameContainingOrderByCreatedAtDesc(
+    public Page<Member> findByMemberBusinessNameContainingOrderByCreatedAtDesc(
             String search, Pageable pageable) {
         QMember qMember = QMember.member;
 
@@ -32,7 +32,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
             predicateBuilder.and(qMember.isNotNull());
         } else {
             // Search refund applications by product name containing the provided search keyword
-            predicateBuilder.and(qMember.username.containsIgnoreCase(search));
+            predicateBuilder.and(qMember.businessName.containsIgnoreCase(search));
         }
 
         Predicate predicate = predicateBuilder.getValue();

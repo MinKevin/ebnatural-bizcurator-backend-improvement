@@ -238,7 +238,7 @@ public class AdminOrderService {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Member> memberPage = null;
-        memberPage = memberRepository.findByMemberUserNameContainingOrderByCreatedAtDesc(
+        memberPage = memberRepository.findByMemberBusinessNameContainingOrderByCreatedAtDesc(
                 search, pageable);
 
         List<AdminUserInfoDto> adminApplicationDtoList = new ArrayList<>();
@@ -288,7 +288,7 @@ public class AdminOrderService {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<SellDocument> sellDocumentPage = null;
-        sellDocumentPage = sellDocumentRepository.findByAllSellDocumentBusinessNameContainingOrderByCreatedAtDesc(
+        sellDocumentPage = sellDocumentRepository.findByAllSellDocumentCategoryContainingOrderByCreatedAtDesc(
                 search, pageable);
 
         List<AdminSellDocumentDto> adminSellDocumentDtoList = new ArrayList<>();
