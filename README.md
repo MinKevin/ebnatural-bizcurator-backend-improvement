@@ -3,6 +3,7 @@
 ebnatural-bizcurator - 백엔드 부분을 구현 했습니다🎉 🎉 🎉
 
 
+
 ## 🧑🏻‍💻 멤버
 
 | 담당 | 총괄 & 고객센터 API| 로그인,회원가입, 의뢰 관련 API | 관리자 페이지 API| 바로구매 관련 API| 장바구니 API |
@@ -11,9 +12,11 @@ ebnatural-bizcurator - 백엔드 부분을 구현 했습니다🎉 🎉 🎉
 |github| [@seulchan](https://github.com/seulchan)|[@MinKevin](https://github.com/MinKevin)|[@lyh951212](https://github.com/lyh951212)|[@itstimi-XD](https://github.com/itstimi-XD)| [@HARIBO033](https://github.com/HARIBO033)|
 
 
+
 ## Application Architecture
 
 ![image](https://github.com/growing-every-day/ebnatural-bizcurator-backend/assets/66657988/d221dbfe-187b-4370-81d1-a71520258334)
+
 
 
 ## 🧰 기술 세부 스택
@@ -52,10 +55,13 @@ ebnatural-bizcurator - 백엔드 부분을 구현 했습니다🎉 🎉 🎉
 * ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 
+
 ## 연차/당직 관리 시스템 API 설계
 
 ### API Spec
 https://www.notion.so/API-5371bdbf35f948039be02dbe0f6337f2?pvs=4
+
+
 
 ## 프로젝트 관리 및 Github Flow 브랜칭 전략
 
