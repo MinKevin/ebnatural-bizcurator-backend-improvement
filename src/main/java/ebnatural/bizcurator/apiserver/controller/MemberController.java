@@ -43,32 +43,35 @@ public class MemberController {
     /**
      * accessToken에 담긴 유저정보를 꺼내서 refresh token을 지워준다.
      *
-     * @param accessToken 엑세스 토큰
+     *
      * @return
      */
-    @PostMapping("/logout")
-    public ResponseEntity<CommonResponse> logout(@RequestBody Map<String, String> accessToken) {
+    @GetMapping("/logout")
+    public ResponseEntity<CommonResponse> logout() {
         return CommonResponse.ok(HttpStatus.OK.value(), "logout success",
-                Map.of("result", memberAuthService.logout(accessToken.get("accessToken"))));
+                Map.of("result", (Object) (memberAuthService.logout())));
     }
 
     /**
      * access토큰 내부의 유저 정보를 확인한 후 access 토큰 새로 만들어준다.
      *
-     * @param accessToken 엑세스 토큰
+     * @param
      * @return
      * @throws Exception
      */
-    @PostMapping("/refresh")
-    public ResponseEntity<CommonResponse> refresh(@RequestBody Map<String, String> accessToken) {
+    @GetMapping("/refresh")
+    public ResponseEntity<CommonResponse> refresh() throws Exception {
         Map<String, Object> mp = new HashMap<>();
-        TokenDto tokenDto = memberAuthService.refreshToken(accessToken.get("accessToken"));
+        TokenDto tokenDto = memberAuthService.refreshToken();
         mp.put("result", tokenDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "refresh success", mp);
     }
 
     /**
      * 전체 회원 정보 조회(관리자만 가능)
+     * todo
+     * 사업자 등록증 확인을 원할 시 따로 처리해야됨
+     * https://www.sunny-son.space/spring/Springboot%EB%A1%9C%20S3%20%ED%8C%8C%EC%9D%BC%20%EC%97%85%EB%A1%9C%EB%93%9C/
      *
      * @return
      */

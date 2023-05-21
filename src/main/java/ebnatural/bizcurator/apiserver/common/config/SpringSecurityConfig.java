@@ -45,8 +45,9 @@ public class SpringSecurityConfig {
         http.rememberMe().disable();
         http.cors();
         http.formLogin().disable();
+
         http.authorizeRequests()
-                .antMatchers("*").permitAll()
+                .antMatchers("/api/users/refresh").authenticated()
                 .anyRequest().permitAll();
 
 //        http.authorizeRequests()
@@ -59,6 +60,7 @@ public class SpringSecurityConfig {
 //                .antMatchers(HttpMethod.GET, "/api/requests/partners").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/api/requests/orders").hasRole("ADMIN")
 //                .anyRequest().authenticated();
+
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {

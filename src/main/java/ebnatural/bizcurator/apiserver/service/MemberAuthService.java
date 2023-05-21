@@ -5,6 +5,7 @@ import ebnatural.bizcurator.apiserver.common.exception.custom.BadRequestExceptio
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
 import ebnatural.bizcurator.apiserver.common.jwt.JwtProvider;
+import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
@@ -50,8 +51,6 @@ public class MemberAuthService {
                 .refreshToken(newRefreshToken)
                 .build();
 
-        Long id = member.getId();
-        memberRepository.updateLastLoginTimeToNowById(id, LocalDate.now());
 
         return MemberDto.from(member, tokenDto);
     }
@@ -59,9 +58,10 @@ public class MemberAuthService {
     /**
      * 프론트 단에서는 Local Storage에 저장된 access, refresh token 폐기한다.
      * member 테이블의 refresh token 컬럼값을 없애준다.
-     * @param accessToken 회원정보를 꺼내올 access token
+     * @param
      */
-    public boolean logout(String accessToken) {
+    public boolean logout() {
+        String accessToken = MemberUtil.getAccessToken();
         String userName = null;
         try {
             Claims claims = jwtProvider.verifyToken(accessToken);
@@ -106,11 +106,12 @@ public class MemberAuthService {
 
     /**
      * access 토큰 재발급
-     * @param accessToken 엑세스 토큰
+     * @param
      * @return
      * @throws Exception
      */
-    public TokenDto refreshToken(String accessToken) {
+    public TokenDto refreshToken() {
+        String accessToken = MemberUtil.getAccessToken();
         String userName = null;
 
         try{
