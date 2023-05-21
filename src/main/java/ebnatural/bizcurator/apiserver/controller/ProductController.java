@@ -50,7 +50,7 @@ public class ProductController {
     }
     @GetMapping("/products")
     public ResponseEntity<CommonResponse> getProducts(
-            @RequestParam(required = false) Long categoryId,
+            @RequestParam Long categoryId,
             @RequestParam(defaultValue = "new") String sort) {
         List<ProductListDto> products = productService.getProducts(categoryId, sort);
         HashMap<String, Object> productMap = new HashMap<>();

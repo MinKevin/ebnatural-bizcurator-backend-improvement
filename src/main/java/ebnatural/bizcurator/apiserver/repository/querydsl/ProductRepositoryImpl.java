@@ -110,8 +110,8 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
                         product.minQuantity
                         )
                 );
-        // categoryId가 null이 아닐 때만 where 절에 categoryId 조건을 추가합니다.
-        if (categoryId != null) {
+        // categoryId가 0이 아닐 때만 where 절에 categoryId 조건을 추가합니다.
+        if (categoryId != 0) {
             query.where(product.category.id.eq(categoryId));
         }
 
