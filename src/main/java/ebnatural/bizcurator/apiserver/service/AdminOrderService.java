@@ -238,7 +238,7 @@ public class AdminOrderService {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Member> memberPage = null;
-        memberPage = memberRepository.findByMemberUserNameContainingOrderByCreatedAtDesc(
+        memberPage = memberRepository.findByMemberBusinessNameContainingOrderByCreatedAtDesc(
                 search, pageable);
 
         List<AdminUserInfoDto> adminApplicationDtoList = new ArrayList<>();

@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface MemberRepositoryCustom {
 
-    Page<Member> findByMemberUserNameContainingOrderByCreatedAtDesc(
+    Page<Member> findByMemberBusinessNameContainingOrderByCreatedAtDesc(
             String search, Pageable pageable);
 }
