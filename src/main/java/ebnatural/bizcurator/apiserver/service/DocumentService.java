@@ -67,7 +67,7 @@ public class DocumentService {
     public void postPurchaseMakeDocument(PurchaseMakeDocumentRequest docDto, MultipartFile image) {
         // todo: 시큐리티 설정 후 주석해제
         // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
-        Member member = memberRepository.findByUserId(1L);
+        Member member = memberRepository.findByUserId(3L);
 
         if (docDto.getDocumentType().equals(String.valueOf(DocumentType.make))) {
             PurposeCategory purposeCategory = purposeCategoryRepository.findById(docDto.getCategory())
@@ -86,7 +86,7 @@ public class DocumentService {
     public void postSellDocument(SellDocumentRequest docDto, MultipartFile image) {
         // todo: 시큐리티 설정 후 주석해제
         // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
-        Member member = memberRepository.findByUserId(1L);
+        Member member = memberRepository.findByUserId(3L);
         Category category = categoryRepository.findById(docDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException());
         String storedPath = s3ImageUploadService.uploadImage(sellDir, image);
@@ -148,7 +148,7 @@ public class DocumentService {
     public void updatePurchaseMakeDocument(Long documentId, PurchaseMakeDocumentRequest docDto, MultipartFile image) {
         // todo: 시큐리티 설정 후 주석해제
         // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
-        Member member = memberRepository.findByUserId(1L);
+        Member member = memberRepository.findByUserId(3L);
         if (docDto.getDocumentType().equals(String.valueOf(DocumentType.make))) {
             PurposeCategory purposeCategory = purposeCategoryRepository.findById(docDto.getCategory())
                     .orElseThrow(() -> new CategoryNotFoundException());
@@ -181,7 +181,7 @@ public class DocumentService {
     public void updateSellDocument(Long documentId, SellDocumentRequest docDto, MultipartFile image) {
         // todo: 시큐리티 설정 후 주석해제
         // Member member = memberRepository.findByUserId(MemberUtil.getMemberId());
-        Member member = memberRepository.findByUserId(1L);
+        Member member = memberRepository.findByUserId(3L);
         Category category = categoryRepository.findById(docDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException());
         SellDocument sellDocument = sellDocumentRepository.findById(documentId)
@@ -206,7 +206,7 @@ public class DocumentService {
             // 기본이 3개월로 되어있음
             filterDays = 90;
         }
-        Long memberId = 1L;
+        Long memberId = 3L;
         // todo: 시큐리티 설정 on되면 주석 해제
         //Long memberId = MemberUtil.getMemberId();
 
@@ -265,7 +265,7 @@ public class DocumentService {
      * @return
      */
     public MyPageDocumentDetailDto showMyDocumentDetail(Long requestId, String documentType) {
-        Long memberId = 1L;
+        Long memberId = 3L;
         // todo: 시큐리티 설정 on되면 주석 해제
         //Long memberId = MemberUtil.getMemberId();
 
@@ -309,7 +309,7 @@ public class DocumentService {
     public void changeDocument(Long requestId, String documentType, DocumentChangeDto documentChangeDto, MultipartFile image){
         // todo: 시큐리티 설정 후 주석해제
         // Long memberId = MemberUtil.getMemberId();
-        Long memberId = 1L;
+        Long memberId = 3L;
 
         switch (documentType) {
             case "Sell":

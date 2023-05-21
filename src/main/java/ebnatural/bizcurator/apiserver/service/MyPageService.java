@@ -72,7 +72,7 @@ public class MyPageService {
 
         List<OrderDetail> orderDetailList = null;
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Long memberId = 3L; // jwtProvider.getUserIDByToken(accessToken);
 
         if (filterMonth != null && deliveryStateText != null) {
             LocalDateTime filterDate = LocalDateTime.now().minusDays(filterMonth);
@@ -146,7 +146,7 @@ public class MyPageService {
 
         List<OrderDetail> orderDetailList = null;
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Long memberId = 3L; // jwtProvider.getUserIDByToken(accessToken);
 
         orderDetailList = orderDetailRepository.findAllByPaymentIdAndMemberId(paymentId, memberId);
 
@@ -216,7 +216,7 @@ public class MyPageService {
         }
 
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Long memberId = 3L; // jwtProvider.getUserIDByToken(accessToken);
         Optional<Member> member = memberRepository.findById(memberId);
         if(!member.isPresent()){
             throw new EntityNotFoundException();
@@ -255,7 +255,7 @@ public class MyPageService {
         }
 
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Long memberId = 3L; // jwtProvider.getUserIDByToken(accessToken);
         Optional<Member> member = memberRepository.findById(memberId);
         if(!member.isPresent()){
             throw new EntityNotFoundException();
@@ -335,7 +335,7 @@ public class MyPageService {
      */
     public List<ApplicationDto> showCancelApplicationList(Integer filterMonth) {
         // todo: 시큐리티 완성되면 수정
-        Long memberId = 1L; // jwtProvider.getUserIDByToken(accessToken);
+        Long memberId = 3L; // jwtProvider.getUserIDByToken(accessToken);
 
         List<CancelApplication> cancelHistories = null;
         if (null != filterMonth) {
@@ -378,7 +378,7 @@ public class MyPageService {
      * @return
      */
     public List<ApplicationDto> showRefundApplicationList(Integer filterMonth) {
-        Long memberId = 1L;
+        Long memberId = 3L;
 
         // todo: 시큐리티 완성되면 수정
         //Long memberId = MemberUtil.getMemberId();
@@ -424,7 +424,7 @@ public class MyPageService {
      * @return
      */
     public ApplicationDetailDto showCancelApplicationDetail(Long cancelId) {
-        Member member = memberRepository.findById(1L)
+        Member member = memberRepository.findById(3L)
                 .orElseThrow(() -> new EntityNotFoundException());
 
         // todo: 시큐리티 설정 on시 주석 해제
@@ -460,7 +460,7 @@ public class MyPageService {
      * @return
      */
     public ApplicationDetailDto showRefundApplicationDetail(Long refundId) {
-        Member member = memberRepository.findById(1L)
+        Member member = memberRepository.findById(3L)
                 .orElseThrow(() -> new EntityNotFoundException());
 
         // todo: 시큐리티 설정 on시 주석 해제

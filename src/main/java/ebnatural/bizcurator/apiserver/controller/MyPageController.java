@@ -38,7 +38,7 @@ public class MyPageController {
     //public ResponseEntity<CommonResponse> showHome(@AuthenticationPrincipal MemberPrincipalDetails memberPrincipalDetails) {
     //    MyPageHomeDto myPageHomeDto = myPageService.showHome(memberPrincipalDetails.getId());
     public ResponseEntity<CommonResponse> showHome() {
-        MyPageHomeDto myPageHomeDto = myPageService.showHome(1L);
+        MyPageHomeDto myPageHomeDto = myPageService.showHome(3L);
         HashMap<String, Object> historyMap = new HashMap<>();
         historyMap.put("histories", myPageHomeDto);
         return CommonResponse.ok(HttpStatus.OK.value(), "홈 화면 로드 완료됐습니다.", historyMap);
