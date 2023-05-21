@@ -15,12 +15,13 @@ import ebnatural.bizcurator.apiserver.repository.CategoryRepository;
 import ebnatural.bizcurator.apiserver.repository.ManufacturerRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductImageRepository;
 import ebnatural.bizcurator.apiserver.repository.ProductRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @Service
@@ -46,6 +47,9 @@ public class ProductService {
 
         ProductImage mainProductImage = ProductImage.createProductImage(product, mainImageUrl, "Y");
         ProductImage detailProductImage = ProductImage.createProductImage(product, detailImageUrl, "N");
+
+        productImageRepository.save(mainProductImage);
+        productImageRepository.save(detailProductImage);
 
         product.getProductImages().add(mainProductImage);
         product.getProductImages().add(detailProductImage);
