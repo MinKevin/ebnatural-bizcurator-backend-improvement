@@ -479,34 +479,34 @@ VALUES (47, 798, 'John Smith', '5163359803', 'Address835', 'Request158', 'Postal
 INSERT INTO purchase_document (id, member_id, category_id, product_name, product_detail, quantity, desired_estimate_date,
                                desired_delivery_date, manager_name, manager_call, request_message, image_directory,
                                state_type, created_at, modified_at)
-Values (1, 1, 1, "productName", "productDetail", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (2, 1, 2, "productName", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (3, 2, 3, "productName", "productDetail", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (4, 3, 4, "productName", "productDetail", 10, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now());
+Values (1, 1, 1, "편백나무침대", "흰색을 사고싶다.", 40, "23-05-20", "23-05-30", "이연희", "1087-1087",
+        "최대한 빨리 답변주세요.", "imageDirectory", "WAIT", '2022-04-14 12:00:00', now()),
+       (2, 1, 2, "친환경칫솔", "대나무로 만든것", 30, "23-05-20", "23-05-30", "황슬찬", "1541-1541",
+        "생분해되는 제품으로 알아봐주세요.", "imageDirectory", "WAIT", '2023-05-20 12:00:00', now()),
+       (3, 1, 3, "우산", "접이식", 20, "23-05-20", "23-05-30", "김인후", "8282-8282",
+        "색상 어떤것들이 있는지 미리 말씀해주세요.", "imageDirectory", "WAIT", '2023-03-20 12:00:00', now()),
+       (4, 1, 4, "머리빗", "휴대용", 10, "23-05-20", "23-05-30", "이연희", "managerCall",
+        "휴대용으로 작은것 구해주세요.", "imageDirectory", "WAIT", '2023-01-20 12:00:00', now());
 
 INSERT INTO make_document (id, member_id, purpose_category_id, product_name, product_detail, quantity, desired_estimate_date,
                            desired_delivery_date, manager_name, manager_call, request_message, image_directory,
                            state_type, created_at, modified_at)
-Values (1, 3, 3, "productName", "productDetail", 10, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (2, 2, 3, "productName", "productDetail", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (3, 2, 2, "productName", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now()),
-       (4, 1, 1, "productName", "productDetail", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
-        "requestMessage", "imageDirectory", "WAIT", now(), now());
+Values (1, 1, 3, "운동복", "등에 '한사랑 산악회'라고 새겨주세요.", 10, "23-05-20", "23-05-30", "조갑수", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", '2022-12-20 12:00:00', now()),
+       (2, 1, 3, "수건", "이길동 축 돌 이라고 새겨주세요.", 20, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "돌잔치 선물용", "imageDirectory", "WAIT", '2022-11-20 12:00:00', now()),
+       (3, 1, 2, "마우스패드", "productDetail", 30, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", '2023-04-20 12:00:00', now()),
+       (4, 1, 1, "마우스", "사무용으로 쓸 것", 40, "23-05-20", "23-05-30", "managerName", "managerCall",
+        "requestMessage", "imageDirectory", "WAIT", '2022-03-10 12:00:00', now());
 
 INSERT INTO sell_document (id, member_id, category_id, business_name, ceo_name, manager_phone_number, business_number,
                            product_detail, establish_year, introduction, image_directory, state_type, created_at, modified_at)
-VALUES (1, 1, 1, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
-        "introduction", "imageDirectory", "WAIT", now(), now()),
-       (2, 2, 2, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
-        "introduction", "imageDirectory", "WAIT", now(), now()),
-       (3, 3, 3, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
-        "introduction", "imageDirectory", "WAIT", now(), now()),
-       (4, 3, 4, "businessName", "ceoName", "managerPhoneNumber", "businessNumber", "productDetail", 2000,
-        "introduction", "imageDirectory", "WAIT", now(), now());
+VALUES (1, 1, 1, "다이써", "선우연희", "1234-1234", "5421534", "문구류", 2000,
+        "introduction", "imageDirectory", "WAIT", '2020-03-10 12:00:00', now()),
+       (2, 1, 2, "네이클로버", "황우슬찬", "4321-4321", "5444534", "운동복", 2000,
+        "introduction", "imageDirectory", "WAIT", '2022-12-01 12:00:00', now()),
+       (3, 1, 3, "규글", "제갈인후", "3333-22222", "34357788", "뷰티제품", 2000,
+        "비건 화장품을 판매하고 있습니다.", "imageDirectory", "WAIT", '2023-02-21 12:00:00', now()),
+       (4, 1, 4, "삼섬", "연찬후", "1111-1111", "67686796", "침구류", 2000,
+        "introduction", "imageDirectory", "WAIT", '2021-02-21 12:00:00', now());
