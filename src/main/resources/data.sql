@@ -398,3 +398,23 @@ VALUES (3, 1, "다이써", "선우연희", "1234-1234", "5421534", "문구류", 
        (3, 3, "튜얼단계", "선우장원", "7789-8844", "9647437", "음주류", 1995, "나만 알고 싶은 작은 제조사 와인", "imageDirectory22", "WAIT", '2021-01-22 11:00:00', now()),
        (3, 7, "리디룸", "김학교", "5957-4321", "9645737", "인테리어 소품", 2007, "인테리어 아이디어를 주는 소품들", "imageDirectory23", "WAIT", '2019-06-02 18:00:00', now()),
        (3, 7, "도트게임", "이예나", "6567-7765", "2345244", "보드 게임", 2012, "여러 가족들과 즐길 수 있는 게임보드", "imageDirectory24", "WAIT", '2018-03-05 19:00:00', now());
+
+-- 주문 취소 신청서
+INSERT INTO cancel_application (user_id, order_id, opinion_category, state, approve_time, created_at)
+VALUES
+    (3, 1, 'CHANGE_OF_MIND', 'WAIT', null, '2021-10-01 10:30:00'),
+    (3, 2, 'UNSATISFIED', 'WAIT', null, '2021-10-02 12:00:00'),
+    (3, 3, 'DELIVERY_DELAYED', 'WAIT', null, '2021-10-03 09:45:00'),
+    (3, 4, 'UNSATISFIED', 'WAIT', null, '2021-10-04 17:20:00'),
+    (3, 5, 'CHANGE_OF_MIND', 'WAIT', null, '2021-10-05 13:10:00'),
+    (3, 6, 'UNSATISFIED', 'WAIT', null, '2021-10-06 14:50:00');
+
+-- 주문 환불 신청서
+INSERT INTO refund_application (user_id, order_id, opinion_category, receive_way_type, receive_address_type, state, address, postal_code, approve_time, created_at)
+VALUES
+    (3, 7, 'CHANGE_OF_MIND', 'PICK_UP_BY_COMPANY', 'SAME_WITH_MEMBER_INFO', 'WAIT', '서울시 강남구 테헤란로 123', '123-456', null, '2021-11-01 09:00:00'),
+    (3, 8, 'DEFECT', 'PICK_UP_BY_COMPANY', 'SAME_WITH_MEMBER_INFO', 'WAIT', null, '123-456', null, '2021-11-02 13:00:00'),
+    (3, 9, 'UNSATISFIED', 'PICK_UP_BY_COMPANY', 'SAME_WITH_MEMBER_INFO', 'WAIT', '경기도 수원시 영통구 광교중앙로 111', '789-123', null, '2021-11-03 18:00:00'),
+    (3, 10, 'DEFECT', 'SEND_BY_USER', 'CHANGE_ADDRESS', 'WAIT', null, '123-446', null, '2021-11-04 10:30:00'),
+    (3, 11, 'UNSATISFIED', 'SEND_BY_USER', 'CHANGE_ADDRESS', 'WAIT', '인천광역시 부평구 아트센터대로 123', '456-789', null, '2021-11-05 15:20:00'),
+    (3, 12, 'CHANGE_OF_MIND', 'SEND_BY_USER', 'CHANGE_ADDRESS', 'WAIT', null, '123-456', null, '2021-11-06 11:40:00');
