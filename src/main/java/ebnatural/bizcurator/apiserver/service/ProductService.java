@@ -98,7 +98,7 @@ public class ProductService {
     }
 
     public List<ProductListDto> getProducts(Long categoryId, String sort) {
-        if (categoryId != null && !categoryRepository.existsById(categoryId)) {  // 인스턴스를 사용하여 existsById 메소드 호출 및 categoryId가 존재할 때만
+        if (categoryId != 0 && !categoryRepository.existsById(categoryId)) {  // 인스턴스를 사용하여 existsById 메소드 호출 및 categoryId가 존재할 때만
             throw new CategoryNotFoundException();
         }return productRepository.findByCategoryId(categoryId, sort);
     }
