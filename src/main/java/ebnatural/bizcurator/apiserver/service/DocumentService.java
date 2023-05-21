@@ -11,6 +11,7 @@ import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.*;
 import ebnatural.bizcurator.apiserver.domain.constant.DocumentType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
+import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.PurchaseMakeDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.SellDocumentDto;
@@ -253,6 +254,48 @@ public class DocumentService {
         } else {
             // 예외 처리 또는 기본값 반환
             throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * 의뢰 내역 상세조회
+     * @param requestId
+     * @param documentType Sell, Purchase, Make 중 하나
+     * @return
+     */
+    public MyPageDocumentDetailDto showMyDocumentDetail(Long requestId, String documentType) {
+        Long memberId = 1L;
+        // todo: 시큐리티 설정 on되면 주석 해제
+        //Long memberId = MemberUtil.getMemberId();
+
+        switch (documentType) {
+            case "Sell":
+            case "sell":
+            {
+                SellDocument sellDocument = sellDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(sellDocument);
+            }
+
+            case "Make":
+            case "make":
+            {
+                MakeDocument makeDocument = makeDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(makeDocument);
+            }
+
+            case "Purchase":
+            case "purchase":
+            {
+                PurchaseDocument purchaseDocument = purchaseDocumentRepository.findByMemberIdAndId(memberId, requestId)
+                        .orElseThrow(() -> new EntityNotFoundException());
+                return MyPageDocumentDetailDto.fromEntity(purchaseDocument);
+            }
+
+            default :
+                throw new IllegalArgumentException();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
@@ -10,6 +11,7 @@ import lombok.Getter;
 public class MyPageDocumentDto {
 
     private Long requestId;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
     private String requestType;
     private String state;

@@ -144,4 +144,15 @@ public class MyPageController {
         return CommonResponse.ok(HttpStatus.OK.value(), "내 의뢰 내역 조회가 완료되었습니다.", historyMap);
     }
 
+    @Operation(summary = "의뢰 내역 상세조회")
+    @GetMapping("/requests/histories/{request-id}")
+    public ResponseEntity<CommonResponse> showDocumentDetails(
+            @PathVariable("request-id") Long requestId,
+            @RequestParam(value = "type") String documentType)  {
+
+        MyPageDocumentDetailDto detailDto = documentService.showMyDocumentDetail(requestId, documentType);
+        HashMap<String, Object> historyMap = new HashMap<>();
+        historyMap.put("details", detailDto);
+        return CommonResponse.ok(HttpStatus.OK.value(), "내 의뢰 내역 상세조회가 완료되었습니다.", historyMap);
+    }
 }
