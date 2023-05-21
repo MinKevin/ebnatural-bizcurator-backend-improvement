@@ -19,145 +19,53 @@ VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvw
         '2022-11-02 10:18:32', true);
 
 -- 공지사항
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '[안내] 배송관련 소비자 분쟁해결 기준 안내',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '[이벤트] 여름이니까 아이스커피! 맥심 할인 판매!',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-14 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-15 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-16 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '고정 1',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', true, 'Jahan', 'Bickford', '2022-11-17 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-18 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-19 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-20 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-21 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-22 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-23 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-24 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-25 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-26 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '고정 2',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', true, 'Jahan', 'Bickford', '2022-11-27 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-28 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-29 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-30 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-01 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-02 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-03 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-04 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '고정 3',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', true, 'Jahan', 'Bickford', '2022-12-05 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-06 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-07 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-08 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-09 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, 'Integer a nibh.',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-12-10 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '[안내] 환불관련 소비자 분쟁해결 기준 안내',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '[이벤트] 여름이니까 아이스 아메리카노! 카누 할인 판매!',
-        'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. falsea justo.',
-        'NOTICE', false, 'Jahan', 'Bickford', '2022-11-13 12:33:51', '2022-11-02 10:18:32');
+INSERT INTO article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+VALUES
+    (1, '중요 공지사항', '안녕하세요. 중요한 공지사항입니다.', 'NOTICE', true, 'admin', 'admin', NOW(), NOW()),
+    (1, '서비스 업데이트 안내', '안녕하세요. 이커머스 사이트의 새로운 업데이트 내용을 안내드립니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '배송 지연 안내', '안녕하세요. 최근에 발생한 배송 지연 사항에 대해 안내드립니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '할인 이벤트 안내', '안녕하세요. 이번 주에 할인 이벤트가 진행될 예정입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '최신 상품 소식', '안녕하세요. 최신 상품 소식을 공유합니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '주문 취소 안내', '안녕하세요. 주문 취소 관련 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '서비스 장애 안내', '안녕하세요. 현재 일시적인 서비스 장애로 불편을 드려 죄송합니다.', 'NOTICE', true, 'admin', 'admin', NOW(), NOW()),
+    (1, '회원 이벤트 안내', '안녕하세요. 회원 전용 이벤트가 개최될 예정입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '반품 접수 안내', '안녕하세요. 반품 접수 관련 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '고객센터 운영 시간 변경', '안녕하세요. 고객센터 운영 시간이 변경되었습니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '이벤트 당첨자 발표', '안녕하세요. 이벤트에 당첨된 분들을 발표합니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '포인트 적립 안내', '안녕하세요. 포인트 적립에 대한 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '상품 리뷰 이벤트', '안녕하세요. 상품 리뷰 작성 이벤트가 진행됩니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '신규 상품 입고 안내', '안녕하세요. 신규 상품이 입고되었습니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '회원 탈퇴 안내', '안녕하세요. 회원 탈퇴 절차 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '이용약관 변경', '안녕하세요. 이용약관이 변경되었습니다. 확인해주세요.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '공지사항 게시판 개편 안내', '안녕하세요. 공지사항 게시판이 개편되었습니다. 변경된 사항을 확인해주세요.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '최근 이슈 사항 안내', '안녕하세요. 최근에 발생한 이슈 사항에 대해 안내드립니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '정기 점검 안내', '안녕하세요. 정기 점검 일정이 변경되었습니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '이메일 수신 동의 안내', '안녕하세요. 이메일 수신 동의에 대한 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '회원 등급 조정 안내', '안녕하세요. 회원 등급 조정에 대한 안내입니다.', 'NOTICE', false, 'admin', 'admin', NOW(), NOW());
 
 -- 자묻질
-insert into article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
-values (1, '[배송/물류] 물건이 도착하지 않았습니다.',
-        '물건이 도착하지 않은 경우 배송업체와 먼저 연락해보시고 연락주세요. 감사합니다.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
-       (1, '[의뢰서] 견적 의뢰한 내용을 수정하고 싶습니다.',
-        '[마이페이지]의 [내 의뢰내역]에서 수정이 가능합니다. 다만 의뢰구분 상태값이 대기인 경우에만 가능하며, 승인 및 반려인 상태에서는 수정이 불가능합니다. 감사합니다.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
-       (1, '[바로구매] 비즈큐레이터 바로구매는 무엇인가요?',
-        '기존 비즈큐레이터의 시스템인 구매 및 견적의뢰를 거치지 않으며, 고객들이 합리적인 가격에 대량으로 바로 제품구매가 가능하게끔 만든 구매형태입니다. 감사합니다.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32'),
-       (1, '[회원정보] 회원탈퇴는 어떻게 하나요?',
-        '[마이페이지]의 [회원정보 수정]의 맨 아래 회원탈퇴 텍스트를 누르신 후 탈퇴하실 수 있습니다. 감사합니다.',
-        'FAQ', false, 'Jahan', 'Bickford', '2022-11-12 12:33:51', '2022-11-02 10:18:32');
+INSERT INTO article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
+VALUES
+    (1, '[배송/물류] 물건이 도착하지 않았습니다.', '물건이 도착하지 않은 경우 배송업체와 먼저 연락해보시고 연락주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[의뢰서] 견적 의뢰한 내용을 수정하고 싶습니다.', '[마이페이지]의 [내 의뢰내역]에서 수정이 가능합니다. 다만 의뢰구분 상태값이 대기인 경우에만 가능하며, 승인 및 반려인 상태에서는 수정이 불가능합니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[바로구매] 비즈큐레이터 바로구매는 무엇인가요?', '기존 비즈큐레이터의 시스템인 구매 및 견적의뢰를 거치지 않으며, 고객들이 합리적인 가격에 대량으로 바로 제품구매가 가능하게끔 만든 구매형태입니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[회원정보] 회원탈퇴는 어떻게 하나요?', '[마이페이지]의 [회원정보 수정]의 맨 아래 회원탈퇴 텍스트를 누르신 후 탈퇴하실 수 있습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[주문/결제] 결제 방법은 어떤 것들이 있나요?', '저희 이커머스 사이트에서는 다양한 결제 방법을 제공하고 있습니다. 주요 결제 수단으로는 신용카드, 계좌이체, 휴대폰 소액결제 등이 있습니다. 자세한 결제 방법은 [마이페이지]의 [결제정보]에서 확인하실 수 있습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[배송/반품] 상품을 언제 받을 수 있나요?', '배송일정은 상품 및 배송지역에 따라 다를 수 있습니다. 주문하신 상품의 배송일정은 [마이페이지]의 [주문내역]에서 확인하실 수 있습니다. 반품 및 교환에 관한 내용은 [마이페이지]의 [반품/교환 안내]를 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[상품문의] 상품 문의는 어떻게 할 수 있나요?', '상품에 대한 문의는 해당 상품 페이지에서 [상품 문의하기] 버튼을 통해 작성하실 수 있습니다. 상품 문의에 대한 답변은 빠르게 처리해드리겠습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[배송비] 배송비는 어떻게 결정되나요?', '배송비는 상품의 종류, 무게, 크기, 배송지역 등에 따라 다르게 책정됩니다. 상품 페이지에서 배송비 정보를 확인하실 수 있습니다. 일부 상품은 무료 배송 서비스를 제공하기도 합니다. 자세한 내용은 상품 페이지를 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[회원정보] 비밀번호를 잊어버렸어요. 어떻게 해야하나요?', '비밀번호를 잊어버리신 경우 [로그인] 페이지에서 [비밀번호 찾기]를 클릭하시면 비밀번호를 재설정할 수 있는 안내를 받으실 수 있습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[상품평] 상품평 작성은 어떻게 할 수 있나요?', '구매하신 상품에 대한 상품평은 해당 상품 페이지에서 작성하실 수 있습니다. 다른 고객들의 구매 결정에 도움이 되는 솔직한 리뷰를 남겨주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[할인/쿠폰] 할인쿠폰은 어떻게 사용하나요?', '할인쿠폰은 상품 결제 시 사용할 수 있는 혜택입니다. 쿠폰 코드를 [장바구니]나 [결제 페이지]에서 입력하시면 할인이 적용됩니다. 유효기간 및 사용 조건은 쿠폰에 따라 다를 수 있으니 유의해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[환불/취소] 상품 환불은 어떻게 진행되나요?', '상품 환불은 [마이페이지]의 [주문내역]에서 가능합니다. 반품 신청 후에는 해당 상품을 반송하셔야 합니다. 환불 처리에 대한 상세한 정보는 [환불/취소 정책]을 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[이용약관] 이용약관은 어디서 확인할 수 있나요?', '이용약관은 [하단]의 [이용약관] 링크를 통해 확인하실 수 있습니다. 이용약관에 동의하지 않으신 경우 서비스 이용이 제한될 수 있습니다. 자세한 내용은 이용약관을 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[회원혜택] 회원 등급은 어떻게 변경되나요?', '회원 등급은 주문액이나 구매 빈도에 따라 자동으로 조정됩니다. 회원 등급 혜택에 대한 자세한 내용은 [마이페이지]의 [회원 등급 혜택]을 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[이벤트] 현재 진행 중인 이벤트는 어떤 것들이 있나요?', '현재 진행 중인 이벤트는 [이벤트] 페이지에서 확인하실 수 있습니다. 다양한 이벤트 및 혜택을 놓치지 않으시려면 주기적으로 확인해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[교환] 상품을 다른 상품으로 교환하고 싶습니다.', '상품 교환은 [마이페이지]의 [주문내역]에서 가능합니다. 교환 가능 여부와 절차에 대한 상세한 내용은 [반품/교환 정책]을 참고해주세요. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[결제오류] 결제가 정상적으로 이루어지지 않습니다.', '결제 오류가 발생한 경우 [고객센터]로 문의해주시거나 결제 시도한 환경(브라우저, 결제 수단 등)과 함께 상세한 내용을 알려주시면 빠르게 도움을 드리도록 하겠습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[상품정보] 상품의 추가 정보를 알고 싶습니다.', '더 자세한 상품 정보를 원하시는 경우 [상품 페이지]에서 상품 설명을 참고하시거나 [고객센터]로 문의해주시면 친절하게 안내해드리겠습니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW()),
+    (1, '[회원가입] 회원가입은 어떻게 진행되나요?', '회원가입은 [메인 페이지]의 [회원가입] 버튼을 클릭하시면 진행하실 수 있습니다. 필요한 정보를 입력하시고 약관에 동의하신 후 가입이 완료됩니다. 감사합니다.', 'FAQ', false, 'admin', 'admin', NOW(), NOW());
+
 
 insert into purpose_category (id, name)
 values (1, '창업(제품판매)'),
