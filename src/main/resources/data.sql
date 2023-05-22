@@ -141,6 +141,12 @@ VALUES (1, '[배송/물류] 물건이 도착하지 않았습니다.', '물건이
         '회원가입은 [메인 페이지]의 [회원가입] 버튼을 클릭하시면 진행하실 수 있습니다. 필요한 정보를 입력하시고 약관에 동의하신 후 가입이 완료됩니다. 감사합니다.', 'FAQ', false,
         'admin', 'admin', NOW(), NOW());
 
+--이용약관
+INSERT INTO terms_of_service (id, name, content, need_agreement, created_at, modified_at)
+VALUES (1, '만 14세 이상입니다.', '만 14세 이상입니다', true, now(), now()),
+       (2, '이용약관', '이용약관', true, now(), now()),
+       (3, '개인정보 수집 및 이용 동의', '개인정보 수집 및 이용 동의', true, now(), now()),
+       (4, '이벤트 및 프로모션 동의', '이벤트 및 프로모션 동의', false, now(), now());
 
 insert into purpose_category (id, name)
 values (1, '창업(제품판매)'),
@@ -149,7 +155,6 @@ values (1, '창업(제품판매)'),
 
 
 -- product
-
 insert into product_category (id, name)
 values (1, '객실용품'),
        (2, '욕실용품'),
@@ -644,3 +649,4 @@ VALUES (3, 7, 'CHANGE_OF_MIND', 'PICK_UP_BY_COMPANY', 'SAME_WITH_MEMBER_INFO', '
         '2021-11-05 15:20:00'),
        (3, 12, 'CHANGE_OF_MIND', 'SEND_BY_USER', 'CHANGE_ADDRESS', 'WAIT', null, '123-456', null,
         '2021-11-06 11:40:00');
+

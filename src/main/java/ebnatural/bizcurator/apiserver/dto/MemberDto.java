@@ -61,7 +61,7 @@ public class MemberDto {
 
     public Member toEntity () {
         return Member.of(username, password, memberRole, representative, businessName, businessNumber, postalCode, address,
-                businessRegistration, manager, managerEmail, managerPhoneNumber, termsOfService);
+                businessRegistration, manager, managerEmail, managerPhoneNumber);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);

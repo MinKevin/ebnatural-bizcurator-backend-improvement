@@ -1,13 +1,12 @@
 package ebnatural.bizcurator.apiserver.service;
 
-import ebnatural.bizcurator.apiserver.common.exception.custom.AlreadyRegisteredUserException;
-import ebnatural.bizcurator.apiserver.common.exception.custom.BadRequestException;
-import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
-import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
+import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
-import ebnatural.bizcurator.apiserver.domain.CertificationNumber;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
+import ebnatural.bizcurator.apiserver.domain.TermsOfService;
+import ebnatural.bizcurator.apiserver.domain.TermsOfServiceAgreement;
+import ebnatural.bizcurator.apiserver.repository.TermsOfServiceAgreementRepository;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
 import ebnatural.bizcurator.apiserver.dto.request.CertificationNumberRequest;
@@ -18,6 +17,7 @@ import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.repository.CertificationNumberRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberLoginLogRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
+import ebnatural.bizcurator.apiserver.repository.TermsOfServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,8 @@ public class MemberService implements UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final S3ImageUploadService s3ImageUploadService;
     private final CertificationNumberRepository certificationNumberRepository;
-
+    private final TermsOfServiceAgreementRepository termsOfServiceAgreementRepository;
+    private final TermsOfServiceRepository termsOfServiceRepository;
     @Value("${cloud.aws.s3.business-registration-dir}")
     private String dir;
 
@@ -58,17 +59,33 @@ public class MemberService implements UserDetailsService {
         if (memberDto.checkPassword())
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
 
+        //이미지 로컬 디렉토리에 저장 및 해당 위치 반환
         String storedPath = s3ImageUploadService.uploadImage(dir, image);
         memberDto.setBusinessRegistration(storedPath);
 
+        //아이디 중복 확인
         String username = memberDto.getUsername();
         Optional.ofNullable(memberRepository.findByUsername(username))
                 .ifPresent(foundedMember -> {
                     throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
                 });
+
         memberDto.encodePrivacy(passwordEncoder);
         Member member = memberDto.toEntity();
         memberRepository.save(member);
+
+        //이용 약관 동의 여부 저장
+        List<Boolean> termsOfServices = memberDto.getTermsOfService();
+        for (long i = 1; i <= termsOfServices.size(); i++){
+            TermsOfService termsOfService = termsOfServiceRepository.findById(i).get();
+            if (termsOfService.getNeedAgreement() == true && termsOfServices.get((int)i - 1) == false)
+                throw new TermsOfServiceAgreementNeedException(ErrorCode.TERMS_OF_SERVICE_AGREEMENT_EXCEPTION);
+            TermsOfServiceAgreement termsOfServiceAgreement =
+                    TermsOfServiceAgreement.of(member, termsOfService, termsOfServices.get((int)i - 1));
+            termsOfServiceAgreementRepository.save(termsOfServiceAgreement);
+        }
+
+
     }
 
     public void updateMember(UpdateMemberRequest memberDto, MultipartFile image) {

@@ -9,6 +9,8 @@ import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
 import java.io.IOException;
+import java.util.List;
+
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,7 +55,7 @@ public class MemberRequest {
     @NotBlank
     String managerPhoneNumber;
 
-    Boolean termsOfService;
+    List<Boolean> termsOfService;
 
     public static MemberRequest from(Member member, TokenDto tokenDto) {
         MemberRequest memberRequest = new MemberRequest();
@@ -65,7 +67,7 @@ public class MemberRequest {
 
     public Member toEntity () {
         return Member.of(username, password, memberRole, representative, businessName, businessNumber, postalCode, address,
-                businessRegistration, manager, managerEmail, managerPhoneNumber, termsOfService);
+                businessRegistration, manager, managerEmail, managerPhoneNumber);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
