@@ -199,7 +199,7 @@ public class AdminOrderController {
     public ResponseEntity<CommonResponse> changePurchaseDocumentState(
             @PathVariable("id") Long id,
             @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
-        adminOrderService.changeSellDocumentState(DocumentType.purchase, id, adminDocumentChangeStateDto.getType().equals("approve"));
+        adminOrderService.changePurchaseOrMakeDocumentState(DocumentType.purchase, id, adminDocumentChangeStateDto.getType().equals("approve"));
         return CommonResponse.ok(HttpStatus.OK.value(), "구매의뢰 수정 처리 완료했습니다.");
     }
 
@@ -222,7 +222,7 @@ public class AdminOrderController {
     public ResponseEntity<CommonResponse> changeMakeDocumentState(
             @PathVariable("id") Long id,
             @Valid @RequestBody AdminDocumentChangeStateDto adminDocumentChangeStateDto) {
-        adminOrderService.changeSellDocumentState(DocumentType.make, id, adminDocumentChangeStateDto.getType().equals("approve"));
+        adminOrderService.changePurchaseOrMakeDocumentState(DocumentType.make, id, adminDocumentChangeStateDto.getType().equals("approve"));
         return CommonResponse.ok(HttpStatus.OK.value(), "제작의뢰 수정 처리 완료했습니다.");
     }
 }

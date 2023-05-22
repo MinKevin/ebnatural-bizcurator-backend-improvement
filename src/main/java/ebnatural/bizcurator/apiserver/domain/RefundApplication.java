@@ -14,9 +14,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,6 +30,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @Getter
+@Table(indexes = {
+        @Index(columnList = "order_id"),
+        @Index(columnList = "user_id"),
+        @Index(columnList = "createdAt")
+})
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class RefundApplication {

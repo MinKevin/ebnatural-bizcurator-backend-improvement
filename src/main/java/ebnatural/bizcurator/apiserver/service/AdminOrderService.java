@@ -45,8 +45,6 @@ public class AdminOrderService {
     private final int PAGE_SIZE = 6; // 페이지네이션 - 한 페이지에 보이는 내역 개수
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final ProductRepository productRepository;
-
     private final CancelApplicationRepository cancelApplicationRepository;
     private final RefundApplicationRepository refundApplicationRepository;
     private final SellDocumentRepository sellDocumentRepository;
@@ -352,7 +350,7 @@ public class AdminOrderService {
     /**
      * 구메의뢰, 제작의뢰 신청서 승인, 거절 처리를 한다.
      */
-    public void changeSellDocumentState(DocumentType documentType, Long applicationId, boolean isApproved) {
+    public void changePurchaseOrMakeDocumentState(DocumentType documentType, Long applicationId, boolean isApproved) {
         switch (documentType) {
             case purchase:{
                 PurchaseDocument purchaseDocument = purchaseDocumentRepository.findById(applicationId)
