@@ -128,7 +128,8 @@ public class MemberController {
      */
     @PostMapping("/findEmail")
     public ResponseEntity<CommonResponse> findEmail(@RequestBody Map<String, String> emailMap) {
-        return ResponseEntity.ok(memberService.findEmail(emailMap.get("email")));
+        CommonResponse commonResponse = memberService.findEmail(emailMap.get("email"));
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
     }
 
     @PostMapping("/emailConfirm")
@@ -142,7 +143,8 @@ public class MemberController {
 
     @PostMapping("/certificationNumberConfirm")
     public ResponseEntity<CommonResponse> certificationNumberConfirm(@Valid @RequestBody CertificationNumberRequest certificationNumberRequest) throws Exception {
-        return ResponseEntity.ok(memberService.certificationNumberConfirm(certificationNumberRequest));
+        CommonResponse commonResponse = memberService.certificationNumberConfirm(certificationNumberRequest);
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
     }
 
     @PostMapping("/findPassword")
@@ -156,7 +158,7 @@ public class MemberController {
 
     @PostMapping("/setNewPwd")
     public ResponseEntity<CommonResponse> setNewPassword(@Valid @RequestBody PasswordFindRequest passwordFindRequest){
-
-        return ResponseEntity.ok(memberService.setNewPassword(passwordFindRequest));
+        CommonResponse commonResponse = memberService.setNewPassword(passwordFindRequest);
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
     }
 }
