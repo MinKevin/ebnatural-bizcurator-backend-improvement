@@ -7,32 +7,60 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import ebnatural.bizcurator.apiserver.domain.CertificationNumber;
+import ebnatural.bizcurator.apiserver.repository.CertificationNumberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-
+    private final CertificationNumberRepository certificationNumberRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final JavaMailSender emailSender;
-
-    public static final String ePw = createKey();
-
+    public String certificationNumber;
     @Value("${AdminMail.id}")
     String AdminMail;
 
-    private MimeMessage createMessage(String to) throws Exception {
-        //System.out.println("보내는 대상 : "+ to);
-        //System.out.println("인증 번호 : "+ePw);
+    private MimeMessage createSetPwdMessage(String to) throws Exception {
         String setNewPwdLink = "somewhere";
+        certificationNumber = createKey();
+        certificationNumberRepository.save(CertificationNumber.of(to, certificationNumber, passwordEncoder));
+
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상
-        message.setSubject("이메일 인증 테스트");//제목
+        message.setSubject("이메일 인증 서비스");//제목
+
+        String msgg = "";
+        msgg += "<div style='margin:20px;'>";
+        msgg += "<h1> 안녕하세요 에비네츄럴 이메일 인증 서비스입니다. </h1>";
+        msgg += "<br>";
+        msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgg += "<h3 style='color:blue;'>비밀번호 재설정 링크입니다. 아래 링크를 통해 비밀번호를 재설정해주세요.</h3>";
+        msgg += "<div style='font-size:130%'>";
+        msgg += "<strong>";
+        msgg += setNewPwdLink + "</strong><div><br/> ";
+        msgg += "</div>";
+        message.setText(msgg, "utf-8", "html");//내용
+        message.setFrom(new InternetAddress("ebnatural522@gmail.com"));//보내는 사람
+
+        return message;
+    }
+
+    private MimeMessage createCertificationNumberMessage(String to) throws Exception {
+        certificationNumber = createKey();
+        certificationNumberRepository.save(CertificationNumber.of(to, certificationNumber, passwordEncoder));
+
+        MimeMessage message = emailSender.createMimeMessage();
+        message.addRecipients(RecipientType.TO, to);//보내는 대상
+        message.setSubject("이메일 인증 서비스");//제목
 
         String msgg = "";
         msgg += "<div style='margin:20px;'>";
@@ -40,10 +68,10 @@ public class EmailServiceImpl implements EmailService {
         msgg += "<br>";
         msgg += "<p>아래 코드를 복사해 입력해주세요<p>";
         msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg += "<h3 style='color:blue;'>비밀번호 재설정 링크입니다. 아래 링크를 통해 비밀번호를 재설정해주세요.</h3>";
+        msgg += "<h3 style='color:blue;'>아래 인증번호를 확인해주세요.</h3>";
         msgg += "<div style='font-size:130%'>";
-        msgg += "<strong>";
-        msgg += setNewPwdLink + "</strong><div><br/> ";
+        msgg += "CODE: <strong>";
+        msgg += certificationNumber + "</strong><div><br/> ";
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("ebnatural522@gmail.com"));//보내는 사람
@@ -78,25 +106,25 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Map<String, Object> sendSetNewPwdMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
+        MimeMessage message = createSetPwdMessage(to);
         try {//예외처리
             emailSender.send(message);
         } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-        return Map.of("certification_code", ePw);
+        return Map.of("certification_code", certificationNumber);
     }
 
     @Override
-    public String sendSimpleMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
+    public String sendCertificationNumberMessage(String to) throws Exception {
+        MimeMessage message = createCertificationNumberMessage(to);
         try {//예외처리
             emailSender.send(message);
         } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-        return ePw;
+        return certificationNumber;
     }
 }

@@ -4,10 +4,7 @@ import ebnatural.bizcurator.apiserver.common.exception.custom.AlreadyRegisteredU
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
-import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
-import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
-import ebnatural.bizcurator.apiserver.dto.request.PasswordFindRequest;
-import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.*;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
 import ebnatural.bizcurator.apiserver.service.EmailServiceImpl;
 import ebnatural.bizcurator.apiserver.service.MemberAuthService;
@@ -133,28 +130,27 @@ public class MemberController {
         return new ResponseEntity<>(memberService.findEmail(emailMap.get("email")), HttpStatus.OK);
     }
 
+    @PostMapping("/emailConfirm")
+    public ResponseEntity<CommonResponse> emailConfirm(@RequestBody Map<String, String> emailMap) throws Exception {
+        CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
+        if (commonResponse.getCode() == 409)
+            throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
+        String confirm = emailService.sendCertificationNumberMessage(emailMap.get("email"));
+        return CommonResponse.ok(HttpStatus.OK.value(),"이메일로 인증번호가 전송되었습니다." ,Map.of("certification_number", confirm));
+    }
+
+    @PostMapping("/certificationNumberConfirm")
+    public ResponseEntity<CommonResponse> certificationNumberConfirm(@RequestBody CertificationNumberRequest certificationNumberRequest) throws Exception {
+        return new ResponseEntity(memberService.certificationNumberConfirm(certificationNumberRequest), HttpStatus.OK);
+    }
+
     @PostMapping("/findPassword")
     public ResponseEntity<CommonResponse> findPassword(@RequestBody Map<String, String> emailMap) throws Exception {
         CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
         if (commonResponse.getCode() == 410)
             throw new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage());
         Map<String, Object> confirm = emailService.sendSetNewPwdMessage(emailMap.get("email"));
-        return CommonResponse.ok(HttpStatus.OK.value(),"비밀번호 재설정 링크가 전송되었습니다." ,confirm);
-    }
-
-    @PostMapping("/certificationNumberConfirm")
-    public ResponseEntity<CommonResponse> certificationNumberConfirm(@RequestBody Map<String, String> numberMap) throws Exception {
-        String certificationNumber = numberMap.get("number");
-        return new ResponseEntity(memberService.certificationNumberConfirm(certificationNumber), HttpStatus.OK);
-    }
-
-    @PostMapping("/emailConfirm")
-    public ResponseEntity<CommonResponse> emailConfirm(@RequestBody Map<String, String> emailMap) throws Exception {
-        CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
-        if (commonResponse.getCode() == 409)
-            throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
-        String confirm = emailService.sendSimpleMessage(emailMap.get("email"));
-        return CommonResponse.ok(HttpStatus.OK.value(), confirm);
+        return CommonResponse.ok(HttpStatus.OK.value(),"비밀번호 재설정 링크가 전송되었습니다." ,Map.of("certification_number" ,confirm));
     }
 
     @PostMapping("/setNewPwd")

@@ -5,14 +5,17 @@ import ebnatural.bizcurator.apiserver.common.exception.custom.BadRequestExceptio
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.common.exception.custom.InvalidUsernamePasswordException;
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
+import ebnatural.bizcurator.apiserver.domain.CertificationNumber;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
+import ebnatural.bizcurator.apiserver.dto.request.CertificationNumberRequest;
 import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
 import ebnatural.bizcurator.apiserver.dto.request.PasswordFindRequest;
 import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
+import ebnatural.bizcurator.apiserver.repository.CertificationNumberRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberLoginLogRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +42,7 @@ public class MemberService implements UserDetailsService {
     private final MemberLoginLogRepository memberLoginLogRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final S3ImageUploadService s3ImageUploadService;
+    private final CertificationNumberRepository certificationNumberRepository;
 
     @Value("${cloud.aws.s3.business-registration-dir}")
     private String dir;
@@ -125,13 +129,6 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public CommonResponse certificationNumberConfirm(String certificationNumber) {
-        if (certificationNumber.equals(EmailServiceImpl.ePw))
-            return CommonResponse.of(HttpStatus.OK.value(), "인증번호가 일치합니다.");
-        else
-            return CommonResponse.of(HttpStatus.NOT_ACCEPTABLE.value(), "인증번호가 일치하지 않습니다.");
-    }
-
     public CommonResponse findEmail(String email) {
         Member member = memberRepository.findByUsername(email);
         if (member == null)
@@ -140,13 +137,37 @@ public class MemberService implements UserDetailsService {
             return CommonResponse.of(409, "해당 이메일은 사용중입니다.");
     }
 
+    public CommonResponse certificationNumberConfirm(CertificationNumberRequest certificationNumberRequest) {
+        CertificationNumber certificationNumber =
+                certificationNumberRepository.findByUsername(certificationNumberRequest.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
+
+        CommonResponse commonResponse;
+        if (passwordEncoder.matches(certificationNumberRequest.getCertificationNumber(), certificationNumber.getCertificationNumber()))
+            commonResponse = CommonResponse.of(HttpStatus.OK.value(), "인증번호가 일치합니다.");
+        else
+            commonResponse = CommonResponse.of(HttpStatus.NOT_ACCEPTABLE.value(), "인증번호가 일치하지 않습니다.");
+
+        certificationNumberRepository.delete(certificationNumber);
+
+        return commonResponse;
+    }
+
+
     public void setNewPassword(PasswordFindRequest passwordFindRequest) {
-        if (!passwordFindRequest.getCertificationNumber().equals(EmailServiceImpl.ePw))
-            throw new InvalidUsernamePasswordException(ErrorCode.CERTIFICATION_NUMBER_WRONG);
+        CertificationNumber certificationNumber =
+                certificationNumberRepository.findByUsername(passwordFindRequest.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
 
         if (!passwordFindRequest.getPassword().equals(passwordFindRequest.getPasswordConfirm()))
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
+
+        if (!passwordEncoder.matches(passwordFindRequest.getCertificationNumber(), certificationNumber.getCertificationNumber()))
+            throw new InvalidUsernamePasswordException(ErrorCode.CERTIFICATION_NUMBER_WRONG);
+
         memberRepository.findByUsername(passwordFindRequest.getUsername())
                 .setNewPassword(passwordFindRequest, passwordEncoder);
+
+        certificationNumberRepository.delete(certificationNumber);
     }
 }
