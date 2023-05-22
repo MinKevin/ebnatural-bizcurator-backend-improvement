@@ -2,61 +2,61 @@
 INSERT INTO member (username, password, member_role, representative, business_name, business_number, postal_code,
                     address,
                     business_registration, manager, manager_email, manager_phone_number, created_at, modified_at,
-                    is_enable, terms_of_service)
+                    is_enable)
 VALUES ('admin@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep',
         'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
-        '2022-11-02 10:18:32', true, true),
+        '2022-11-02 10:18:32', true),
        ('admin2@admin.com', '$2a$10$y.p87DfRX11cw6mLJ9OZD.SdrRegpOT2YZ9hUqY2h2yvwYfYW9UFy', 'ROLE_ADMIN', 'userRep',
         'user',
         '123-4512-1234',
         '4542', 'somewhere', '12314', 'user', 'user@email', '010-123-4567', '2022-11-12 12:33:51',
-        '2022-11-02 10:18:32', true, true),
+        '2022-11-02 10:18:32', true),
        ('user1@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '이민수', '민수호텔',
         '123456-7890123', '12345', '대전시 유성구 유성동 유성로 12 미왕빌딩 201호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
-        '이영희', 'younghee@minsu.com', '010-1234-5678', NOW(), NOW(), true, true),
+        '이영희', 'younghee@minsu.com', '010-1234-5678', NOW(), NOW(), true),
        ('user2@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '박창용', '창용택배',
         '573456-7890123', '57345', '인천시 부평구 부메동 부메로 49 신설타워 601호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '박미현', 'mihyun@changyong.com', '010-1934-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user3@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '최다예', '다예피피아이',
         '123456-7890120', '12340', '울산시 남구 야음동 야음로 20 야음빌딩 701호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '최지우', 'jiwoo@daye.com', '010-2034-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user4@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '황예성', '예성전자',
         '224565-7890121', '22456', '부산시 해운대구 센텀동 재송로 21 재송타워 301호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '황유진', 'yujin@yesung.com', '010-2100-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user5@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '남영후',
         '영후전자상거래', '298760-7890122', '29876', '부산시 해운대구 센텀동 재송로 22 재송타워 302호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '남가린', 'garin@younghoo.com', '010-2200-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user6@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '민소영', '소영식품',
         '375840-7890123', '37584', '대구시 수성구 가제동 가제로 23 가제타워 303호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '민기환', 'kihwan@soyoung.com', '010-2300-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user7@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '이민지', '민지월드',
         '987456-7890140', '98745', '화성시 주공동 주공로 38 주공빌딩 401호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '이하늬', 'haneul@minji.com', '010-3800-5678',
-        NOW(), NOW(), true, true),
+        NOW(), NOW(), true),
        ('user8@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '조유림', '유림출판물',
         '789741-2356980', '12345', '대구시 수성구 가제동 가제로 39 가제타워 403호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '조수아', 'sua@yurim.com', '010-3900-5678', NOW(),
-        NOW(), true, true),
+        NOW(), true),
        ('user9@user.com', '$2a$10$Ef5oakcZUNfETYLE1f1qfOpVwyoEuPQnXtyxVnU7o0fLFlJAghVlC', 'ROLE_USER', '전서경', '서경프린트',
         '625874-7890141', '62559', '부산시 기장군 기장읍 기장로 40 기장빌딩 404호',
         'https://s3-ebnatural.s3.ap-northeast-2.amazonaws.com/business_registration_images/resgistration01.jpeg',
         '전나라', 'nara@seokyung.com', '010-4000-5678',
-        NOW(), NOW(), true, true);
+        NOW(), NOW(), true);
 
 -- 공지사항
 INSERT INTO article (member_id, title, content, board_type, is_fixed, created_by, modified_by, created_at, modified_at)
@@ -141,6 +141,12 @@ VALUES (1, '[배송/물류] 물건이 도착하지 않았습니다.', '물건이
         '회원가입은 [메인 페이지]의 [회원가입] 버튼을 클릭하시면 진행하실 수 있습니다. 필요한 정보를 입력하시고 약관에 동의하신 후 가입이 완료됩니다. 감사합니다.', 'FAQ', false,
         'admin', 'admin', NOW(), NOW());
 
+--이용약관
+INSERT INTO terms_of_service (id, name, content, need_agreement, created_at, modified_at)
+VALUES (1, '만 14세 이상입니다.', '만 14세 이상입니다', true, now(), now()),
+       (2, '이용약관', '이용약관', true, now(), now()),
+       (3, '개인정보 수집 및 이용 동의', '개인정보 수집 및 이용 동의', true, now(), now()),
+       (4, '이벤트 및 프로모션 동의', '이벤트 및 프로모션 동의', false, now(), now());
 
 insert into purpose_category (id, name)
 values (1, '창업(제품판매)'),
@@ -149,7 +155,6 @@ values (1, '창업(제품판매)'),
 
 
 -- product
-
 insert into product_category (id, name)
 values (1, '객실용품'),
        (2, '욕실용품'),
@@ -644,3 +649,4 @@ VALUES (3, 7, 'CHANGE_OF_MIND', 'PICK_UP_BY_COMPANY', 'SAME_WITH_MEMBER_INFO', '
         '2021-11-05 15:20:00'),
        (3, 12, 'CHANGE_OF_MIND', 'SEND_BY_USER', 'CHANGE_ADDRESS', 'WAIT', null, '123-456', null,
         '2021-11-06 11:40:00');
+
