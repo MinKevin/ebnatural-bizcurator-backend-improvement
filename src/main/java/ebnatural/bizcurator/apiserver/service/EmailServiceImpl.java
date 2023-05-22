@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.service;
 
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.Message.RecipientType;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl implements EmailService{
+public class EmailServiceImpl implements EmailService {
 
 
     private final JavaMailSender emailSender;
@@ -24,25 +25,26 @@ public class EmailServiceImpl implements EmailService{
     @Value("${AdminMail.id}")
     String AdminMail;
 
-    private MimeMessage createMessage(String to)throws Exception{
-        System.out.println("보내는 대상 : "+ to);
-        System.out.println("인증 번호 : "+ePw);
-        MimeMessage  message = emailSender.createMimeMessage();
+    private MimeMessage createMessage(String to) throws Exception {
+        //System.out.println("보내는 대상 : "+ to);
+        //System.out.println("인증 번호 : "+ePw);
+        String setNewPwdLink = "somewhere";
+        MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상
         message.setSubject("이메일 인증 테스트");//제목
 
-        String msgg="";
-        msgg+= "<div style='margin:20px;'>";
-        msgg+= "<h1> 안녕하세요 에비네츄럴 이메일 인증 서비스입니다. </h1>";
-        msgg+= "<br>";
-        msgg+= "<p>아래 코드를 복사해 입력해주세요<p>";
-        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
-        msgg+= "<div style='font-size:130%'>";
-        msgg+= "CODE : <strong>";
-        msgg+= ePw+"</strong><div><br/> ";
-        msgg+= "</div>";
+        String msgg = "";
+        msgg += "<div style='margin:20px;'>";
+        msgg += "<h1> 안녕하세요 에비네츄럴 이메일 인증 서비스입니다. </h1>";
+        msgg += "<br>";
+        msgg += "<p>아래 코드를 복사해 입력해주세요<p>";
+        msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgg += "<h3 style='color:blue;'>비밀번호 재설정 링크입니다. 아래 링크를 통해 비밀번호를 재설정해주세요.</h3>";
+        msgg += "<div style='font-size:130%'>";
+        msgg += "<strong>";
+        msgg += setNewPwdLink + "</strong><div><br/> ";
+        msgg += "</div>";
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("ebnatural522@gmail.com"));//보내는 사람
 
@@ -73,13 +75,25 @@ public class EmailServiceImpl implements EmailService{
         }
         return key.toString();
     }
+
     @Override
-    public String sendSimpleMessage(String to)throws Exception {
-        // TODO Auto-generated method stub
+    public Map<String, Object> sendSetNewPwdMessage(String to) throws Exception {
         MimeMessage message = createMessage(to);
-        try{//예외처리
+        try {//예외처리
             emailSender.send(message);
-        }catch(MailException es){
+        } catch (MailException es) {
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+        return Map.of("certification_code", ePw);
+    }
+
+    @Override
+    public String sendSimpleMessage(String to) throws Exception {
+        MimeMessage message = createMessage(to);
+        try {//예외처리
+            emailSender.send(message);
+        } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }

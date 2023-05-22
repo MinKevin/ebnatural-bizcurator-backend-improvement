@@ -31,6 +31,8 @@ public class PasswordFindRequest {
     String password;
     @NotBlank
     String passwordConfirm;
+    @NotBlank
+    String certificationNumber;
 
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);

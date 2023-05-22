@@ -138,8 +138,14 @@ public class MemberController {
         CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
         if (commonResponse.getCode() == 410)
             throw new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage());
-        String confirm = emailService.sendSimpleMessage(emailMap.get("email"));
-        return CommonResponse.ok(HttpStatus.OK.value(), confirm);
+        Map<String, Object> confirm = emailService.sendSetNewPwdMessage(emailMap.get("email"));
+        return CommonResponse.ok(HttpStatus.OK.value(),"비밀번호 재설정 링크가 전송되었습니다." ,confirm);
+    }
+
+    @PostMapping("/certificationNumberConfirm")
+    public ResponseEntity<CommonResponse> certificationNumberConfirm(@RequestBody Map<String, String> numberMap) throws Exception {
+        String certificationNumber = numberMap.get("number");
+        return new ResponseEntity(memberService.certificationNumberConfirm(certificationNumber), HttpStatus.OK);
     }
 
     @PostMapping("/emailConfirm")
@@ -151,17 +157,9 @@ public class MemberController {
         return CommonResponse.ok(HttpStatus.OK.value(), confirm);
     }
 
-    @PostMapping("/certificationNumberConfirm")
-    public ResponseEntity<CommonResponse> certificationNumberConfirm(@RequestBody Map<String, String> numberMap) throws Exception {
-        String certificationNumber = numberMap.get("number");
-        return new ResponseEntity(memberService.certificationNumberConfirm(certificationNumber), HttpStatus.OK);
-    }
-
     @PostMapping("/setNewPwd")
     public ResponseEntity<CommonResponse> setNewPassword(@RequestBody PasswordFindRequest passwordFindRequest){
         memberService.setNewPassword(passwordFindRequest);
         return CommonResponse.ok(HttpStatus.OK.value(), "비밀번호 재설정이 완료되었습니다.");
     }
-
-
 }

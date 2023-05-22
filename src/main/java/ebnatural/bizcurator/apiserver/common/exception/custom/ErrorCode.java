@@ -34,7 +34,8 @@ public enum ErrorCode {
     USERNAME_OR_PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 올바르지 않습니다."),
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "회원을 찾을 수 없습니다."),
     INVALID_DOCUMENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "요청서의 종류를 올바르게 선택해주세요."),
-    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "비밀번호가 올바르지 않습니다.")
+    PASSWORD_WRONG(HttpStatus.BAD_REQUEST, "비밀번호가 올바르지 않습니다."),
+    CERTIFICATION_NUMBER_WRONG(HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다.")
     ;
 
     private final HttpStatus httpStatusCode;

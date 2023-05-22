@@ -125,7 +125,6 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-
     public CommonResponse certificationNumberConfirm(String certificationNumber) {
         if (certificationNumber.equals(EmailServiceImpl.ePw))
             return CommonResponse.of(HttpStatus.OK.value(), "인증번호가 일치합니다.");
@@ -142,6 +141,9 @@ public class MemberService implements UserDetailsService {
     }
 
     public void setNewPassword(PasswordFindRequest passwordFindRequest) {
+        if (!passwordFindRequest.getCertificationNumber().equals(EmailServiceImpl.ePw))
+            throw new InvalidUsernamePasswordException(ErrorCode.CERTIFICATION_NUMBER_WRONG);
+
         if (!passwordFindRequest.getPassword().equals(passwordFindRequest.getPasswordConfirm()))
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
         memberRepository.findByUsername(passwordFindRequest.getUsername())
