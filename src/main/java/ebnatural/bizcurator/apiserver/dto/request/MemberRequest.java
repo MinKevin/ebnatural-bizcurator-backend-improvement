@@ -53,6 +53,8 @@ public class MemberRequest {
     @NotBlank
     String managerPhoneNumber;
 
+    Boolean termsOfService;
+
     public static MemberRequest from(Member member, TokenDto tokenDto) {
         MemberRequest memberRequest = new MemberRequest();
         memberRequest.setId(member.getId());
@@ -63,7 +65,7 @@ public class MemberRequest {
 
     public Member toEntity () {
         return Member.of(username, password, memberRole, representative, businessName, businessNumber, postalCode, address,
-                businessRegistration, manager, managerEmail, managerPhoneNumber);
+                businessRegistration, manager, managerEmail, managerPhoneNumber, termsOfService);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);

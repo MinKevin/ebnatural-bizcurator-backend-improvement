@@ -34,7 +34,7 @@ public class MemberDto {
     String managerEmail;
     String managerPhoneNumber;
     private TokenDto tokenDto;
-
+    Boolean termsOfService;
     public static MemberDto from(Member member, TokenDto tokenDto) {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(member.getId());
@@ -61,7 +61,7 @@ public class MemberDto {
 
     public Member toEntity () {
         return Member.of(username, password, memberRole, representative, businessName, businessNumber, postalCode, address,
-                businessRegistration, manager, managerEmail, managerPhoneNumber);
+                businessRegistration, manager, managerEmail, managerPhoneNumber, termsOfService);
     }
     public void encodePrivacy(BCryptPasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);

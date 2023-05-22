@@ -71,8 +71,11 @@ public class Member extends TimeEntity {
     @Column
     private String refreshToken;
 
+    @Column
+    Boolean termsOfService;
+
     private Member(String username, String password, MemberRole memberRole, String representative, String businessName, String businessNumber, String postalCode, String address,
-                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber) {
+                   String businessRegistration, String manager, String managerEmail, String managerPhoneNumber, Boolean termsOfService) {
         this.username = username;
         this.password = password;
         this.memberRole = memberRole;
@@ -85,6 +88,7 @@ public class Member extends TimeEntity {
         this.manager = manager;
         this.managerEmail = managerEmail;
         this.managerPhoneNumber = managerPhoneNumber;
+        this.termsOfService = termsOfService;
     }
 
     public static Member of(String username,
@@ -98,7 +102,8 @@ public class Member extends TimeEntity {
                             String businessRegistration,
                             String manager,
                             String managerEmail,
-                            String managerPhoneNumber) {
+                            String managerPhoneNumber,
+                            Boolean termsOfService) {
         return new Member(username,
                 password,
                 memberRole,
@@ -110,7 +115,8 @@ public class Member extends TimeEntity {
                 businessRegistration,
                 manager,
                 managerEmail,
-                managerPhoneNumber);
+                managerPhoneNumber
+                , termsOfService);
     }
 
     public Member expire() {
@@ -130,7 +136,7 @@ public class Member extends TimeEntity {
         return this;
     }
 
-    public Member update(UpdateMemberRequest memberDto){
+    public Member update(UpdateMemberRequest memberDto) {
         this.password = memberDto.getPassword();
         this.businessName = memberDto.getBusinessName();
         this.businessNumber = memberDto.getBusinessNumber();
@@ -145,7 +151,7 @@ public class Member extends TimeEntity {
         return this;
     }
 
-    public Member setNewPassword(PasswordFindRequest memberDto, BCryptPasswordEncoder passwordEncoder){
+    public Member setNewPassword(PasswordFindRequest memberDto, BCryptPasswordEncoder passwordEncoder) {
         memberDto.encodePrivacy(passwordEncoder);
         this.password = memberDto.getPassword();
 
