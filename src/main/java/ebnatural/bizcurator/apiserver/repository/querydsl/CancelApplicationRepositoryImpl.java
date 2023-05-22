@@ -3,6 +3,8 @@ package ebnatural.bizcurator.apiserver.repository.querydsl;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import ebnatural.bizcurator.apiserver.domain.CancelApplication;
+import ebnatural.bizcurator.apiserver.domain.QCancelApplication;
 import ebnatural.bizcurator.apiserver.domain.QCategory;
 import ebnatural.bizcurator.apiserver.domain.QManufacturer;
 import ebnatural.bizcurator.apiserver.domain.QOrderDetail;
@@ -15,18 +17,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-public class RefundApplicationRepositoryImpl implements RefundApplicationRepositoryCustom{
+public class CancelApplicationRepositoryImpl implements CancelApplicationRepositoryCustom{
 
     private final JPAQueryFactory queryFactory;
 
-    public RefundApplicationRepositoryImpl(EntityManager em) {
+    public CancelApplicationRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
     @Override
-    public Page<RefundApplication> findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(
-            String search, Pageable pageable) {
-        QRefundApplication qRefundApplication = QRefundApplication.refundApplication;
+    public Page<CancelApplication> findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(String search, Pageable pageable) {
+        QCancelApplication qCancelApplication = QCancelApplication.cancelApplication;
         QOrderDetail qOrderDetail = QOrderDetail.orderDetail;
         QProduct qProduct = QProduct.product;
         QManufacturer qManufacturer = QManufacturer.manufacturer;
@@ -36,29 +37,30 @@ public class RefundApplicationRepositoryImpl implements RefundApplicationReposit
 
         if (search == null) {
             // No search keyword provided, retrieve all refund applications
-            predicateBuilder.and(qRefundApplication.isNotNull());
+            predicateBuilder.and(qCancelApplication.isNotNull());
         } else {
             // Search refund applications by product name containing the provided search keyword
-            predicateBuilder.and(qRefundApplication.orderDetail.product.name.containsIgnoreCase(search));
+            predicateBuilder.and(qCancelApplication.orderDetail.product.name.containsIgnoreCase(search));
         }
 
         Predicate predicate = predicateBuilder.getValue();
-        long total = queryFactory.selectFrom(qRefundApplication)
+
+        long total = queryFactory.selectFrom(qCancelApplication)
                 .where(predicate)
                 .fetchCount();
 
-        List<RefundApplication> refundApplications = queryFactory.selectFrom(qRefundApplication)
-                .leftJoin(qRefundApplication.orderDetail, qOrderDetail).fetchJoin()
+        List<CancelApplication> cancelApplications = queryFactory.selectFrom(qCancelApplication)
+                .where(predicate)
+                .leftJoin(qCancelApplication.orderDetail, qOrderDetail).fetchJoin()
                 .leftJoin(qOrderDetail.product, qProduct).fetchJoin()
                 .leftJoin(qProduct.category, qCategory).fetchJoin()
                 .leftJoin(qProduct.manufacturer, qManufacturer).fetchJoin()
-                .where(predicate)
-                .orderBy(qRefundApplication.createdAt.desc())
+                .orderBy(qCancelApplication.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        return new PageImpl<>(refundApplications, pageable, total);
+        return new PageImpl<>(cancelApplications, pageable, total);
     }
 
 }

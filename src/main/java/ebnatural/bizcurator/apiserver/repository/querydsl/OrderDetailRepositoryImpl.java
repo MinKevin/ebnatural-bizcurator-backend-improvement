@@ -4,16 +4,13 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.QCategory;
-import ebnatural.bizcurator.apiserver.domain.QMakeDocument;
 import ebnatural.bizcurator.apiserver.domain.QManufacturer;
 import ebnatural.bizcurator.apiserver.domain.QOrderDetail;
 import ebnatural.bizcurator.apiserver.domain.QProduct;
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.springframework.data.domain.PageImpl;
 
 public class OrderDetailRepositoryImpl implements OrderDetailRepositoryCustom{
 

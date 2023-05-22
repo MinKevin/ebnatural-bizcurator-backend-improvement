@@ -3,6 +3,8 @@ package ebnatural.bizcurator.apiserver.domain;
 import ebnatural.bizcurator.apiserver.domain.constant.RequestStateType;
 import ebnatural.bizcurator.apiserver.dto.DocumentChangeDto;
 import ebnatural.bizcurator.apiserver.dto.request.PurchaseMakeDocumentRequest;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -12,6 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+
+@Table(indexes = {
+        @Index(columnList = "purpose_category_id"),
+        @Index(columnList = "member_id"),
+        @Index(columnList = "createdAt")
+})
 @Entity
 @Getter
 public class MakeDocument extends RequestDocumentEntity{

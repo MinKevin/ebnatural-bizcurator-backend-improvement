@@ -10,6 +10,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Table(indexes = {
+        @Index(columnList = "category_id"),
+        @Index(columnList = "member_id"),
+        @Index(columnList = "createdAt")
+})
 @Entity
 @Getter
 public class SellDocument extends TimeEntity{

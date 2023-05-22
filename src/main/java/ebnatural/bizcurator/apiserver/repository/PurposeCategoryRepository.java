@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.repository;
 
-import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.PurposeCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
