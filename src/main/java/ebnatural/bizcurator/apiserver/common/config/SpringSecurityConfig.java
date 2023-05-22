@@ -51,7 +51,9 @@ public class SpringSecurityConfig {
                 .anyRequest().permitAll();
 
 //        http.authorizeRequests()
-//                .antMatchers("/login", "/signup", "/api/users/login", "/api/users/signup").permitAll()
+//                .antMatchers("/api/users/findEmail", "/api/users/findPassword", "/api/users/emailConfirm",
+//                "/api/users/certificationNumberConfirm", "/api/users/setNewPwd",
+//                "/api/users/login", "/api/users/signup").permitAll()
 //                .antMatchers("/api/admins/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.POST, "/api/notices/**").hasRole("ADMIN")

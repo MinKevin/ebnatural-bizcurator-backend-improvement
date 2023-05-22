@@ -34,7 +34,7 @@ public class MemberDto {
     String managerEmail;
     String managerPhoneNumber;
     private TokenDto tokenDto;
-
+    Boolean termsOfService;
     public static MemberDto from(Member member, TokenDto tokenDto) {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(member.getId());

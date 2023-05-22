@@ -1,9 +1,12 @@
 package ebnatural.bizcurator.apiserver.domain;
 
 import ebnatural.bizcurator.apiserver.domain.constant.MemberRole;
+import ebnatural.bizcurator.apiserver.dto.request.PasswordFindRequest;
 import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -58,8 +61,11 @@ public class Member extends TimeEntity {
     private final Set<MemberLoginLog> memberLoginLogs = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-
     private List<Cart> carts;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "terms_of_service_agreement_id")
+    List<TermsOfServiceAgreement> termsOfServiceAgreement;
 
     @Column
     LocalDate lastLoginTime = LocalDate.now();
@@ -107,7 +113,8 @@ public class Member extends TimeEntity {
                 businessRegistration,
                 manager,
                 managerEmail,
-                managerPhoneNumber);
+                managerPhoneNumber
+        );
     }
 
     public Member expire() {
@@ -127,7 +134,7 @@ public class Member extends TimeEntity {
         return this;
     }
 
-    public Member update(UpdateMemberRequest memberDto){
+    public Member update(UpdateMemberRequest memberDto) {
         this.password = memberDto.getPassword();
         this.businessName = memberDto.getBusinessName();
         this.businessNumber = memberDto.getBusinessNumber();
@@ -139,6 +146,13 @@ public class Member extends TimeEntity {
         this.managerEmail = memberDto.getManagerEmail();
         this.managerPhoneNumber = memberDto.getManagerPhoneNumber();
         this.lastLoginTime = null;
+        return this;
+    }
+
+    public Member setNewPassword(PasswordFindRequest memberDto, BCryptPasswordEncoder passwordEncoder) {
+        memberDto.encodePrivacy(passwordEncoder);
+        this.password = memberDto.getPassword();
+
         return this;
     }
 }

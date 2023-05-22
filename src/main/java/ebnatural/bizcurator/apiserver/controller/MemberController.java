@@ -1,16 +1,19 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import com.amazonaws.Response;
+import ebnatural.bizcurator.apiserver.common.exception.custom.AlreadyRegisteredUserException;
+import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.TokenDto;
-import ebnatural.bizcurator.apiserver.dto.request.LoginRequest;
-import ebnatural.bizcurator.apiserver.dto.request.MemberRequest;
-import ebnatural.bizcurator.apiserver.dto.request.UpdateMemberRequest;
+import ebnatural.bizcurator.apiserver.dto.request.*;
 import ebnatural.bizcurator.apiserver.dto.response.CommonResponse;
+import ebnatural.bizcurator.apiserver.service.EmailServiceImpl;
 import ebnatural.bizcurator.apiserver.service.MemberAuthService;
 import ebnatural.bizcurator.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +27,8 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
     private final MemberAuthService memberAuthService;
+
+    private final EmailServiceImpl emailService;
 
     /**
      * 로그인 시 access 토큰, refresh 토큰 모두 새로 만들어준다.
@@ -43,7 +48,6 @@ public class MemberController {
     /**
      * accessToken에 담긴 유저정보를 꺼내서 refresh token을 지워준다.
      *
-     *
      * @return
      */
     @GetMapping("/logout")
@@ -60,7 +64,7 @@ public class MemberController {
      * @throws Exception
      */
     @GetMapping("/refresh")
-    public ResponseEntity<CommonResponse> refresh() throws Exception {
+    public ResponseEntity<CommonResponse> refresh() {
         Map<String, Object> mp = new HashMap<>();
         TokenDto tokenDto = memberAuthService.refreshToken();
         mp.put("result", tokenDto);
@@ -112,5 +116,49 @@ public class MemberController {
         memberService.delete();
 
         return CommonResponse.ok(HttpStatus.OK.value(), "deleteMember success");
+    }
+
+    /**
+     * 이메일 중복 확인 API
+     *
+     * @param emailMap
+     * @return
+     * @throws Exception result:
+     *                   code: 409(이미 사용중인 이메일), 410(사용 가능한 이메일)
+     */
+    @PostMapping("/findEmail")
+    public ResponseEntity<CommonResponse> findEmail(@RequestBody Map<String, String> emailMap) {
+        CommonResponse commonResponse = memberService.findEmail(emailMap.get("email"));
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
+    }
+
+    @PostMapping("/emailConfirm")
+    public ResponseEntity<CommonResponse> emailConfirm(@RequestBody Map<String, String> emailMap) throws Exception {
+        CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
+        if (commonResponse.getCode() == 409)
+            throw new AlreadyRegisteredUserException(ErrorCode.ALREADY_REGISTERED_USER_EXCEPTION);
+        String confirm = emailService.sendCertificationNumberMessage(emailMap.get("email"));
+        return CommonResponse.ok(HttpStatus.OK.value(),"이메일로 인증번호가 전송되었습니다." ,Map.of("certification_number", confirm));
+    }
+
+    @PostMapping("/certificationNumberConfirm")
+    public ResponseEntity<CommonResponse> certificationNumberConfirm(@Valid @RequestBody CertificationNumberRequest certificationNumberRequest) throws Exception {
+        CommonResponse commonResponse = memberService.certificationNumberConfirm(certificationNumberRequest);
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
+    }
+
+    @PostMapping("/findPassword")
+    public ResponseEntity<CommonResponse> findPassword(@RequestBody Map<String, String> emailMap) throws Exception {
+        CommonResponse commonResponse = memberService.findEmail(emailMap.get(("email")));
+        if (commonResponse.getCode() == 410)
+            throw new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage());
+        Map<String, Object> confirm = emailService.sendSetNewPwdMessage(emailMap.get("email"));
+        return CommonResponse.ok(HttpStatus.OK.value(),"비밀번호 재설정 링크가 전송되었습니다." ,Map.of("certification_number" ,confirm));
+    }
+
+    @PostMapping("/setNewPwd")
+    public ResponseEntity<CommonResponse> setNewPassword(@Valid @RequestBody PasswordFindRequest passwordFindRequest){
+        CommonResponse commonResponse = memberService.setNewPassword(passwordFindRequest);
+        return CommonResponse.ok(commonResponse.getCode(), commonResponse.getMessage());
     }
 }

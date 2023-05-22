@@ -43,3 +43,21 @@ cloud:
       make-document-dir: make_document_images
       sell-document-dir: sell_document_images
       business-registration-dir: business_registration_images
+
+mail:
+  smtp:
+    auth: true
+    starttls:
+      required: true
+      enable: true
+    socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+      fallback: false
+      port: 465
+    port: 465
+
+  # admin 구글 계정
+  #pw: bizcurator522
+AdminMail:
+  id: ebnatural522@gmail.com
+  password: ozyrjiisldhjjzsi
