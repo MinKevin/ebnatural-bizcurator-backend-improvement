@@ -1,9 +1,7 @@
 package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
-import ebnatural.bizcurator.apiserver.domain.Category;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
-import ebnatural.bizcurator.apiserver.domain.Manufacturer;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
 import ebnatural.bizcurator.apiserver.domain.Product;
@@ -24,7 +22,6 @@ import ebnatural.bizcurator.apiserver.repository.CancelApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.MakeDocumentRepository;
 import ebnatural.bizcurator.apiserver.repository.MemberRepository;
 import ebnatural.bizcurator.apiserver.repository.OrderDetailRepository;
-import ebnatural.bizcurator.apiserver.repository.ProductRepository;
 import ebnatural.bizcurator.apiserver.repository.PurchaseDocumentRepository;
 import ebnatural.bizcurator.apiserver.repository.RefundApplicationRepository;
 import ebnatural.bizcurator.apiserver.repository.SellDocumentRepository;
@@ -129,27 +126,19 @@ public class AdminOrderService {
         page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
-        Page<CancelApplication> cancelApplicationPage = null;
-        if (search == null) {
-            cancelApplicationPage = cancelApplicationRepository.findAllByOrderByCreatedAtDesc(pageable);
-        } else{
-            cancelApplicationPage = cancelApplicationRepository.findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(search, pageable);
-        }
+        Page<CancelApplication> cancelApplicationPage =
+                cancelApplicationRepository.findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(search, pageable);
 
         List<AdminApplicationDto> adminApplicationDtoList = new ArrayList<>();
         for (CancelApplication cancelApplication : cancelApplicationPage) {
-            Object[] results = (Object[]) cancelApplicationRepository.findOrderDetailWithProductAndManufacturerAndCategoryById(cancelApplication.getId());
-
-            OrderDetail orderDetail = (OrderDetail) ((Object[]) results[0])[0];
-            Product product = (Product) ((Object[]) results[0])[1];
-            Manufacturer manufacturer = (Manufacturer) ((Object[]) results[0])[2];
-            Category category = (Category) ((Object[]) results[0])[3];
+            OrderDetail orderDetail = cancelApplication.getOrderDetail();
+            Product product = orderDetail.getProduct();
 
             AdminApplicationDto adminApplicationDto = AdminApplicationDto.of(
                     cancelApplication.getId(),
                     product.getName(),
-                    manufacturer.getName(),
-                    category.getName(),
+                    product.getManufacturer().getName(),
+                    product.getCategory().getName(),
                     orderDetail.getOrderTime(),
                     cancelApplication.getState().getMeaning(),
                     orderDetail.getQuantity(),
@@ -172,24 +161,19 @@ public class AdminOrderService {
         page = (page == null) ? 0 : Math.max(0, page-1);
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
-        Page<RefundApplication> refundApplicationPage = null;
-        refundApplicationPage = refundApplicationRepository.findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(
-                search, pageable);
+        Page<RefundApplication> refundApplicationPage =
+                refundApplicationRepository.findByOrderDetailProduct_NameContainingOrderByCreatedAtDesc(search, pageable);
 
         List<AdminApplicationDto> adminApplicationDtoList = new ArrayList<>();
         for (RefundApplication refundApplication : refundApplicationPage) {
-            Object[] results = (Object[]) refundApplicationRepository.findOrderDetailWithProductAndManufacturerAndCategoryById(refundApplication.getId());
-
-            OrderDetail orderDetail = (OrderDetail) ((Object[]) results[0])[0];
-            Product product = (Product) ((Object[]) results[0])[1];
-            Manufacturer manufacturer = (Manufacturer) ((Object[]) results[0])[2];
-            Category category = (Category) ((Object[]) results[0])[3];
+            OrderDetail orderDetail = refundApplication.getOrderDetail();
+            Product product = orderDetail.getProduct();
 
             AdminApplicationDto adminApplicationDto = AdminApplicationDto.of(
                     refundApplication.getId(),
                     product.getName(),
-                    manufacturer.getName(),
-                    category.getName(),
+                    product.getManufacturer().getName(),
+                    product.getCategory().getName(),
                     orderDetail.getOrderTime(),
                     refundApplication.getState().getMeaning(),
                     orderDetail.getQuantity(),
@@ -236,8 +220,7 @@ public class AdminOrderService {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Member> memberPage = null;
-        memberPage = memberRepository.findByMemberBusinessNameContainingOrderByCreatedAtDesc(
-                search, pageable);
+        memberPage = memberRepository.findByMemberBusinessNameContainingOrderByCreatedAtDesc(search, pageable);
 
         List<AdminUserInfoDto> adminApplicationDtoList = new ArrayList<>();
         for (Member member : memberPage) {

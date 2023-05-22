@@ -1,7 +1,5 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
-import com.querydsl.core.Tuple;
-import ebnatural.bizcurator.apiserver.domain.RefundApplication;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import java.time.LocalDateTime;
 import java.util.List;

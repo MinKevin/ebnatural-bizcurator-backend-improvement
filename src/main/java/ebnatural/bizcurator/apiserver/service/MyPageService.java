@@ -1,6 +1,5 @@
 package ebnatural.bizcurator.apiserver.service;
 
-import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
 import ebnatural.bizcurator.apiserver.domain.CancelApplication;
 import ebnatural.bizcurator.apiserver.domain.Member;
 import ebnatural.bizcurator.apiserver.domain.OrderDetail;
@@ -13,7 +12,6 @@ import ebnatural.bizcurator.apiserver.domain.constant.ReceiveAddressType;
 import ebnatural.bizcurator.apiserver.domain.constant.ReceiveWayType;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDetailDto;
 import ebnatural.bizcurator.apiserver.dto.ApplicationDto;
-import ebnatural.bizcurator.apiserver.dto.MyPageDocumentDto;
 import ebnatural.bizcurator.apiserver.dto.MyPageHomeDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto;
 import ebnatural.bizcurator.apiserver.dto.PaymentDetailDto.OrderDetailDto;

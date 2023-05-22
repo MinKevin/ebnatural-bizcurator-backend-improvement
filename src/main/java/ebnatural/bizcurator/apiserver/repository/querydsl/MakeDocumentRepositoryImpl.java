@@ -1,14 +1,10 @@
 package ebnatural.bizcurator.apiserver.repository.querydsl;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.QMakeDocument;
-
-import ebnatural.bizcurator.apiserver.domain.QSellDocument;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;

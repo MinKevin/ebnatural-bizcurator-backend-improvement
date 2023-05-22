@@ -1,15 +1,11 @@
 package ebnatural.bizcurator.apiserver.repository;
 
-import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
 import ebnatural.bizcurator.apiserver.repository.querydsl.SellDocumentRepositoryCustom;
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.PropertyValues;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 public interface SellDocumentRepository extends JpaRepository<SellDocument, Long>, SellDocumentRepositoryCustom {
