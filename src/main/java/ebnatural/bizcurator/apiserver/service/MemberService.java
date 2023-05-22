@@ -2,10 +2,7 @@ package ebnatural.bizcurator.apiserver.service;
 
 import ebnatural.bizcurator.apiserver.common.exception.custom.*;
 import ebnatural.bizcurator.apiserver.common.util.MemberUtil;
-import ebnatural.bizcurator.apiserver.domain.Member;
-import ebnatural.bizcurator.apiserver.domain.MemberLoginLog;
-import ebnatural.bizcurator.apiserver.domain.TermsOfService;
-import ebnatural.bizcurator.apiserver.domain.TermsOfServiceAgreement;
+import ebnatural.bizcurator.apiserver.domain.*;
 import ebnatural.bizcurator.apiserver.repository.TermsOfServiceAgreementRepository;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
 import ebnatural.bizcurator.apiserver.dto.MemberPrincipalDetails;
@@ -159,8 +156,13 @@ public class MemberService implements UserDetailsService {
                 certificationNumberRepository.findByUsername(certificationNumberRequest.getUsername())
                         .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
 
+        if (certificationNumber.isExpired()){
+            certificationNumberRepository.delete(certificationNumber);
+            return CommonResponse.of(HttpStatus.FORBIDDEN.value(), "인증번호가 만료되었습니다. (유효시간 : 1시간)");
+        }
+
         CommonResponse commonResponse;
-        if (passwordEncoder.matches(certificationNumberRequest.getCertificationNumber(), certificationNumber.getCertificationNumber()))
+        if (passwordEncoder.matches(certificationNumber.getCertificationNumber(), certificationNumberRequest.getCertificationNumber()))
             commonResponse = CommonResponse.of(HttpStatus.OK.value(), "인증번호가 일치합니다.");
         else
             commonResponse = CommonResponse.of(HttpStatus.NOT_ACCEPTABLE.value(), "인증번호가 일치하지 않습니다.");
@@ -171,10 +173,15 @@ public class MemberService implements UserDetailsService {
     }
 
 
-    public void setNewPassword(PasswordFindRequest passwordFindRequest) {
+    public CommonResponse setNewPassword(PasswordFindRequest passwordFindRequest) {
         CertificationNumber certificationNumber =
                 certificationNumberRepository.findByUsername(passwordFindRequest.getUsername())
                         .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
+
+        if (certificationNumber.isExpired()){
+            certificationNumberRepository.delete(certificationNumber);
+            return CommonResponse.of(HttpStatus.FORBIDDEN.value(), "인증번호가 만료되었습니다. (유효시간 : 1시간)");
+        }
 
         if (!passwordFindRequest.getPassword().equals(passwordFindRequest.getPasswordConfirm()))
             throw new InvalidUsernamePasswordException(ErrorCode.PASSWORD_WRONG);
@@ -186,5 +193,7 @@ public class MemberService implements UserDetailsService {
                 .setNewPassword(passwordFindRequest, passwordEncoder);
 
         certificationNumberRepository.delete(certificationNumber);
+
+        return CommonResponse.of(HttpStatus.OK.value(), "비밀번호 재설정에 성공했습니다.");
     }
 }

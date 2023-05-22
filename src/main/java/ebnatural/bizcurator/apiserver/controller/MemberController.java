@@ -1,5 +1,6 @@
 package ebnatural.bizcurator.apiserver.controller;
 
+import com.amazonaws.Response;
 import ebnatural.bizcurator.apiserver.common.exception.custom.AlreadyRegisteredUserException;
 import ebnatural.bizcurator.apiserver.common.exception.custom.ErrorCode;
 import ebnatural.bizcurator.apiserver.dto.MemberDto;
@@ -140,7 +141,7 @@ public class MemberController {
     }
 
     @PostMapping("/certificationNumberConfirm")
-    public ResponseEntity<CommonResponse> certificationNumberConfirm(@RequestBody CertificationNumberRequest certificationNumberRequest) throws Exception {
+    public ResponseEntity<CommonResponse> certificationNumberConfirm(@Valid @RequestBody CertificationNumberRequest certificationNumberRequest) throws Exception {
         return new ResponseEntity(memberService.certificationNumberConfirm(certificationNumberRequest), HttpStatus.OK);
     }
 
@@ -154,8 +155,8 @@ public class MemberController {
     }
 
     @PostMapping("/setNewPwd")
-    public ResponseEntity<CommonResponse> setNewPassword(@RequestBody PasswordFindRequest passwordFindRequest){
-        memberService.setNewPassword(passwordFindRequest);
-        return CommonResponse.ok(HttpStatus.OK.value(), "비밀번호 재설정이 완료되었습니다.");
+    public ResponseEntity<CommonResponse> setNewPassword(@Valid @RequestBody PasswordFindRequest passwordFindRequest){
+
+        return new ResponseEntity(memberService.setNewPassword(passwordFindRequest), HttpStatus.OK);
     }
 }

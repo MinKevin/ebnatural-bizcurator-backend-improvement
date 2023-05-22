@@ -2,20 +2,27 @@ package ebnatural.bizcurator.apiserver.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
+import org.joda.time.DateTime;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class CertificationNumber {
+public class CertificationNumber extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -32,5 +39,9 @@ public class CertificationNumber {
 
     public static CertificationNumber of(String username, String certificationNumber, BCryptPasswordEncoder passwordEncoder){
         return new CertificationNumber(username, passwordEncoder.encode(certificationNumber));
+    }
+
+    public boolean isExpired(){
+        return Duration.between(super.getCreatedAt(), LocalDateTime.now()).getSeconds() > 3600;
     }
 }
