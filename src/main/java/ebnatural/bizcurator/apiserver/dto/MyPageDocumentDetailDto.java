@@ -12,7 +12,11 @@ import lombok.Getter;
 public class MyPageDocumentDetailDto {
 
     private Long requestId;
+
+    private Long categoryId;
     private String category;
+
+    private String productName;
     private String productDetail;
     private int quantity;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -30,13 +34,15 @@ public class MyPageDocumentDetailDto {
     private String requestContext;
 
 
-    private MyPageDocumentDetailDto(Long requestId, String category, String productDetail,
+    private MyPageDocumentDetailDto(Long requestId, Long categoryId, String category, String productName, String productDetail,
             int quantity,
             Date desiredEstimateDate, Date desiredDeliveryDate,
             String image,
             int establishYear, String companyIntroduction, String requestContext) {
         this.requestId = requestId;
+        this.categoryId = categoryId;
         this.category = category;
+        this.productName = productName;
         this.productDetail = productDetail;
         this.quantity = quantity;
         this.desiredEstimateDate = desiredEstimateDate;
@@ -50,7 +56,9 @@ public class MyPageDocumentDetailDto {
     public static MyPageDocumentDetailDto fromEntity(SellDocument document) {
         return new MyPageDocumentDetailDto(
                 document.getId(),
+                document.getCategory().getId(),
                 document.getCategory().getName(),
+                "",
                 document.getProductDetail(),
                 0,  //입점의뢰는 갯수를 입력하지 않음
                 null, //입점의뢰는 desiredEstimateDate 입력하지 않음
@@ -64,7 +72,9 @@ public class MyPageDocumentDetailDto {
     public static MyPageDocumentDetailDto fromEntity(MakeDocument document) {
         return new MyPageDocumentDetailDto(
                 document.getId(),
+                document.getPurposeCategory().getId(),
                 document.getPurposeCategory().getName(),
+                document.getProductName(),
                 document.getProductDetail(),
                 document.getQuantity(),
                 document.getDesiredEstimateDate(),
@@ -79,7 +89,9 @@ public class MyPageDocumentDetailDto {
     public static MyPageDocumentDetailDto fromEntity(PurchaseDocument document) {
         return new MyPageDocumentDetailDto(
                 document.getId(),
+                document.getCategory().getId(),
                 document.getCategory().getName(),
+                document.getProductName(),
                 document.getProductDetail(),
                 document.getQuantity(),
                 document.getDesiredEstimateDate(),
