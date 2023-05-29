@@ -37,8 +37,8 @@ public class CartService {
             //ProductImage productMainImage = productService.getProductMainImage(product.getId());
             String mainImageUrl = productService.getProductMainImage(product.getId()).getImgUrl();
 
-            cartProductDtos.add(new CartProductDto(product.getName(), product.getCostWithDiscount(),
-                    product.getRegularPrice(), carts.getQuantity(), mainImageUrl)) ;
+            cartProductDtos.add(new CartProductDto(product.getName(), product.getId(), product.getCostWithDiscount(),
+                    product.getRegularPrice(), carts.getQuantity(), product.getMinQuantity(), mainImageUrl)) ;
         }
         return cartProductDtos;
     }
