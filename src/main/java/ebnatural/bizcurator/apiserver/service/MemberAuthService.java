@@ -18,8 +18,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +26,10 @@ public class MemberAuthService {
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
+
     /**
      * 로그인 처리 + 엑세스, 리프레시 토큰 생성 + db저장
+     *
      * @param loginDto
      * @return
      * @throws Exception
@@ -46,8 +46,9 @@ public class MemberAuthService {
         }
 
         String newRefreshToken = createRefreshToken(member);
+        String newAccessToken = jwtProvider.createAccessToken(member.getId(), member.getUsername(), member.getMemberRole());
         TokenDto tokenDto = TokenDto.builder()
-                .accessToken(jwtProvider.createAccessToken(member.getId(), member.getUsername(), member.getMemberRole()))
+                .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .build();
 
@@ -58,17 +59,18 @@ public class MemberAuthService {
     /**
      * 프론트 단에서는 Local Storage에 저장된 access, refresh token 폐기한다.
      * member 테이블의 refresh token 컬럼값을 없애준다.
+     *
      * @param
      */
     public boolean logout() {
-        String accessToken = MemberUtil.getAccessToken();
+        String accessToken = MemberUtil.getToken();
         String userName = null;
         try {
             Claims claims = jwtProvider.verifyToken(accessToken);
             userName = claims.getSubject();
         } catch (ExpiredJwtException e) {
             userName = e.getClaims().getSubject();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
@@ -83,9 +85,9 @@ public class MemberAuthService {
     }
 
 
-
     /**
      * refresh 토큰 생성 + member 에 저장 + member db 테이블에 저장
+     *
      * @param member
      * @return
      */
@@ -106,32 +108,26 @@ public class MemberAuthService {
 
     /**
      * access 토큰 재발급
+     *
      * @param
      * @return
      * @throws Exception
      */
     public TokenDto refreshToken() {
-        String accessToken = MemberUtil.getAccessToken();
-        String userName = null;
+        String refreshToken = MemberUtil.getToken();
 
-        try{
-            userName = jwtProvider.getUsernameByToken(accessToken);
-        } catch (ExpiredJwtException ex){
-            // access 토큰이 만료됐으면
-            userName = ex.getClaims().getSubject();
-        }
+        //이미 jwtFilter 에서 예외처리가 되었기 때문에, 현재 메서드에서는 verifyToken 에서 exception 이 없음이 보장
+        Claims claims = jwtProvider.verifyToken(refreshToken);
+        String userName = claims.getSubject();
 
         Member member = Optional.ofNullable(memberRepository.findByUsername(userName))
                 .orElseThrow(() ->
                         new BadRequestException(ErrorCode.USER_NOT_FOUND));
         String currentRefreshToken = member.getRefreshToken();
-        try {
-            Claims claims = jwtProvider.verifyToken(currentRefreshToken);
-        } catch (ExpiredJwtException | IllegalArgumentException e) {
-            // refresh token이 만료됐거나 null이면 재로그인을 해야함
-            throw new ExpiredJwtException(null, null, null);
-        } catch (Exception e){
-            throw e;
+
+        //아래 예외처리도 jwtFilter 에 의해 exception 이 없음이 보장되지만, 예방 차원에서 구현
+        if (!refreshToken.equals(currentRefreshToken)){
+            throw new BadCredentialsException("refreshToken is expired. please login again");
         }
 
         return TokenDto.builder()

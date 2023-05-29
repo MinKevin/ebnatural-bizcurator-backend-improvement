@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberUtil {
     private static Authentication authentication;
-    private static String accessToken;
+    private static String token;
     @CleanAuth
     public static String getUsername() {
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -22,12 +22,12 @@ public class MemberUtil {
     }
 
     @CleanAuth
-    public static String getAccessToken(){
-        return MemberUtil.accessToken;
+    public static String getToken(){
+        return MemberUtil.token;
     }
 
-    public static void setAccessToken(String token){
-        MemberUtil.accessToken = token;
+    public static void setToken(String token){
+        MemberUtil.token = token;
     }
     public static void clean(){
         authentication = null;
