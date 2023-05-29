@@ -40,17 +40,17 @@ public class JwtFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String accessToken = jwtProvider.resolveToken(request);
-        if(null != accessToken) {
+        String token = jwtProvider.resolveToken(request);
+        if(null != token) {
             try {
-                Claims claims = jwtProvider.verifyToken(accessToken);
+                Claims claims = jwtProvider.verifyToken(token);
                 Member member = Optional.of(memberRepository.findByUsername(claims.getSubject())).orElseThrow(() ->
-                        new BadCredentialsException("Access Token의 잘못된 계정정보입니다."));
+                        new BadCredentialsException("token의 잘못된 계정정보입니다."));
 
                 if (member.getIsEnable() == false)
                     new InvalidUsernamePasswordException(ErrorCode.USERNAME_OR_PASSWORD_WRONG);
 
-                Authentication auth = jwtProvider.getAuthentication(accessToken);
+                Authentication auth = jwtProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
 
