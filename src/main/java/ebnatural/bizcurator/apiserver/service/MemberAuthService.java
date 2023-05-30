@@ -116,7 +116,8 @@ public class MemberAuthService {
     public TokenDto refreshToken() {
         String refreshToken = MemberUtil.getToken();
 
-        //이미 jwtFilter 에서 예외처리가 되었기 때문에, 현재 메서드에서는 verifyToken 에서 exception 이 없음이 보장
+        //이미 jwtFilter 에서 예외처리가 되었기 때문에,
+        // 현재 메서드에서는 verifyToken 에서 exception 이 없음이 보장
         Claims claims = jwtProvider.verifyToken(refreshToken);
         String userName = claims.getSubject();
 
@@ -131,7 +132,8 @@ public class MemberAuthService {
         }
 
         return TokenDto.builder()
-                .accessToken(jwtProvider.createAccessToken(member.getId(), member.getUsername(), member.getMemberRole()))
+                .accessToken(jwtProvider.createAccessToken(member.getId(),
+                        member.getUsername(), member.getMemberRole()))
                 .refreshToken(currentRefreshToken)
                 .build();
     }
