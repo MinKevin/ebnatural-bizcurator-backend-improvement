@@ -27,12 +27,12 @@ public class JwtProvider {
     private String secretKey = "workschedulesecretkeyworkschedulesecretkeyworkschedulesecretkeyworkschedulesecretkeyworkschedulesecretkey";
 
     // 엑세스 토큰 유효시간 1시간
-    //static final long ACCESS_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60 * 60;
-    static final long ACCESS_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 5;
+    static final long ACCESS_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60 * 60;
+    //static final long ACCESS_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 5;
 
     // 리프레시 토큰 유효시간 일주일
-    //static final long REFRESH_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60 * 60 * 24 * 7;
-    static final long REFRESH_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60;
+    static final long REFRESH_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60 * 60 * 24 * 7;
+    //static final long REFRESH_TOKEN_VALID_MILLIE_SEC_TIME = 1000L * 60;
 
     private final UserDetailsService userDetailsService;
 
