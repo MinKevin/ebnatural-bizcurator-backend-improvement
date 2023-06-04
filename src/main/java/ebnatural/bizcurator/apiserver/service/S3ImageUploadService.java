@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class S3ImageUploadService {
 
         try {
             InputStream inputStream = multipartFile.getInputStream();
-            ObjectMetadata objectMetadata = checkFileType(inputStream);
+            ObjectMetadata objectMetadata = checkFileType(copyInputStream(inputStream));
 
 
             amazonS3Client.putObject(new PutObjectRequest(bucket, newFileName, multipartFile.getInputStream(), objectMetadata)
@@ -48,6 +49,11 @@ public class S3ImageUploadService {
         }
 
         return amazonS3Client.getUrl(bucket, newFileName).toString();
+    }
+
+    private InputStream copyInputStream(InputStream inputStream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        return new ByteArrayInputStream(bytes);
     }
 
     /**
