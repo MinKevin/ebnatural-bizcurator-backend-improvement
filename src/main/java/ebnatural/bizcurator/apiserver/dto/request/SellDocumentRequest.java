@@ -26,7 +26,7 @@ public class SellDocumentRequest {
     @NotBlank
     String productDetail;
     @NotNull
-    int establishYear;
+    Integer establishYear;
     @NotBlank
     String introduction;
     String imageDirectory;

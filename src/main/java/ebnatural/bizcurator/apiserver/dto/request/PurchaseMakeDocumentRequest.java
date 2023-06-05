@@ -23,13 +23,13 @@ public class PurchaseMakeDocumentRequest {
     @NotBlank
     String managerCall;
     @NotNull
-    long category;
+    Long category;
     @NotBlank
     String productName;
     @NotBlank
     String productDetail;
     @NotNull
-    int quantity;
+    Integer quantity;
     @NotNull
     Date desiredEstimateDate;
     @NotNull
