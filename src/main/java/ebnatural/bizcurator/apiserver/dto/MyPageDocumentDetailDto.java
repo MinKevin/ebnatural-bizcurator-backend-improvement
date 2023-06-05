@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ebnatural.bizcurator.apiserver.domain.MakeDocument;
 import ebnatural.bizcurator.apiserver.domain.PurchaseDocument;
 import ebnatural.bizcurator.apiserver.domain.SellDocument;
-import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.Getter;
+
+import java.util.Date;
 
 @Getter
 public class MyPageDocumentDetailDto {
@@ -18,7 +18,7 @@ public class MyPageDocumentDetailDto {
 
     private String productName;
     private String productDetail;
-    private int quantity;
+    private Integer quantity;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date desiredEstimateDate;
 
@@ -27,7 +27,7 @@ public class MyPageDocumentDetailDto {
 
     private String image;
 
-    private int establishYear;
+    private Integer establishYear;
 
     private String companyIntroduction;
 
@@ -35,10 +35,10 @@ public class MyPageDocumentDetailDto {
 
 
     private MyPageDocumentDetailDto(Long requestId, Long categoryId, String category, String productName, String productDetail,
-            int quantity,
-            Date desiredEstimateDate, Date desiredDeliveryDate,
-            String image,
-            int establishYear, String companyIntroduction, String requestContext) {
+                                    Integer quantity,
+                                    Date desiredEstimateDate, Date desiredDeliveryDate,
+                                    String image,
+                                    Integer establishYear, String companyIntroduction, String requestContext) {
         this.requestId = requestId;
         this.categoryId = categoryId;
         this.category = category;
@@ -53,20 +53,21 @@ public class MyPageDocumentDetailDto {
         this.requestContext = requestContext;
     }
 
+
     public static MyPageDocumentDetailDto fromEntity(SellDocument document) {
         return new MyPageDocumentDetailDto(
                 document.getId(),
                 document.getCategory().getId(),
                 document.getCategory().getName(),
-                "",
+                null,
                 document.getProductDetail(),
-                0,  //입점의뢰는 갯수를 입력하지 않음
+                null,  //입점의뢰는 갯수를 입력하지 않음
                 null, //입점의뢰는 desiredEstimateDate 입력하지 않음
                 null, //입점의뢰는 desiredDeliveryDate 입력하지 않음
                 document.getImageDirectory(),
                 document.getEstablishYear(),
                 document.getIntroduction(),
-                ""); //입점의뢰는 요청사항 입력하지 않음
+                null); //입점의뢰는 요청사항 입력하지 않음
     }
 
     public static MyPageDocumentDetailDto fromEntity(MakeDocument document) {
@@ -80,10 +81,10 @@ public class MyPageDocumentDetailDto {
                 document.getDesiredEstimateDate(),
                 document.getDesiredDeliveryDate(),
                 document.getImageDirectory(),
-                0, // 제작의뢰는 설립년도 필요없음
-                "", // 제작의뢰는 회사 소개 필요없음
+                null, // 제작의뢰는 설립년도 필요없음
+                null, // 제작의뢰는 회사 소개 필요없음
                 document.getRequestMessage()
-                );
+        );
     }
 
     public static MyPageDocumentDetailDto fromEntity(PurchaseDocument document) {
@@ -97,8 +98,8 @@ public class MyPageDocumentDetailDto {
                 document.getDesiredEstimateDate(),
                 document.getDesiredDeliveryDate(),
                 document.getImageDirectory(),
-                0, // 구매의뢰는 설립년도 필요없음
-                "", // 구매의뢰는 회사 소개 필요없음
+                null, // 구매의뢰는 설립년도 필요없음
+                null, // 구매의뢰는 회사 소개 필요없음
                 document.getRequestMessage()
         );
     }
