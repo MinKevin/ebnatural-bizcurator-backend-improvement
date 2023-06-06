@@ -14,9 +14,9 @@ public class DocumentChangeDto {
     @NotBlank
     private String category;
 
+    private String productName;
 
     private String productDetail;
-
 
     private int quantity;
 

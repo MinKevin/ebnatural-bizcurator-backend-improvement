@@ -65,6 +65,7 @@ public class PurchaseDocument extends RequestDocumentEntity{
     }
 
     public void update(Category category, DocumentChangeDto documentChangeDto) {
+        this.productName = documentChangeDto.getProductName();
         this.category = category;
         this.productDetail = documentChangeDto.getProductDetail();
         this.quantity = documentChangeDto.getQuantity();

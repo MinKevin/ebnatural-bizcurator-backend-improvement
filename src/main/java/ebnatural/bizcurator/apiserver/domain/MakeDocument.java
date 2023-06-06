@@ -66,6 +66,7 @@ public class MakeDocument extends RequestDocumentEntity{
     }
 
     public void update(PurposeCategory purposeCategory, DocumentChangeDto documentChangeDto) {
+        this.productName = documentChangeDto.getProductName();
         this.purposeCategory = purposeCategory;
         this.productDetail = documentChangeDto.getProductDetail();
         this.quantity = documentChangeDto.getQuantity();
