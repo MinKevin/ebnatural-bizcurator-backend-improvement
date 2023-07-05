@@ -28,8 +28,8 @@ spring:
 cloud:
   aws:
     credentials:
-      access-key: AKIAULJLHSTRP7GGTAFO
-      secret-key: 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
+      access-key:
+      secret-key:
     region:
       static: ap-northeast-2
     stack:
@@ -55,7 +55,7 @@ mail:
     port: 465
 
   # admin 구글 계정
-  #pw: bizcurator522
+  #pw:
 AdminMail:
-  id: ebnatural522@gmail.com
-  password: ozyrjiisldhjjzsi
+  id:
+  password:
