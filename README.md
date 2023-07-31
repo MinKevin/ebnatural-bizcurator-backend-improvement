@@ -54,7 +54,7 @@
 
 
 
-## 연차/당직 관리 시스템 API 설계
+## API 설계
 
 ### API Spec
 https://www.notion.so/API-5371bdbf35f948039be02dbe0f6337f2?pvs=4
