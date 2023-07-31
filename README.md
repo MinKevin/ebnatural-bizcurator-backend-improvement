@@ -12,8 +12,8 @@
 
 
 ## Application Architecture
+![image](https://github.com/growing-every-day/ebnatural-bizcurator-backend/assets/66657988/5808f0d0-f9fa-4d02-9b39-fc07540f7b02)
 
-![image](https://github.com/growing-every-day/ebnatural-bizcurator-backend/assets/66657988/d221dbfe-187b-4370-81d1-a71520258334)
 
 
 
